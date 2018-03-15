@@ -1,4 +1,5 @@
 ﻿using HITWashing.Models.EnumClass;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -46,5 +47,14 @@ namespace HITWashing.Models.DBClass
 
         [DisplayName("商户名")]
         public string StoreName { get; set; }
+
+        [DisplayName("账户信息")]
+        public virtual ICollection<BalanceModel> Balances { get; set; }
+
+        [DisplayName("借订单信息")]
+        public virtual ICollection<BorrowModel> Borrows { get; set; }
+
+        [DisplayName("运送订单信息")]
+        public virtual ICollection<BorrowModel> BorrowTransport { get; set; }
     }
 }
