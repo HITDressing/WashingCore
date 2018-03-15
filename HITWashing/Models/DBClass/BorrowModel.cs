@@ -23,9 +23,9 @@ namespace HITWashing.Models.DBClass
         public virtual AccountModel TAccount { get; set; }
 
         [DisplayName("是否取消")]
-        public bool isCanceled { get; set; }
+        public bool IsCanceled { get; set; }
 
         [DisplayName("是否完成")]
-        public bool isComplited { get; set; }
+        public bool IsComplited { get; set; }
     }
 }
