@@ -15,12 +15,15 @@ namespace HITWashing.Models.DBClass
         public int BorrowOrderID { get; set; }
 
         public int UserID { get; set; }
-        [ForeignKey("UserID")]
-        public virtual AccountModel UAccount { get; set; }
+        //[ForeignKey("UserID")]
+        //public virtual AccountModel UAccount { get; set; }
 
-        public int TransportID { get; set; }
-        [ForeignKey("TransportID")]
-        public virtual AccountModel TAccount { get; set; }
+        //public int TransportID { get; set; }
+        //[ForeignKey("TransportID")]
+        //public virtual AccountModel TAccount { get; set; }
+
+        public int AccountID { get; set; }
+        public virtual AccountModel Account { get; set; }//运送ID
 
         [DisplayName("是否取消")]
         public bool IsCanceled { get; set; }
