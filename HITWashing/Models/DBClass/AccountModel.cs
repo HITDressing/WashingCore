@@ -58,10 +58,10 @@ namespace HITWashing.Models.DBClass
         public virtual ICollection<BorrowModel> BorrowTransport { get; set; }
 
 
-        [DisplayName("借订单用户信息")]
-        public virtual ICollection<BorrowModel> Paybacks { get; set; }
+        [DisplayName("还订单用户信息")]
+        public virtual ICollection<PaybackModel> Paybacks { get; set; }
 
-        [DisplayName("借订单运送信息")]
-        public virtual ICollection<BorrowModel> PaybackTransport { get; set; }
+        [DisplayName("还订单运送信息")]
+        public virtual ICollection<PaybackModel> PaybackTransport { get; set; }
     }
 }
