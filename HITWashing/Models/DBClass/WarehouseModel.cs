@@ -14,18 +14,15 @@ namespace HITWashing.Models.DBClass
         public int WarehouseID { get; set; }
 
         [Required]
-        [DisplayName]
         public int ItemNum_1 { get; set; }
 
         [Required]
-        [DisplayName]
         public int ItemNum_2 { get; set; }
 
         [Required]
-        [DisplayName]
         public int ItemNum_3 { get; set; }
 
-        public int UserID { get; set; }
+        public int AccountID { get; set; }
         public virtual AccountModel Account { get; set; }
 
     }
