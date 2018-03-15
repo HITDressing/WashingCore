@@ -51,10 +51,17 @@ namespace HITWashing.Models.DBClass
         [DisplayName("账户信息")]
         public virtual ICollection<BalanceModel> Balances { get; set; }
 
-        [DisplayName("借订单信息")]
+        [DisplayName("借订单用户信息")]
         public virtual ICollection<BorrowModel> Borrows { get; set; }
 
-        [DisplayName("运送订单信息")]
+        [DisplayName("借订单运送信息")]
         public virtual ICollection<BorrowModel> BorrowTransport { get; set; }
+
+
+        [DisplayName("借订单用户信息")]
+        public virtual ICollection<BorrowModel> Paybacks { get; set; }
+
+        [DisplayName("借订单运送信息")]
+        public virtual ICollection<BorrowModel> PaybackTransport { get; set; }
     }
 }
