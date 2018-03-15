@@ -26,6 +26,6 @@ namespace HITWashing.Models.DBClass
         public bool IsCanceled { get; set; }
 
         [DisplayName("是否完成")]
-        public bool IsComplited { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }
