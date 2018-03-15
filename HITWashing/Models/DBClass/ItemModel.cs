@@ -10,7 +10,7 @@ namespace HITWashing.Models.DBClass
     public class ItemModel
     {
         [Key]
-        [DisplayName("物品编号")]
+        [DisplayName("IID")]
         public int ItemID { get; set; }
 
         [Required]
