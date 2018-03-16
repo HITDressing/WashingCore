@@ -22,7 +22,7 @@ namespace HITWashing.Models.DBClass
         //[ForeignKey("TransportID")]
         //public virtual AccountModel TAccount { get; set; }
 
-        public int AccountID { get; set; }
+        public string AccountName { get; set; }
         public virtual AccountModel Account { get; set; }//运送ID
 
         [DisplayName("是否取消")]

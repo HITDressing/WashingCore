@@ -1,0 +1,44 @@
+﻿@model IEnumerable<HITWashing.Models.DBClass.ItemModel>
+
+@{
+    ViewData["Title"] = "物品价值管理";
+}
+
+<div class="jumbotron" style="background-color:lightgreen">
+    <h2 style="color:white">@ViewBag.Title</h2>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("添加物品", "Create", "ItemModels", null, htmlAttributes: new { @class = "btn btn-info" })
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">物品信息查询</button>
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemValue)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemID)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ItemID">@Html.DisplayFor(modelItem => item.ItemName)</a>                
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ItemID">@Html.DisplayFor(modelItem => item.ItemValue) 元</a>                
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

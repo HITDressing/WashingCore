@@ -1,38 +1,39 @@
 ﻿@model IEnumerable<HITWashing.Models.DBClass.AccountModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "用户管理";
 }
 
-<h2>Index</h2>
+<div class="jumbotron" style="background-color:gold">
+    <h2 style="color:white">@ViewBag.Title</h2>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("添加用户", "Regist", "AccountModels", null, htmlAttributes: new { @class = "btn btn-info" })
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">用户信息查询</button>
+        <button class="btn btn-danger" onclick="ShowOrHide()">显示/隐藏密码</button>
+    </p>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.MobileNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LocationX)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LocationY)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Password)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Salt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StoreName)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+            <th name="pass">
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StoreName)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -40,32 +41,83 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                <a asp-action="Details" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.AccountName)</a>
+            </td>
+            <td name="pass">
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.MobileNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LocationX)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LocationY)
+                @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salt)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.StoreName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AccountID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AccountID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AccountID">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+<script type="text/javascript">
+    function ShowOrHide() {
+        var tab = document.getElementsByName('pass');
+
+        for (var i = 0; i < tab.length; i++) {
+            if (tab[i].style.display == 'none') {
+                tab[i].style.display = '';
+            } else {
+                tab[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        @using (Html.BeginForm("Index", "AccountModels", FormMethod.Get))
+        {
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">查询条件</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form">
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.TextBox("credit", "", htmlAttributes: new { @class = "form-control", placeholder = "信用卡号" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBox("name", "", htmlAttributes: new { @class = "form-control", placeholder = "用户账号" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    @Html.TextBox("school", "", htmlAttributes: new { @class = "form-control", placeholder = "单位(学校)" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.TextBox("mobile", "", htmlAttributes: new { @class = "form-control", placeholder = "手机号码" })
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    <input type="submit" value="查询" class="btn btn-success" />
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

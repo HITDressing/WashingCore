@@ -1,39 +1,43 @@
 ﻿@model IEnumerable<HITWashing.Models.DBClass.BalanceModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "账户余额管理";
 }
 
-<h2>Index</h2>
+<div class="jumbotron" style="background-color:deepskyblue">
+    <h2 style="color:white">@ViewBag.Title</h2>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("初始化账户余额", "Create", "ItemModels", null, htmlAttributes: new { @class = "btn btn-success" })
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">账户余额查询</button>
+    </p>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Balance)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.Account)
+                @Html.DisplayNameFor(model => model.Account.AccountName)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account.MobileNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Balance)
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Balance)
+                <a asp-action="Edit" asp-route-id="@item.BalanceID">@Html.DisplayFor(modelItem => item.Balance)</a>
+                @Html.DisplayFor(modelItem => item.Account.AccountName)
             </td>
-            <td>
+            <th>
                 @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-            </td>
+            </th>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BalanceID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BalanceID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BalanceID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.BalanceID">@Html.DisplayFor(modelItem => item.Balance)</a>                
             </td>
         </tr>
 }

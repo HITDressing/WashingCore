@@ -9,8 +9,9 @@ namespace HITWashing.Models.DBClass
     public class AccountModel
     {
         [Key]
-        [DisplayName("AID")]
-        public int AccountID { get; set; }
+        [StringLength(32, ErrorMessage = "帐户名必须为4~32", MinimumLength = 4)]
+        [DisplayName("帐户名")]
+        public string AccountName { get; set; }
 
         [DisplayName("手机号")]
         [Required]
@@ -18,13 +19,9 @@ namespace HITWashing.Models.DBClass
         [StringLength(11, ErrorMessage = "电话号码长度必须为11位", MinimumLength = 11)]
         public string MobileNumber { get; set; }
 
-        [Required]
-        [DisplayName("坐标X")]
-        public double LocationX { get; set; }
-
-        [Required]
-        [DisplayName("坐标Y")]
-        public double LocationY { get; set; }
+        [StringLength(64, ErrorMessage = "帐户名必须为4~64", MinimumLength = 4)]
+        [DisplayName("商家地址")]
+        public string Address { get; set; }
 
         [Required]
         [DisplayName("用户类别")]
@@ -45,7 +42,9 @@ namespace HITWashing.Models.DBClass
         [DisplayName("混淆盐")]
         public string Salt { get; set; }
 
-        [DisplayName("商户名")]
+        [DisplayName("商户名")]//single
+        [StringLength(32, ErrorMessage = "商户名必须为4~32", MinimumLength = 4)]
+        [Required]
         public string StoreName { get; set; }
 
         [DisplayName("账户信息")]

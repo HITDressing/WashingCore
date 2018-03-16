@@ -17,16 +17,10 @@
             @Html.DisplayFor(model => model.MobileNumber)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.LocationX)
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.LocationX)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationY)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LocationY)
+            @Html.DisplayFor(model => model.Address)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Type)
@@ -55,6 +49,7 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.AccountID">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.AccountName">Delete</a> |
+    <a asp-action="Edit" asp-route-id="@Model.AccountName">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

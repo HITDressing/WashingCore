@@ -20,11 +20,12 @@
             @Html.DisplayNameFor(model => model.Account)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Account.MobileNumber)
+            @Html.DisplayFor(model => model.Account.AccountName)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.BalanceID">Edit</a> |
+    <a asp-action="Delete" asp-route-id="@Model.BalanceID">Delete</a> |
     <a asp-action="Index">Back to List</a>
 </div>

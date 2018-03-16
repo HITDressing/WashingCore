@@ -18,16 +18,10 @@
             @Html.DisplayFor(model => model.MobileNumber)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.LocationX)
+            @Html.DisplayNameFor(model => model.Address)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.LocationX)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationY)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.LocationY)
+            @Html.DisplayFor(model => model.Address)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Type)
@@ -56,7 +50,7 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="AccountID" />
+        <input type="hidden" asp-for="AccountName" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>

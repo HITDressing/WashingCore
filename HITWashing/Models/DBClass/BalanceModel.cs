@@ -14,7 +14,7 @@ namespace HITWashing.Models.DBClass
         [DisplayName("余额")]
         public double Balance { get; set; }
 
-        public int AccountID { get; set; }
+        public string AccountName { get; set; }
         public virtual AccountModel Account { get; set; }
     }
 }

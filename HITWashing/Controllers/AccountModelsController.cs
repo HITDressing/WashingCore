@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HITWashing.Models.DBClass;
+using HITWashing.Models.EnumClass;
 
 namespace HITWashing.Controllers
 {
@@ -25,7 +26,7 @@ namespace HITWashing.Controllers
         }
 
         // GET: AccountModels/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
@@ -33,7 +34,7 @@ namespace HITWashing.Controllers
             }
 
             var accountModel = await _context.AccountModels
-                .SingleOrDefaultAsync(m => m.AccountID == id);
+                .SingleOrDefaultAsync(m => m.AccountName == id);
             if (accountModel == null)
             {
                 return NotFound();
@@ -53,7 +54,7 @@ namespace HITWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountID,MobileNumber,LocationX,LocationY,Type,Password,Salt,StoreName")] AccountModel accountModel)
+        public async Task<IActionResult> Create([Bind("AccountName,MobileNumber,Address,Type,Password,Salt,StoreName")] AccountModel accountModel)
         {
             if (ModelState.IsValid)
             {
@@ -65,14 +66,14 @@ namespace HITWashing.Controllers
         }
 
         // GET: AccountModels/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var accountModel = await _context.AccountModels.SingleOrDefaultAsync(m => m.AccountID == id);
+            var accountModel = await _context.AccountModels.SingleOrDefaultAsync(m => m.AccountName == id);
             if (accountModel == null)
             {
                 return NotFound();
@@ -85,9 +86,9 @@ namespace HITWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("AccountID,MobileNumber,LocationX,LocationY,Type,Password,Salt,StoreName")] AccountModel accountModel)
+        public async Task<IActionResult> Edit(string id, [Bind("AccountName,MobileNumber,Address,Type,Password,Salt,StoreName")] AccountModel accountModel)
         {
-            if (id != accountModel.AccountID)
+            if (id != accountModel.AccountName)
             {
                 return NotFound();
             }
@@ -101,7 +102,7 @@ namespace HITWashing.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AccountModelExists(accountModel.AccountID))
+                    if (!AccountModelExists(accountModel.AccountName))
                     {
                         return NotFound();
                     }
@@ -116,7 +117,7 @@ namespace HITWashing.Controllers
         }
 
         // GET: AccountModels/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
@@ -124,7 +125,7 @@ namespace HITWashing.Controllers
             }
 
             var accountModel = await _context.AccountModels
-                .SingleOrDefaultAsync(m => m.AccountID == id);
+                .SingleOrDefaultAsync(m => m.AccountName == id);
             if (accountModel == null)
             {
                 return NotFound();
@@ -136,17 +137,40 @@ namespace HITWashing.Controllers
         // POST: AccountModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var accountModel = await _context.AccountModels.SingleOrDefaultAsync(m => m.AccountID == id);
+            var accountModel = await _context.AccountModels.SingleOrDefaultAsync(m => m.AccountName == id);
             _context.AccountModels.Remove(accountModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AccountModelExists(int id)
+        private bool AccountModelExists(string id)
         {
-            return _context.AccountModels.Any(e => e.AccountID == id);
+            return _context.AccountModels.Any(e => e.AccountName == id);
+        }
+
+        // GET: AccountModels/Regist
+        public IActionResult Regist()
+        {
+            return View();
+        }
+
+        // POST: AccountModels/Regist
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Regist([Bind("AccountName,MobileNumber,Address,Password,StoreName")] AccountModel accountModel)
+        {
+            accountModel.Type = EnumAccountType.客户;
+            if (ModelState.IsValid)
+            {
+                _context.Add(accountModel);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(accountModel);
         }
     }
 }

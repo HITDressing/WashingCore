@@ -22,7 +22,7 @@ namespace HITWashing.Models.DBClass
         [Required]
         public int ItemNum_3 { get; set; }
 
-        public int AccountID { get; set; }
+        public string AccountName { get; set; }
         public virtual AccountModel Account { get; set; }
 
     }

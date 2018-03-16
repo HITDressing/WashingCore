@@ -9,23 +9,22 @@ using HITWashing.Models.DBClass;
 
 namespace HITWashing.Controllers
 {
-    public class BalanceModelsController : Controller
+    public class ItemModelsController : Controller
     {
         private readonly WashingContext _context;
 
-        public BalanceModelsController(WashingContext context)
+        public ItemModelsController(WashingContext context)
         {
             _context = context;
         }
 
-        // GET: BalanceModels
+        // GET: ItemModels
         public async Task<IActionResult> Index()
         {
-            var washingContext = _context.Balances.Include(b => b.Account);
-            return View(await washingContext.ToListAsync());
+            return View(await _context.Items.ToListAsync());
         }
 
-        // GET: BalanceModels/Details/5
+        // GET: ItemModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +32,39 @@ namespace HITWashing.Controllers
                 return NotFound();
             }
 
-            var balanceModel = await _context.Balances
-                .Include(b => b.Account)
-                .SingleOrDefaultAsync(m => m.BalanceID == id);
-            if (balanceModel == null)
+            var itemModel = await _context.Items
+                .SingleOrDefaultAsync(m => m.ItemID == id);
+            if (itemModel == null)
             {
                 return NotFound();
             }
 
-            return View(balanceModel);
+            return View(itemModel);
         }
 
-        // GET: BalanceModels/Create
+        // GET: ItemModels/Create
         public IActionResult Create()
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
             return View();
         }
 
-        // POST: BalanceModels/Create
+        // POST: ItemModels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BalanceID,Balance,AccountName")] BalanceModel balanceModel)
+        public async Task<IActionResult> Create([Bind("ItemID,ItemName,ItemValue")] ItemModel itemModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(balanceModel);
+                _context.Add(itemModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", balanceModel.AccountName);
-            return View(balanceModel);
+            return View(itemModel);
         }
 
-        // GET: BalanceModels/Edit/5
+        // GET: ItemModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +72,22 @@ namespace HITWashing.Controllers
                 return NotFound();
             }
 
-            var balanceModel = await _context.Balances.SingleOrDefaultAsync(m => m.BalanceID == id);
-            if (balanceModel == null)
+            var itemModel = await _context.Items.SingleOrDefaultAsync(m => m.ItemID == id);
+            if (itemModel == null)
             {
                 return NotFound();
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", balanceModel.AccountName);
-            return View(balanceModel);
+            return View(itemModel);
         }
 
-        // POST: BalanceModels/Edit/5
+        // POST: ItemModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BalanceID,Balance,AccountName")] BalanceModel balanceModel)
+        public async Task<IActionResult> Edit(int id, [Bind("ItemID,ItemName,ItemValue")] ItemModel itemModel)
         {
-            if (id != balanceModel.BalanceID)
+            if (id != itemModel.ItemID)
             {
                 return NotFound();
             }
@@ -101,12 +96,12 @@ namespace HITWashing.Controllers
             {
                 try
                 {
-                    _context.Update(balanceModel);
+                    _context.Update(itemModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BalanceModelExists(balanceModel.BalanceID))
+                    if (!ItemModelExists(itemModel.ItemID))
                     {
                         return NotFound();
                     }
@@ -117,11 +112,10 @@ namespace HITWashing.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", balanceModel.AccountName);
-            return View(balanceModel);
+            return View(itemModel);
         }
 
-        // GET: BalanceModels/Delete/5
+        // GET: ItemModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +123,30 @@ namespace HITWashing.Controllers
                 return NotFound();
             }
 
-            var balanceModel = await _context.Balances
-                .Include(b => b.Account)
-                .SingleOrDefaultAsync(m => m.BalanceID == id);
-            if (balanceModel == null)
+            var itemModel = await _context.Items
+                .SingleOrDefaultAsync(m => m.ItemID == id);
+            if (itemModel == null)
             {
                 return NotFound();
             }
 
-            return View(balanceModel);
+            return View(itemModel);
         }
 
-        // POST: BalanceModels/Delete/5
+        // POST: ItemModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var balanceModel = await _context.Balances.SingleOrDefaultAsync(m => m.BalanceID == id);
-            _context.Balances.Remove(balanceModel);
+            var itemModel = await _context.Items.SingleOrDefaultAsync(m => m.ItemID == id);
+            _context.Items.Remove(itemModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BalanceModelExists(int id)
+        private bool ItemModelExists(int id)
         {
-            return _context.Balances.Any(e => e.BalanceID == id);
+            return _context.Items.Any(e => e.ItemID == id);
         }
     }
 }
