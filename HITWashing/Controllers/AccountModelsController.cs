@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HITWashing.Models.DBClass;
 using HITWashing.Models.EnumClass;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HITWashing.Controllers
 {
@@ -19,6 +20,7 @@ namespace HITWashing.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "超级管理员")]
         // GET: AccountModels
         public async Task<IActionResult> Index()
         {

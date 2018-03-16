@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HITWashing.Models.DBClass;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +26,18 @@ namespace HITWashing
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<WashingContext>(options =>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddAuthentication(
+                options =>
+                {
+                    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                })
+            .AddCookie(options =>
+            {
+                options.LoginPath = "/Home/Login";
+                options.Cookie.HttpOnly = true;
+            });
+            services.AddTransient<HttpContextAccessor>();
             services.AddMvc();
         }
 
@@ -41,6 +55,8 @@ namespace HITWashing
             }
 
             app.UseStaticFiles();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

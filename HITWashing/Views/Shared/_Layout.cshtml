@@ -33,7 +33,19 @@
                     <li><a asp-area="" asp-controller="AccountModels" asp-action="Index">Account</a></li>
                     <li><a asp-area="" asp-controller="BalanceModels" asp-action="Index">Balance</a></li>
                     <li><a asp-area="" asp-controller="ItemModels" asp-action="Index">Item</a></li>
-                    <li><a asp-area="" asp-controller="AccountModels" asp-action="Regist">Regist</a></li>
+                    <li><a asp-area="" asp-controller="AccountModels" asp-action="Regist">注册</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">个人中心 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a asp-area="" asp-controller="AccountModels" asp-action="Details" asp-route-id="sunxu123456">个人清单</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="CurrentOrder">进行中的订单</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a asp-area="" asp-controller="AccountModels" asp-action="Edit" asp-route-id="sunxu123456">个人信息修改</a></li>
+                            <li><a asp-area="" asp-controller="AccountModels" asp-action="Password" asp-route-id="sunxu123456">密码修改</a></li>
+                        </ul>
+                    </li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Store">商店</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Login">登录</a></li>
                 </ul>
             </div>
         </div>
