@@ -6,28 +6,23 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HITWashing.Models.DBClass;
-using Microsoft.AspNetCore.Authorization;
 
 namespace HITWashing.Controllers
 {
-    [Authorize(Roles = "超级管理员,仓库保管员")]
-    public class WarehouseModelsController : Controller
+    public class PaybackModelsController : Controller
     {
         private readonly WashingContext _context;
 
-        public WarehouseModelsController(WashingContext context)
-        {
-            _context = context;
-        }
+        public PaybackModelsController(WashingContext context) => _context = context;
 
-        // GET: WarehouseModels
+        // GET: PaybackModels
         public async Task<IActionResult> Index()
         {
-            var washingContext = _context.Warehouses.Include(w => w.Account);
+            var washingContext = _context.Paybacks.Include(p => p.Account);
             return View(await washingContext.ToListAsync());
         }
 
-        // GET: WarehouseModels/Details/5
+        // GET: PaybackModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,42 +30,42 @@ namespace HITWashing.Controllers
                 return NotFound();
             }
 
-            var warehouseModel = await _context.Warehouses
-                .Include(w => w.Account)
-                .SingleOrDefaultAsync(m => m.WarehouseID == id);
-            if (warehouseModel == null)
+            var paybackModel = await _context.Paybacks
+                .Include(p => p.Account)
+                .SingleOrDefaultAsync(m => m.PaybackOrderID == id);
+            if (paybackModel == null)
             {
                 return NotFound();
             }
 
-            return View(warehouseModel);
+            return View(paybackModel);
         }
 
-        // GET: WarehouseModels/Create
+        // GET: PaybackModels/Create
         public IActionResult Create()
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName");
             return View();
         }
 
-        // POST: WarehouseModels/Create
+        // POST: PaybackModels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("WarehouseID,ItemNum_1,ItemNum_2,ItemNum_3,AccountName")] WarehouseModel warehouseModel)
+        public async Task<IActionResult> Create([Bind("PaybackOrderID,UserName,AccountName,ItemNum_1,ItemNum_2,ItemNum_3,IsCanceled,IsCompleted")] PaybackModel paybackModel)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(warehouseModel);
+                _context.Add(paybackModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", warehouseModel.AccountName);
-            return View(warehouseModel);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", paybackModel.AccountName);
+            return View(paybackModel);
         }
 
-        // GET: WarehouseModels/Edit/5
+        // GET: PaybackModels/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,23 +73,23 @@ namespace HITWashing.Controllers
                 return NotFound();
             }
 
-            var warehouseModel = await _context.Warehouses.SingleOrDefaultAsync(m => m.WarehouseID == id);
-            if (warehouseModel == null)
+            var paybackModel = await _context.Paybacks.SingleOrDefaultAsync(m => m.PaybackOrderID == id);
+            if (paybackModel == null)
             {
                 return NotFound();
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", warehouseModel.AccountName);
-            return View(warehouseModel);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", paybackModel.AccountName);
+            return View(paybackModel);
         }
 
-        // POST: WarehouseModels/Edit/5
+        // POST: PaybackModels/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("WarehouseID,ItemNum_1,ItemNum_2,ItemNum_3,AccountName")] WarehouseModel warehouseModel)
+        public async Task<IActionResult> Edit(int id, [Bind("PaybackOrderID,UserName,AccountName,ItemNum_1,ItemNum_2,ItemNum_3,IsCanceled,IsCompleted")] PaybackModel paybackModel)
         {
-            if (id != warehouseModel.WarehouseID)
+            if (id != paybackModel.PaybackOrderID)
             {
                 return NotFound();
             }
@@ -103,12 +98,12 @@ namespace HITWashing.Controllers
             {
                 try
                 {
-                    _context.Update(warehouseModel);
+                    _context.Update(paybackModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!WarehouseModelExists(warehouseModel.WarehouseID))
+                    if (!PaybackModelExists(paybackModel.PaybackOrderID))
                     {
                         return NotFound();
                     }
@@ -119,11 +114,11 @@ namespace HITWashing.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", warehouseModel.AccountName);
-            return View(warehouseModel);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", paybackModel.AccountName);
+            return View(paybackModel);
         }
 
-        // GET: WarehouseModels/Delete/5
+        // GET: PaybackModels/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,31 +126,31 @@ namespace HITWashing.Controllers
                 return NotFound();
             }
 
-            var warehouseModel = await _context.Warehouses
-                .Include(w => w.Account)
-                .SingleOrDefaultAsync(m => m.WarehouseID == id);
-            if (warehouseModel == null)
+            var paybackModel = await _context.Paybacks
+                .Include(p => p.Account)
+                .SingleOrDefaultAsync(m => m.PaybackOrderID == id);
+            if (paybackModel == null)
             {
                 return NotFound();
             }
 
-            return View(warehouseModel);
+            return View(paybackModel);
         }
 
-        // POST: WarehouseModels/Delete/5
+        // POST: PaybackModels/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var warehouseModel = await _context.Warehouses.SingleOrDefaultAsync(m => m.WarehouseID == id);
-            _context.Warehouses.Remove(warehouseModel);
+            var paybackModel = await _context.Paybacks.SingleOrDefaultAsync(m => m.PaybackOrderID == id);
+            _context.Paybacks.Remove(paybackModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool WarehouseModelExists(int id)
+        private bool PaybackModelExists(int id)
         {
-            return _context.Warehouses.Any(e => e.WarehouseID == id);
+            return _context.Paybacks.Any(e => e.PaybackOrderID == id);
         }
     }
 }

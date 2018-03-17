@@ -14,12 +14,16 @@ namespace HITWashing.Models.DBClass
         public int WarehouseID { get; set; }
 
         [Required]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
         public int ItemNum_1 { get; set; }
 
         [Required]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
         public int ItemNum_2 { get; set; }
 
         [Required]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+
         public int ItemNum_3 { get; set; }
 
         public string AccountName { get; set; }

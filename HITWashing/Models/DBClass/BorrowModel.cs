@@ -14,7 +14,7 @@ namespace HITWashing.Models.DBClass
         [DisplayName("BOID")]
         public int BorrowOrderID { get; set; }
 
-        public int UserID { get; set; }
+        public string UserID { get; set; }
         //[ForeignKey("UserID")]
         //public virtual AccountModel UAccount { get; set; }
 
@@ -23,14 +23,20 @@ namespace HITWashing.Models.DBClass
         //public virtual AccountModel TAccount { get; set; }
 
         [DisplayName("物品1")]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+
         [Required]
         public int ItemNum_1 { get; set; }
 
         [DisplayName("物品2")]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+
         [Required]
         public int ItemNum_2 { get; set; }
 
         [DisplayName("物品3")]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+
         [Required]
         public int ItemNum_3 { get; set; }
 

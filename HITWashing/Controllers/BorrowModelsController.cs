@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HITWashing.Models.DBClass;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HITWashing.Controllers
 {
+    //[Authorize(Roles = "超级管理员,仓库保管员,财务负责人,配送专员,客户")]
+    //[Authorize(Roles = "超级管理员,仓库保管员")]
     public class BorrowModelsController : Controller
     {
         private readonly WashingContext _context;
@@ -44,10 +48,11 @@ namespace HITWashing.Controllers
             return View(borrowModel);
         }
 
+        [Authorize(Roles = "超级管理员,仓库保管员,客户")]
         // GET: BorrowModels/Create
         public IActionResult Create()
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName");
             return View();
         }
 
@@ -56,15 +61,31 @@ namespace HITWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BorrowOrderID,UserID,ItemNum_1,ItemNum_2,ItemNum_3,AccountName,IsCanceled,IsCompleted")] BorrowModel borrowModel)
+        [Authorize(Roles = "超级管理员,仓库保管员,客户")]
+        public async Task<IActionResult> Create([Bind("BorrowOrderID,ItemNum_1,ItemNum_2,ItemNum_3")] BorrowModel borrowModel)
         {
+            borrowModel.IsCanceled = false;
+            borrowModel.IsCompleted = false;
+            borrowModel.UserID = User.FindFirst(ClaimTypes.Sid).Value;
+            borrowModel.Account = null;
+
+            var ware = _context.Warehouses.FirstOrDefault(x => x.Account.Type == Models.EnumClass.EnumAccountType.超级管理员);
             if (ModelState.IsValid)
             {
-                _context.Add(borrowModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (borrowModel.ItemNum_1 <= ware.ItemNum_1 && borrowModel.ItemNum_2 <= ware.ItemNum_2 && borrowModel.ItemNum_3 <= ware.ItemNum_3)
+                {
+                    _context.Add(borrowModel);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    if (borrowModel.ItemNum_1 > ware.ItemNum_1) ModelState.AddModelError("ItemNum_1", "库存不足");
+                    if (borrowModel.ItemNum_2 > ware.ItemNum_2) ModelState.AddModelError("ItemNum_2", "库存不足");
+                    if (borrowModel.ItemNum_3 > ware.ItemNum_3) ModelState.AddModelError("ItemNum_3", "库存不足");
+                }
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", borrowModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
             return View(borrowModel);
         }
 
@@ -81,7 +102,7 @@ namespace HITWashing.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", borrowModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
             return View(borrowModel);
         }
 
@@ -117,7 +138,7 @@ namespace HITWashing.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", borrowModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
             return View(borrowModel);
         }
 
