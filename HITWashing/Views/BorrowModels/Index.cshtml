@@ -16,6 +16,15 @@
                     @Html.DisplayNameFor(model => model.UserID)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.ItemNum_1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum_2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum_3)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.IsCanceled)
                 </th>
                 <th>
@@ -32,6 +41,15 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.UserID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum_1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum_2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum_3)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsCanceled)

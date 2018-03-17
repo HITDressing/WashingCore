@@ -56,7 +56,7 @@ namespace HITWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BorrowOrderID,UserID,AccountName,IsCanceled,IsCompleted")] BorrowModel borrowModel)
+        public async Task<IActionResult> Create([Bind("BorrowOrderID,UserID,ItemNum_1,ItemNum_2,ItemNum_3,AccountName,IsCanceled,IsCompleted")] BorrowModel borrowModel)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace HITWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BorrowOrderID,UserID,AccountName,IsCanceled,IsCompleted")] BorrowModel borrowModel)
+        public async Task<IActionResult> Edit(int id, [Bind("BorrowOrderID,UserID,ItemNum_1,ItemNum_2,ItemNum_3,AccountName,IsCanceled,IsCompleted")] BorrowModel borrowModel)
         {
             if (id != borrowModel.BorrowOrderID)
             {

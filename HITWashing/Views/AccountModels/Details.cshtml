@@ -1,8 +1,110 @@
 ﻿@model HITWashing.Models.DBClass.AccountModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.StoreName;
+    ViewData["SubTitle"] = Model.Address;
+
+    var user_ware = Model.Warehouses.FirstOrDefault(x => x.AccountName == Model.AccountName);
+    //var user_balance = Model.Balances.FirstOrDefault(x => x.AccountName == Model.AccountName);
 }
+
+<div class="jumbotron" style="background-image: url(&quot;//i0.hdslb.com/bfs/space/cd52d4ac1d336c940cc4958120170f7928d9e606.png@75Q.webp&quot;);">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h4>
+        <span class="label label-warning">@ViewData["SubTitle"]</span>
+    </h4>
+</div>
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">库存信息</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">余额信息</a></li>
+        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">借订单历史</a></li>
+        <li role="presentation"><a href="#forum" aria-controls="forum" role="tab" data-toggle="tab">还订单历史</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active" id="home">
+            <dl class="dl-horizontal">
+                <dt>
+                    枕头
+                </dt>
+                <dd>
+                    @user_ware.ItemNum_1
+                </dd>
+                <dt>
+                    枕巾
+                </dt>
+                <dd>
+                    @user_ware.ItemNum_2
+                </dd>
+                <dt>
+                    浴巾
+                </dt>
+                <dd>
+                    @user_ware.ItemNum_3
+                </dd>
+            </dl>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="profile">
+
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="messages">
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="forum">
+
+            @*<table class="table">
+                <tr>
+                    <th>
+                        帖子标题
+                    </th>
+                    <th>
+                        回复数量
+                    </th>
+                    <th>
+                        被举报
+                    </th>
+                    <th>
+                        被冻结
+                    </th>
+                    <th>
+                        发帖时间
+                    </th>
+                </tr>
+
+                @foreach (var item in Model.ForumTitles)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.Title, "Details", "ForumModels", routeValues: new { id = item.ForumItemId }, htmlAttributes: null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ForumComments.Count)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Reported)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Frozen)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CommentDate)
+                        </td>
+                    </tr>
+                }
+            </table>*@
+
+        </div>
+
+    </div>
+
+</div>
+
 
 <h2>Details</h2>
 

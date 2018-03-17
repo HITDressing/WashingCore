@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using HITWashing.Models.DBClass;
 using HITWashing.Models.EnumClass;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace HITWashing.Controllers
 {
@@ -27,6 +28,7 @@ namespace HITWashing.Controllers
             return View(await _context.AccountModels.ToListAsync());
         }
 
+        [Authorize(Roles = "超级管理员,客户")]
         // GET: AccountModels/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -41,6 +43,9 @@ namespace HITWashing.Controllers
             {
                 return NotFound();
             }
+
+            accountModel.BorrowTransport = await _context.Borrows.Where(x => x.AccountName == id && x.IsCompleted).ToListAsync();
+            accountModel.PaybackTransport = await _context.Paybacks.Where(x => x.AccountName == id && x.IsCompleted).ToListAsync();
 
             return View(accountModel);
         }
@@ -174,5 +179,6 @@ namespace HITWashing.Controllers
             }
             return View(accountModel);
         }
+
     }
 }

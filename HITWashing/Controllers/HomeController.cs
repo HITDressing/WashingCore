@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HITWashing.Models;
@@ -9,14 +7,14 @@ using HITWashing.Models.DBClass;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using HITWashing.Models.EnumClass;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 
 namespace HITWashing.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly WashingContext _context;
+        protected readonly WashingContext _context;
 
         public HomeController(WashingContext context)
         {
@@ -74,12 +72,19 @@ namespace HITWashing.Controllers
                 {
                     ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
                 });
+
                 return RedirectToAction("Index", "Home");
             }
 
             ModelState.AddModelError("", "用户名或密码错误！");
 
             return View(accountModel);
+        }
+
+        public async Task<ActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
         }
     }
 }
