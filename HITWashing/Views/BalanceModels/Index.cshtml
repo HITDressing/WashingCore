@@ -7,8 +7,8 @@
 <div class="jumbotron" style="background-color:deepskyblue">
     <h2 style="color:white">@ViewBag.Title</h2>
     <p style="color:white" class="lead">
-        @Html.ActionLink("初始化账户余额", "Create", "ItemModels", null, htmlAttributes: new { @class = "btn btn-success" })
-        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">账户余额查询</button>
+        @Html.ActionLink("初始化账户余额", "Create", "BalanceModels", null, htmlAttributes: new { @class = "btn btn-success" })
+        @Html.ActionLink("余额充值", "Topup", "BalanceModels", null, htmlAttributes: new { @class = "btn btn-warning" })
     </p>
 </div>
 
@@ -24,20 +24,25 @@
             <th>
                 @Html.DisplayNameFor(model => model.Balance)
             </th>
+            <th>
+                操作
+            </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BalanceID">@Html.DisplayFor(modelItem => item.Balance)</a>
-                @Html.DisplayFor(modelItem => item.Account.AccountName)
+                @Html.ActionLink(item.AccountName, "Details", "AccountModels", routeValues: new { id = item.AccountName }, htmlAttributes: new { @class = "btn btn-xs btn-info" })
             </td>
             <th>
                 @Html.DisplayFor(modelItem => item.Account.MobileNumber)
             </th>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.BalanceID">@Html.DisplayFor(modelItem => item.Balance)</a>                
+                <a asp-action="Edit" class="btn btn-xs btn-success" asp-route-id="@item.BalanceID">@Html.DisplayFor(modelItem => item.Balance)</a>           
+            </td>
+            <td>
+                @Html.ActionLink("充值", "Topup", "BalanceModels", routeValues: new { id = item.AccountName }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
             </td>
         </tr>
 }

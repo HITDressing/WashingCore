@@ -66,13 +66,17 @@ namespace HITWashing.Controllers
         {
             borrowModel.IsCanceled = false;
             borrowModel.IsCompleted = false;
-            borrowModel.UserID = User.FindFirst(ClaimTypes.Sid).Value;
-            borrowModel.Account = null;
+            borrowModel.AccountName = User.FindFirst(ClaimTypes.Sid).Value;
 
             var ware = _context.Warehouses.FirstOrDefault(x => x.Account.Type == Models.EnumClass.EnumAccountType.超级管理员);
             if (ModelState.IsValid)
             {
-                if (borrowModel.ItemNum_1 <= ware.ItemNum_1 && borrowModel.ItemNum_2 <= ware.ItemNum_2 && borrowModel.ItemNum_3 <= ware.ItemNum_3)
+                if (ware == null)
+                {
+                    ModelState.AddModelError("ItemNum_1", "库存中未有任何物品信息 请联系管理员");
+
+                }
+                else if (borrowModel.ItemNum_1 <= ware.ItemNum_1 && borrowModel.ItemNum_2 <= ware.ItemNum_2 && borrowModel.ItemNum_3 <= ware.ItemNum_3)
                 {
                     _context.Add(borrowModel);
                     await _context.SaveChangesAsync();

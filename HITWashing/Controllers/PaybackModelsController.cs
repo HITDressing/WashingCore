@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HITWashing.Models.DBClass;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HITWashing.Controllers
 {
@@ -41,6 +43,7 @@ namespace HITWashing.Controllers
             return View(paybackModel);
         }
 
+        [Authorize(Roles = "超级管理员,仓库保管员,客户")]
         // GET: PaybackModels/Create
         public IActionResult Create()
         {
@@ -53,13 +56,33 @@ namespace HITWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PaybackOrderID,UserName,AccountName,ItemNum_1,ItemNum_2,ItemNum_3,IsCanceled,IsCompleted")] PaybackModel paybackModel)
+        [Authorize(Roles = "超级管理员,仓库保管员,客户")]
+        public async Task<IActionResult> Create([Bind("PaybackOrderID,ItemNum_1,ItemNum_2,ItemNum_3")] PaybackModel paybackModel)
         {
+            paybackModel.IsCanceled = false;
+            paybackModel.IsCompleted = false;
+            paybackModel.AccountName = User.FindFirst(ClaimTypes.Sid).Value;
+
+            var ware = _context.Warehouses.FirstOrDefault(x => x.AccountName == paybackModel.AccountName);
+
             if (ModelState.IsValid)
             {
-                _context.Add(paybackModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ware==null)
+                {
+                    ModelState.AddModelError("ItemNum_1", "该用户未有任何库存信息");
+                }
+                else if (paybackModel.ItemNum_1 <= ware.ItemNum_1 && paybackModel.ItemNum_2 <= ware.ItemNum_2 && paybackModel.ItemNum_3 <= ware.ItemNum_3)
+                {
+                    _context.Add(paybackModel);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    if (paybackModel.ItemNum_1 > ware.ItemNum_1) ModelState.AddModelError("ItemNum_1", "库存不足");
+                    if (paybackModel.ItemNum_2 > ware.ItemNum_2) ModelState.AddModelError("ItemNum_2", "库存不足");
+                    if (paybackModel.ItemNum_3 > ware.ItemNum_3) ModelState.AddModelError("ItemNum_3", "库存不足");
+                }
             }
             ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", paybackModel.AccountName);
             return View(paybackModel);

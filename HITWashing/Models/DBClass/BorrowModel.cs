@@ -14,7 +14,8 @@ namespace HITWashing.Models.DBClass
         [DisplayName("BOID")]
         public int BorrowOrderID { get; set; }
 
-        public string UserID { get; set; }
+        [DisplayName("运送人员ID")]
+        public string UserID { get; set; }//运送ID
         //[ForeignKey("UserID")]
         //public virtual AccountModel UAccount { get; set; }
 
@@ -24,24 +25,21 @@ namespace HITWashing.Models.DBClass
 
         [DisplayName("物品1")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
-
         [Required]
         public int ItemNum_1 { get; set; }
 
         [DisplayName("物品2")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
-
         [Required]
         public int ItemNum_2 { get; set; }
 
         [DisplayName("物品3")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
-
         [Required]
         public int ItemNum_3 { get; set; }
 
         public string AccountName { get; set; }
-        public virtual AccountModel Account { get; set; }//运送ID
+        public virtual AccountModel Account { get; set; }
 
         [DisplayName("是否取消")]
         public bool IsCanceled { get; set; }

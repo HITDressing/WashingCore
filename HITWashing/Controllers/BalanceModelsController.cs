@@ -25,6 +25,45 @@ namespace HITWashing.Controllers
             return View(await washingContext.ToListAsync());
         }
 
+        public IActionResult Topup(string id)
+        {
+            var name = _context.Balances.Select(x => x.Account.AccountName);
+            var list = _context.AccountModels.Where(x => name.Contains(x.AccountName));
+            ViewData["AccountName"] = new SelectList(list, "AccountName", "AccountName", id);
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Topup([Bind("Balance,AccountName")] BalanceModel balanceModel)
+        {
+            if (balanceModel.Balance > 0 && ModelState.IsValid)
+            {
+                try
+                {
+                    var find = await _context.Balances.FirstOrDefaultAsync(x => x.AccountName == balanceModel.AccountName);
+                    find.Balance += balanceModel.Balance;
+                    _context.Update(find);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BalanceModelExists(balanceModel.BalanceID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ModelState.AddModelError("Balance", "充值金额不能为负");
+            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", balanceModel.AccountName);
+            return View(balanceModel);
+        }
+
         // GET: BalanceModels/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -47,7 +86,9 @@ namespace HITWashing.Controllers
         // GET: BalanceModels/Create
         public IActionResult Create()
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
+            var name = _context.Balances.Select(x => x.AccountName);
+            var list = _context.AccountModels.Where(x => !name.Contains(x.AccountName));
+            ViewData["AccountName"] = new SelectList(list, "AccountName", "AccountName");
             return View();
         }
 
@@ -81,7 +122,9 @@ namespace HITWashing.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", balanceModel.AccountName);
+            var name = _context.Balances.Select(x => x.AccountName);
+            var list = _context.AccountModels.Where(x => name.Contains(x.AccountName));
+            ViewData["AccountName"] = new SelectList(list, "AccountName", "AccountName", balanceModel.AccountName);
             return View(balanceModel);
         }
 
@@ -117,7 +160,9 @@ namespace HITWashing.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", balanceModel.AccountName);
+            var name = _context.Balances.Select(x => x.AccountName);
+            var list = _context.AccountModels.Where(x => name.Contains(x.AccountName));
+            ViewData["AccountName"] = new SelectList(list, "AccountName", "AccountName", balanceModel.AccountName);
             return View(balanceModel);
         }
 

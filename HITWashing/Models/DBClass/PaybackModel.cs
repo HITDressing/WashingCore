@@ -14,26 +14,25 @@ namespace HITWashing.Models.DBClass
         [DisplayName("POID")]
         public int PaybackOrderID { get; set; }
 
-        public string UserName { get; set; }
+        [DisplayName("运送人员ID")]
+
+        public string UserName { get; set; }//运送ID
 
         public string AccountName { get; set; }
-        public virtual AccountModel Account { get; set; }//运送ID
+        public virtual AccountModel Account { get; set; }
 
         [DisplayName("物品1")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
-
         [Required]
         public int ItemNum_1 { get; set; }
 
         [DisplayName("物品2")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
-
         [Required]
         public int ItemNum_2 { get; set; }
 
         [DisplayName("物品3")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
-
         [Required]
         public int ItemNum_3 { get; set; }
 

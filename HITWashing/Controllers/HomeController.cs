@@ -9,6 +9,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
 
 namespace HITWashing.Controllers
 {
@@ -85,6 +86,24 @@ namespace HITWashing.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<ActionResult> OrderPool()
+        {
+            var borrow = _context.Borrows.Where(x => String.IsNullOrEmpty(x.UserID)).Include(w => w.Account);
+            var payback = _context.Paybacks.Where(x => String.IsNullOrEmpty(x.UserName)).Include(w => w.Account);
+
+            ViewBag.Payback = await payback.ToListAsync();
+            return View(await borrow.ToListAsync());
+        }
+
+        public async Task<ActionResult> PickOrder()
+        {
+            var borrow = _context.Borrows.Where(x => String.IsNullOrEmpty(x.UserID)).Include(w => w.Account);
+            var payback = _context.Paybacks.Where(x => String.IsNullOrEmpty(x.UserName)).Include(w => w.Account);
+
+            ViewBag.Payback = await payback.ToListAsync();
+            return View(await borrow.ToListAsync());
         }
     }
 }
