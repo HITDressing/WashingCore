@@ -38,14 +38,20 @@ namespace HITWashing.Controllers
             }
 
             var accountModel = await _context.AccountModels
+                .Include(x=>x.Warehouses)
+                .Include(x=>x.Balances)
+                .Include(x=>x.BorrowTransport)
+                .Include(x=>x.PaybackTransport)
                 .SingleOrDefaultAsync(m => m.AccountName == id);
             if (accountModel == null)
             {
                 return NotFound();
             }
 
-            accountModel.BorrowTransport = await _context.Borrows.Where(x => x.AccountName == id && x.IsCompleted).ToListAsync();
-            accountModel.PaybackTransport = await _context.Paybacks.Where(x => x.AccountName == id && x.IsCompleted).ToListAsync();
+            //accountModel.BorrowTransport = await _context.Borrows.Where(x => x.AccountName == id && x.IsCompleted).ToListAsync();
+            //accountModel.PaybackTransport = await _context.Paybacks.Where(x => x.AccountName == id && x.IsCompleted).ToListAsync();
+            //accountModel.Warehouses = await _context.Warehouses.Where(x => x.AccountName == id).ToListAsync();
+            //accountModel.Balances = await _context.Warehouses.Where(x => x.AccountName == id).ToListAsync();
 
             return View(accountModel);
         }

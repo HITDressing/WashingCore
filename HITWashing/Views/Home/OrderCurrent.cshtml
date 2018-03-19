@@ -1,0 +1,144 @@
+﻿@model HITWashing.Models.DBClass.AccountModel
+
+@{
+    ViewData["Title"] = "进行中的订单";
+    ViewData["SubTitle"] = Model.AccountName;
+}
+
+<div class="jumbotron" style="background-color:lightsalmon">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h4>
+        <span class="label label-warning">@ViewData["SubTitle"]</span>
+    </h4>
+</div>
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">借订单信息</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">还订单信息</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active" id="home">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            配送人员
+                        </th>
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        <th>
+                            物品1
+                        </th>
+                        <th>
+                            物品2
+                        </th>
+                        <th>
+                            物品3
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowTransport)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_3)
+                            </td>
+                            <td>
+                                @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                                @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="profile">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            配送人员
+                        </th>
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        <th>
+                            物品1
+                        </th>
+                        <th>
+                            物品2
+                        </th>
+                        <th>
+                            物品3
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PaybackTransport)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_3)
+                            </td>
+                            <td>
+                                @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                                @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

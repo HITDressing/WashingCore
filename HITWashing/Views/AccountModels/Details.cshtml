@@ -5,13 +5,35 @@
     ViewData["SubTitle"] = Model.Address;
 
     var user_ware = Model.Warehouses.FirstOrDefault(x => x.AccountName == Model.AccountName);
-    //var user_balance = Model.Balances.FirstOrDefault(x => x.AccountName == Model.AccountName);
+    var user_balance = Model.Balances.FirstOrDefault(x => x.AccountName == Model.AccountName);
 }
 
-<div class="jumbotron" style="background-image: url(&quot;//i0.hdslb.com/bfs/space/cd52d4ac1d336c940cc4958120170f7928d9e606.png@75Q.webp&quot;);">
+<div class="jumbotron" style="background-color: lightsteelblue">
     <h2 style="color:white">@ViewData["Title"]</h2>
     <h4>
-        <span class="label label-warning">@ViewData["SubTitle"]</span>
+        <span class="label label-default">@ViewData["SubTitle"]</span>
+    </h4>
+    <h4>
+        @if (user_ware == null)
+        {
+            <span class="label label-warning">该用户尚未有任何库存信息 请至少完成1个订单</span>
+        }
+        else
+        {
+            <span class="btn btn-success">枕头 <span class="badge">@user_ware.ItemNum_1</span></span>
+            <span class="btn btn-info">枕巾 <span class="badge">@user_ware.ItemNum_2</span></span>
+            <span class="btn btn-warning">浴巾 <span class="badge">@user_ware.ItemNum_3</span></span>
+        }
+    </h4><h4>
+
+        @if (user_balance == null)
+        {
+            <span class="label label-warning">该用户尚未有任何余额信息 请联系管理员进行初始化</span>
+        }
+        else
+        {
+            <span class="btn btn-danger">余额 <span class="badge">@user_balance.Balance</span></span>
+        }
     </h4>
 </div>
 
@@ -19,139 +41,118 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">库存信息</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">余额信息</a></li>
-        <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">借订单历史</a></li>
+        <li role="presentation" class="active"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">借订单历史</a></li>
         <li role="presentation"><a href="#forum" aria-controls="forum" role="tab" data-toggle="tab">还订单历史</a></li>
     </ul>
     <div class="tab-content">
 
-        <div role="tabpanel" class="tab-pane fade in active" id="home">
-            <dl class="dl-horizontal">
-                <dt>
-                    枕头
-                </dt>
-                <dd>
-                    @user_ware.ItemNum_1
-                </dd>
-                <dt>
-                    枕巾
-                </dt>
-                <dd>
-                    @user_ware.ItemNum_2
-                </dd>
-                <dt>
-                    浴巾
-                </dt>
-                <dd>
-                    @user_ware.ItemNum_3
-                </dd>
-            </dl>
-        </div>
 
-        <div role="tabpanel" class="tab-pane fade" id="profile">
-
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="messages">
-
+        <div role="tabpanel" class="tab-pane fade in active" id="messages">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            配送人员
+                        </th>
+                        <th>
+                            物品1
+                        </th>
+                        <th>
+                            物品2
+                        </th>
+                        <th>
+                            物品3
+                        </th>
+                        <th>
+                            是否取消
+                        </th>
+                        <th>
+                            是否完成
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowTransport.Where(x=>x.IsCanceled||x.IsCompleted))
+                    {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemNum_1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemNum_2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ItemNum_3)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsCanceled)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsCompleted)
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
         </div>
 
         <div role="tabpanel" class="tab-pane fade" id="forum">
 
-            @*<table class="table">
-                <tr>
-                    <th>
-                        帖子标题
-                    </th>
-                    <th>
-                        回复数量
-                    </th>
-                    <th>
-                        被举报
-                    </th>
-                    <th>
-                        被冻结
-                    </th>
-                    <th>
-                        发帖时间
-                    </th>
-                </tr>
-
-                @foreach (var item in Model.ForumTitles)
-                {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            配送人员
+                        </th>
+                        <th>
+                            物品1
+                        </th>
+                        <th>
+                            物品2
+                        </th>
+                        <th>
+                            物品3
+                        </th>
+                        <th>
+                            是否取消
+                        </th>
+                        <th>
+                            是否完成
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PaybackTransport.Where(x => x.IsCanceled || x.IsCompleted))
+            {
                     <tr>
                         <td>
-                            @Html.ActionLink(item.Title, "Details", "ForumModels", routeValues: new { id = item.ForumItemId }, htmlAttributes: null)
+                            @Html.DisplayFor(modelItem => item.UserName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ForumComments.Count)
+                            @Html.DisplayFor(modelItem => item.ItemNum_1)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Reported)
+                            @Html.DisplayFor(modelItem => item.ItemNum_2)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Frozen)
+                            @Html.DisplayFor(modelItem => item.ItemNum_3)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.CommentDate)
+                            @Html.DisplayFor(modelItem => item.IsCanceled)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsCompleted)
                         </td>
                     </tr>
-                }
-            </table>*@
+    }
+                </tbody>
+            </table>
 
         </div>
 
     </div>
 
-</div>
-
-
-<h2>Details</h2>
-
-<div>
-    <h4>AccountModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MobileNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MobileNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Salt)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Salt)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StoreName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StoreName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Delete" asp-route-id="@Model.AccountName">Delete</a> |
-    <a asp-action="Edit" asp-route-id="@Model.AccountName">Edit</a> |
-    <a asp-action="Index">Back to List</a>
 </div>

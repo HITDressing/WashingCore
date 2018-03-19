@@ -80,7 +80,7 @@ namespace HITWashing.Controllers
                 {
                     _context.Add(borrowModel);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Details", "AccountModels", borrowModel.AccountName);
                 }
                 else
                 {
@@ -179,6 +179,143 @@ namespace HITWashing.Controllers
         private bool BorrowModelExists(int id)
         {
             return _context.Borrows.Any(e => e.BorrowOrderID == id);
+        }
+
+        [Authorize(Roles = "配送专员")]
+        public async Task<ActionResult> PickOrder(int? id)
+        {
+            var find = await _context.Borrows.FindAsync(id);
+
+            if (String.IsNullOrEmpty(find.UserID))
+            {
+                find.UserID = User.FindFirst(ClaimTypes.Sid).Value;
+
+                try
+                {
+                    _context.Update(find);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!BorrowModelExists(find.BorrowOrderID))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return RedirectToAction("OrderPool", "Home");
+        }
+
+        [Authorize(Roles = "超级管理员,仓库保管员,客户")]
+        public async Task<ActionResult> ConfirmOrder(int? id)
+        {
+            var find = await _context.Borrows.FindAsync(id);
+
+            if (!find.IsCanceled && !find.IsCompleted)
+            {
+                //标记订单状态
+
+                find.IsCompleted = true;
+
+                //总库存减少
+
+                var allWare = await _context.Warehouses.FirstOrDefaultAsync(x => x.Account.Type == Models.EnumClass.EnumAccountType.超级管理员);
+                if(allWare == null)
+                {
+                    return RedirectToAction("OrderCurrent", "Home");
+                }
+                else
+                {
+                    allWare.ItemNum_1 -= find.ItemNum_1;
+                    allWare.ItemNum_2 -= find.ItemNum_2;
+                    allWare.ItemNum_3 -= find.ItemNum_3;
+                    _context.Update(allWare);
+                }
+                
+                //单体库存增加
+
+                var accountWare = await _context.Warehouses.FirstOrDefaultAsync(x => x.AccountName == find.AccountName);
+
+                if (accountWare == null)
+                {
+                    _context.Add(new WarehouseModel()
+                    {
+                        AccountName = find.AccountName,
+                        ItemNum_1 = find.ItemNum_1,
+                        ItemNum_2 = find.ItemNum_2,
+                        ItemNum_3 = find.ItemNum_3
+                    });
+                    //await _context.SaveChangesAsync();
+                    //return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    accountWare.ItemNum_1 += find.ItemNum_1;
+                    accountWare.ItemNum_2 += find.ItemNum_2;
+                    accountWare.ItemNum_3 += find.ItemNum_3;
+                    _context.Update(accountWare);
+                }
+
+                //扣除单体资金
+
+                var accountBalance = await _context.Balances.FirstOrDefaultAsync(x => x.AccountName == find.AccountName);
+
+                var item = await _context.Items.ToListAsync();
+
+                var tempBalance = find.ItemNum_1 * item[0].ItemValue + find.ItemNum_2 * item[1].ItemValue + find.ItemNum_3 * item[2].ItemValue;
+
+                if (accountBalance == null)
+                {
+                    _context.Add(new BalanceModel()
+                    {
+                        AccountName = find.AccountName,
+                        Balance = -tempBalance
+                    });
+                }
+                else
+                {
+                    accountBalance.Balance -= tempBalance;
+                }
+
+                try
+                {                   
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+            }
+
+            return RedirectToAction("OrderCurrent", "Home");
+        }
+
+        [Authorize(Roles = "超级管理员,仓库保管员,客户")]
+        public async Task<ActionResult> CancelOrder(int? id)
+        {
+            var find = await _context.Borrows.FindAsync(id);
+            find.IsCanceled = true;
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(find);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction("OrderCurrent", "Home");
         }
     }
 }

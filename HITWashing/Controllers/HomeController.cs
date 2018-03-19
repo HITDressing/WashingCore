@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HITWashing.Controllers
 {
@@ -88,6 +89,7 @@ namespace HITWashing.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [Authorize(Roles = "配送专员")]
         public async Task<ActionResult> OrderPool()
         {
             var borrow = _context.Borrows.Where(x => String.IsNullOrEmpty(x.UserID)).Include(w => w.Account);
@@ -97,13 +99,54 @@ namespace HITWashing.Controllers
             return View(await borrow.ToListAsync());
         }
 
-        public async Task<ActionResult> PickOrder()
+        [Authorize(Roles = "配送专员,客户")]
+        public async Task<ActionResult> OrderHistory()
         {
-            var borrow = _context.Borrows.Where(x => String.IsNullOrEmpty(x.UserID)).Include(w => w.Account);
-            var payback = _context.Paybacks.Where(x => String.IsNullOrEmpty(x.UserName)).Include(w => w.Account);
+            //User.FindFirst(ClaimTypes.Sid).Value
+            //var data = await _context.AccountModels.FindAsync(User.FindFirst(ClaimTypes.Sid).Value);
+            //.Where(x => x.AccountName == );
+            //    .Include(a => a.BorrowTransport)
+            //    .Include(a => a.PaybackTransport).FirstOrDefaultAsync();
 
-            ViewBag.Payback = await payback.ToListAsync();
-            return View(await borrow.ToListAsync());
+            //data.BorrowTransport = data.BorrowTransport.Where(x => x.IsCanceled || x.IsCompleted).ToList();
+            //data.PaybackTransport = data.PaybackTransport.Where(x => x.IsCanceled || x.IsCompleted).ToList();
+            var name = User.FindFirst(ClaimTypes.Sid).Value;
+            var data = await _context.AccountModels.FindAsync(name);
+            data.BorrowTransport = await _context.Borrows.Where(x => x.UserID == name && (x.IsCompleted || x.IsCanceled)).ToListAsync();
+            data.PaybackTransport = await _context.Paybacks.Where(x => x.UserName == name && (x.IsCompleted || x.IsCanceled)).ToListAsync();
+
+            return View(data);
+        }
+
+        [Authorize(Roles = "配送专员,客户")]
+        public async Task<ActionResult> OrderCurrent()
+        {
+            var account = await _context.AccountModels.Include(x => x.PaybackTransport).Include(x => x.BorrowTransport).FirstOrDefaultAsync(x => x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
+
+            switch (User.FindFirst(ClaimTypes.Role).Value)
+            {
+                case "配送专员":
+                    {
+                        account.BorrowTransport = await _context.Borrows.Where(x => x.UserID == User.FindFirst(ClaimTypes.Sid).Value && !x.IsCompleted && !x.IsCanceled).ToListAsync();
+                        account.PaybackTransport = await _context.Paybacks.Where(x => x.UserName == User.FindFirst(ClaimTypes.Sid).Value && !x.IsCompleted && !x.IsCanceled).ToListAsync();
+                        break;
+                    }
+                case "客户":
+                    {
+                        if (account.BorrowTransport != null)
+                        {
+                            account.BorrowTransport = account.BorrowTransport.Where(x => !String.IsNullOrEmpty(x.UserID) && !x.IsCompleted && !x.IsCanceled).ToList();
+                        }
+                        if (account.PaybackTransport != null)
+                        {
+                            account.PaybackTransport = account.PaybackTransport.Where(x => !String.IsNullOrEmpty(x.UserName) && !x.IsCompleted && !x.IsCanceled).ToList();
+                        }
+                        break;
+                    }
+                default:break;
+            }
+
+            return View(account);
         }
     }
 }
