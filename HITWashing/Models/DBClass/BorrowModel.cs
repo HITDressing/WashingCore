@@ -23,17 +23,17 @@ namespace HITWashing.Models.DBClass
         //[ForeignKey("TransportID")]
         //public virtual AccountModel TAccount { get; set; }
 
-        [DisplayName("物品1")]
+        [DisplayName("床单")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
         [Required]
         public int ItemNum_1 { get; set; }
 
-        [DisplayName("物品2")]
+        [DisplayName("枕套")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
         [Required]
         public int ItemNum_2 { get; set; }
 
-        [DisplayName("物品3")]
+        [DisplayName("浴巾")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
         [Required]
         public int ItemNum_3 { get; set; }

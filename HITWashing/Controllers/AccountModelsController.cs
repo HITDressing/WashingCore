@@ -124,7 +124,7 @@ namespace HITWashing.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details",new { id });
             }
             return View(accountModel);
         }

@@ -50,13 +50,13 @@
                             电话
                         </th>
                         <th>
-                            物品1
+                            床单
                         </th>
                         <th>
-                            物品2
+                            枕套
                         </th>
                         <th>
-                            物品3
+                            浴巾
                         </th>
                         @if (isUser)
                         {
@@ -142,13 +142,13 @@
                             电话
                         </th>
                         <th>
-                            物品1
+                            床单
                         </th>
                         <th>
-                            物品2
+                            枕套
                         </th>
                         <th>
-                            物品3
+                            浴巾
                         </th>
                         @if (isUser)
                         {
@@ -199,7 +199,6 @@
                                     @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
                                     @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
                                 </td>
-
                             }
 
                         </tr>
