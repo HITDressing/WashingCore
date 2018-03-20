@@ -10,116 +10,132 @@
         配送专员再此选择要接的订单
     </p>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                用户
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Account.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Account.MobileNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemNum_1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemNum_2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemNum_3)
-            </th>
-            <th>
-                操作
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Account.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ItemNum_1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ItemNum_2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ItemNum_3)
-                </td>
-                <td>
-                    @Html.ActionLink("接单", "PickOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-warning" })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
-<hr />
+<div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                用户
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Account.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Account.MobileNumber)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemNum_1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemNum_2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ItemNum_3)
-            </th>
-            <th>
-                操作
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in (List<PaybackModel>)ViewBag.Payback)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Account.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ItemNum_1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ItemNum_2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ItemNum_3)
-                </td>
-                <td>
-                    @Html.ActionLink("接单", "PickOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-warning" })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">借订单信息</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">还订单信息</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active" id="home">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            用户
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Account.Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Account.MobileNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemNum_1)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemNum_2)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemNum_3)
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_3)
+                            </td>
+                            <td>
+                                @Html.ActionLink("接单", "PickOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-warning" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="profile">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            用户
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Account.Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Account.MobileNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemNum_1)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemNum_2)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ItemNum_3)
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (List<PaybackModel>)ViewBag.Payback)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.AccountName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_2)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ItemNum_3)
+                            </td>
+                            <td>
+                                @Html.ActionLink("接单", "PickOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-warning" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

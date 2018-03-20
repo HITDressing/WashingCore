@@ -17,6 +17,8 @@ namespace HITWashing.Controllers
 
         public PaybackModelsController(WashingContext context) => _context = context;
 
+        [Authorize(Roles = "超级管理员,仓库保管员")]
+
         // GET: PaybackModels
         public async Task<IActionResult> Index()
         {
@@ -59,6 +61,11 @@ namespace HITWashing.Controllers
         [Authorize(Roles = "超级管理员,仓库保管员,客户")]
         public async Task<IActionResult> Create([Bind("PaybackOrderID,ItemNum_1,ItemNum_2,ItemNum_3")] PaybackModel paybackModel)
         {
+            if (paybackModel.ItemNum_1 == 0 && paybackModel.ItemNum_2 == 0 && paybackModel.ItemNum_3 == 0)
+            {
+                ModelState.AddModelError("ItemNum_1", "订单不能全部为0");
+            }
+
             paybackModel.IsCanceled = false;
             paybackModel.IsCompleted = false;
             paybackModel.AccountName = User.FindFirst(ClaimTypes.Sid).Value;
@@ -67,7 +74,7 @@ namespace HITWashing.Controllers
 
             if (ModelState.IsValid)
             {
-                if (ware==null)
+                if (ware == null)
                 {
                     ModelState.AddModelError("ItemNum_1", "该用户未有任何库存信息");
                 }
@@ -82,7 +89,8 @@ namespace HITWashing.Controllers
                     _context.Update(ware);
 
                     await _context.SaveChangesAsync();
-                    return RedirectToAction("Details","AccountModels", paybackModel.AccountName);
+                    return RedirectToAction("Details", "AccountModels", new { id = paybackModel.AccountName });
+
                 }
                 else
                 {
@@ -307,6 +315,15 @@ namespace HITWashing.Controllers
             {
                 try
                 {
+                    //单体库存增加
+                    var accountWare = await _context.Warehouses.FirstOrDefaultAsync(x => x.AccountName == find.AccountName);
+
+
+                    accountWare.ItemNum_1 += find.ItemNum_1;
+                    accountWare.ItemNum_2 += find.ItemNum_2;
+                    accountWare.ItemNum_3 += find.ItemNum_3;
+                    _context.Update(accountWare);
+
                     _context.Update(find);
                     await _context.SaveChangesAsync();
                 }
@@ -314,7 +331,6 @@ namespace HITWashing.Controllers
                 {
                     throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
 
             return RedirectToAction("OrderCurrent", "Home");

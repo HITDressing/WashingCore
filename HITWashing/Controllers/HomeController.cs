@@ -127,8 +127,8 @@ namespace HITWashing.Controllers
             {
                 case "配送专员":
                     {
-                        account.BorrowTransport = await _context.Borrows.Where(x => x.UserID == User.FindFirst(ClaimTypes.Sid).Value && !x.IsCompleted && !x.IsCanceled).ToListAsync();
-                        account.PaybackTransport = await _context.Paybacks.Where(x => x.UserName == User.FindFirst(ClaimTypes.Sid).Value && !x.IsCompleted && !x.IsCanceled).ToListAsync();
+                        account.BorrowTransport = await _context.Borrows.Include(x=>x.Account).Where(x => x.UserID == User.FindFirst(ClaimTypes.Sid).Value && !x.IsCompleted && !x.IsCanceled).ToListAsync();
+                        account.PaybackTransport = await _context.Paybacks.Include(x => x.Account).Where(x => x.UserName == User.FindFirst(ClaimTypes.Sid).Value && !x.IsCompleted && !x.IsCanceled).ToListAsync();
                         break;
                     }
                 case "客户":

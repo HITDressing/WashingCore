@@ -6,9 +6,17 @@
 
   <ItemGroup>
     <Compile Remove="Migrations\**" />
+    <Compile Remove="新文件夹1\**" />
+    <Compile Remove="新文件夹\**" />
     <Content Remove="Migrations\**" />
+    <Content Remove="新文件夹1\**" />
+    <Content Remove="新文件夹\**" />
     <EmbeddedResource Remove="Migrations\**" />
+    <EmbeddedResource Remove="新文件夹1\**" />
+    <EmbeddedResource Remove="新文件夹\**" />
     <None Remove="Migrations\**" />
+    <None Remove="新文件夹1\**" />
+    <None Remove="新文件夹\**" />
   </ItemGroup>
 
   <ItemGroup>

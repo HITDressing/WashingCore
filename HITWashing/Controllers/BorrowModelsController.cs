@@ -22,6 +22,7 @@ namespace HITWashing.Controllers
             _context = context;
         }
 
+        [Authorize(Roles = "超级管理员,仓库保管员")]
         // GET: BorrowModels
         public async Task<IActionResult> Index()
         {
@@ -64,23 +65,41 @@ namespace HITWashing.Controllers
         [Authorize(Roles = "超级管理员,仓库保管员,客户")]
         public async Task<IActionResult> Create([Bind("BorrowOrderID,ItemNum_1,ItemNum_2,ItemNum_3")] BorrowModel borrowModel)
         {
+
+            if (borrowModel.ItemNum_1 == 0 && borrowModel.ItemNum_2 == 0 && borrowModel.ItemNum_3 == 0)
+            {
+                ModelState.AddModelError("ItemNum_1","订单不能全部为0");
+            }
+
             borrowModel.IsCanceled = false;
             borrowModel.IsCompleted = false;
             borrowModel.AccountName = User.FindFirst(ClaimTypes.Sid).Value;
 
-            var ware = _context.Warehouses.FirstOrDefault(x => x.Account.Type == Models.EnumClass.EnumAccountType.超级管理员);
+            var ware = await _context.Warehouses.FirstOrDefaultAsync(x => x.Account.Type == Models.EnumClass.EnumAccountType.超级管理员);
+            var accountBalance = await _context.Balances.FirstOrDefaultAsync(x => x.AccountName == borrowModel.AccountName);
+
             if (ModelState.IsValid)
             {
-                if (ware == null)
+                if (ware == null || accountBalance == null)
                 {
-                    ModelState.AddModelError("ItemNum_1", "库存中未有任何物品信息 请联系管理员");
+                    ModelState.AddModelError("ItemNum_1", "库存中未有任何物品信息或您的余额尚未初始化 请联系管理员");
 
                 }
                 else if (borrowModel.ItemNum_1 <= ware.ItemNum_1 && borrowModel.ItemNum_2 <= ware.ItemNum_2 && borrowModel.ItemNum_3 <= ware.ItemNum_3)
                 {
-                    _context.Add(borrowModel);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction("Details", "AccountModels", borrowModel.AccountName);
+                    var item = await _context.Items.ToListAsync();
+
+                    var tempBalance = borrowModel.ItemNum_1 * item[0].ItemValue + borrowModel.ItemNum_2 * item[1].ItemValue + borrowModel.ItemNum_3 * item[2].ItemValue;
+
+                    //余额非负判断
+                    if (accountBalance.Balance >= tempBalance)
+                    {
+                        _context.Add(borrowModel);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Details", "AccountModels", new { id = borrowModel.AccountName });
+                    }
+
+                    ModelState.AddModelError("ItemNum_1", "您的余额不足 无法提交订单");
                 }
                 else
                 {
@@ -312,7 +331,6 @@ namespace HITWashing.Controllers
                 {
                     throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
 
             return RedirectToAction("OrderCurrent", "Home");

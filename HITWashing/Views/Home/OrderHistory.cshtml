@@ -1,59 +1,17 @@
 ﻿@model HITWashing.Models.DBClass.AccountModel
 
 @{
-    ViewData["Title"] = "OrderHistory";
+    ViewData["Title"] = "历史订单信息";
 }
 
-<h2>OrderHistory</h2>
-
-<div>
-    <h4>AccountModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MobileNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MobileNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Salt)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Salt)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StoreName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StoreName)
-        </dd>
-
-        <dt>
-            @Html.DisplayFor(model => model.BorrowTransport.Count)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PaybackTransport.Count)
-        </dd>
-    </dl>
+<div class="jumbotron" style="background-color:olivedrab">
+    <h2 style="color:white">@ViewBag.Title</h2>
+    <p style="color:white" class="lead">
+        <span class="label label-warning">@Model.AccountName</span>
+        <span class="label label-success">@Model.Address</span>
+        <span class="label label-info">@Model.StoreName</span>
+        <span class="label label-danger">@Model.MobileNumber</span>
+    </p>
 </div>
 
 <table class="table">
