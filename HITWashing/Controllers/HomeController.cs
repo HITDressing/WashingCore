@@ -72,7 +72,7 @@ namespace HITWashing.Controllers
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPrincipal, new AuthenticationProperties
                 {
-                    ExpiresUtc = DateTime.UtcNow.AddMinutes(20)
+                    ExpiresUtc = DateTime.UtcNow.AddDays(30)
                 });
 
                 return RedirectToAction("Index", "Home");

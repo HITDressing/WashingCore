@@ -8,8 +8,9 @@
     <h2 style="color:white">@ViewBag.Title</h2>
     <p style="color:white" class="lead">
         @Html.ActionLink("添加用户", "Regist", "AccountModels", null, htmlAttributes: new { @class = "btn btn-info" })
-        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">用户信息查询</button>
-        <button class="btn btn-danger" onclick="ShowOrHide()">显示/隐藏密码</button>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">用户信息查询</button>
+        <button class="btn btn-danger" onclick="ShowOrHide('pass')">显示/隐藏密码</button>
+        <button class="btn btn-warning" onclick="MessageShowOrHide()">显示/隐藏信息</button>
     </p>
 </div>
 
@@ -22,16 +23,16 @@
             <th name="pass">
                 @Html.DisplayNameFor(model => model.Password)
             </th>
-            <th>
+            <th name="mob">
                 @Html.DisplayNameFor(model => model.MobileNumber)
             </th>
-            <th>
+            <th name="addr">
                 @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
-            <th>
+            <th name="sname">
                 @Html.DisplayNameFor(model => model.StoreName)
             </th>
             <th></th>
@@ -46,16 +47,16 @@
             <td name="pass">
                 @Html.DisplayFor(modelItem => item.Password)
             </td>
-            <td>
+            <td name="mob">
                 @Html.DisplayFor(modelItem => item.MobileNumber)
             </td>
-            <td>
+            <td name="addr">
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
-            <td>
+            <td name="sname">
                 @Html.DisplayFor(modelItem => item.StoreName)
             </td>
         </tr>
@@ -64,8 +65,8 @@
 </table>
 
 <script type="text/javascript">
-    function ShowOrHide() {
-        var tab = document.getElementsByName('pass');
+    function ShowOrHide(var1) {
+        var tab = document.getElementsByName(var1);
 
         for (var i = 0; i < tab.length; i++) {
             if (tab[i].style.display == 'none') {
@@ -74,6 +75,12 @@
                 tab[i].style.display = 'none';
             }
         }
+    }
+
+    function MessageShowOrHide() {
+        ShowOrHide('mob');
+        ShowOrHide('addr');
+        ShowOrHide('sname');
     }
 </script>
 
