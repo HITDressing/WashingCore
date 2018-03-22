@@ -33,7 +33,7 @@ namespace BSXWashing.Models.DBClass
 
         [Required]
         [DisplayName("商家种类")]
-        public EnumAccountLevel Category { get; set; }
+        public EnumAccountCategory Category { get; set; }
 
         [DisplayName("用户密码")]
         [DataType(DataType.Password)]
