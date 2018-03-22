@@ -9,6 +9,7 @@
         [DisplayName("TID")]
         public int TopupID { get; set; }
 
+        [Required]
         [DisplayName("充值金额")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
         public double TopupValue { get; set; }

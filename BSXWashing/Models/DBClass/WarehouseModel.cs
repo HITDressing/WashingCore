@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    public class WarehouseModel
+    public class WarehouseModel : WashingFather
     {
         [Key]
         [DisplayName("WID")]
@@ -15,6 +15,5 @@
         [DisplayName("库存备注")]
         [DataType(DataType.MultilineText)]
         public string WareNote { get; set; }
-
     }
 }

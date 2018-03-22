@@ -31,6 +31,10 @@ namespace BSXWashing.Models.DBClass
         [DisplayName("用户级别")]
         public EnumAccountLevel Level { get; set; }
 
+        [Required]
+        [DisplayName("商家种类")]
+        public EnumAccountLevel Category { get; set; }
+
         [DisplayName("用户密码")]
         [DataType(DataType.Password)]
         [StringLength(32, ErrorMessage = "密码长度必须在8到32之间", MinimumLength = 8)]
@@ -54,16 +58,18 @@ namespace BSXWashing.Models.DBClass
         [DisplayName("余额")]
         public double Balance { get; set; }
 
+        //----------------------------------------------------------
+
         [DisplayName("库存信息")]
         public virtual ICollection<WarehouseModel> Warehouses { get; set; }
 
         [DisplayName("充值信息")]
         public virtual ICollection<TopupModel> Topups { get; set; }
 
-        //[DisplayName("借订单运送信息")]
-        //public virtual ICollection<BorrowModel> BorrowTransport { get; set; }
+        [DisplayName("借订单运送信息")]
+        public virtual ICollection<BorrowModel> BorrowTransport { get; set; }
 
-        //[DisplayName("还订单运送信息")]
-        //public virtual ICollection<PaybackModel> PaybackTransport { get; set; }
+        [DisplayName("还订单运送信息")]
+        public virtual ICollection<PaybackModel> PaybackTransport { get; set; }
     }
 }

@@ -17,4 +17,13 @@
         D类,
         E类
     }
+
+    public enum EnumAccountCategory
+    {
+        洗浴,
+        宾馆,
+        美发,
+        预留,
+        其他
+    }
 }
