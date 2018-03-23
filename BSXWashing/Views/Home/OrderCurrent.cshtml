@@ -1,0 +1,177 @@
+﻿@model BSXWashing.Models.DBClass.AccountModel
+
+@using System.Security.Claims;
+
+@{
+    ViewData["Title"] = "进行中的订单";
+    ViewData["SubTitle"] = Model.AccountName;
+
+    var isUser = User.FindFirst(ClaimTypes.Role).Value == "客户" ? true : false;
+}
+
+<div class="jumbotron" style="background-color:lightsalmon">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h4>
+        <span class="label label-warning">@ViewData["SubTitle"]</span>
+    </h4>
+</div>
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">借订单信息</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">还订单信息</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active" id="home">
+            <table class="table">
+                <thead>
+                    <tr>
+                        @if (isUser)
+                        {
+                            <th>
+                                配送人员
+                            </th>
+
+                        }
+                        else
+                        {
+                            <th>
+                                订单用户
+                            </th>
+
+                        }
+
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        @if (isUser)
+                        {
+                            <th>
+                                操作
+                            </th>
+
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowTransport)
+                    {
+                        <tr>
+                            @if (isUser)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TranName)
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AccountName)
+                                </td>
+
+                            }
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            @if (isUser)
+                            {
+
+                                <td>
+                                    @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                                    @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="profile">
+            <table class="table">
+                <thead>
+                    <tr>
+                        @if (isUser)
+                        {
+                            <th>
+                                配送人员
+                            </th>
+
+                        }
+                        else
+                        {
+                            <th>
+                                订单用户
+                            </th>
+
+                        }
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        @if (isUser)
+                        {
+                            <th>
+                                操作
+                            </th>
+
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PaybackTransport)
+                    {
+                        <tr>
+                            @if (isUser)
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TranName)
+                                </td>
+
+                            }
+                            else
+                            {
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AccountName)
+                                </td>
+
+                            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            @if (isUser)
+                            {
+                                <td>
+                                    @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                                    @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>

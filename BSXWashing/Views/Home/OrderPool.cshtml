@@ -1,0 +1,118 @@
+﻿@model IEnumerable<BSXWashing.Models.DBClass.BorrowModel>
+
+@using BSXWashing.Models.DBClass
+@{
+    ViewData["Title"] = "订单池";
+
+}
+
+<div class="jumbotron" style="background-color:deepskyblue">
+    <h2 style="color:white">@ViewBag.Title</h2>
+    <p style="color:white" class="lead">
+        库存管理人员在此分配订单给配送专员
+    </p>
+</div>
+
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">借订单信息</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">还订单信息</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active" id="home">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BorrowOrderID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Account)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BorrowNote)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.BorrowOrderID">@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.AccountName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BorrowNote)
+                        </td>
+                        <td></td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="profile">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            还订单ID
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Account)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TranName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartTime)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.BorrowNote)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in (List<PaybackModel>)ViewBag.Payback)
+                    {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.PaybackOrderID">@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.AccountName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BorrowNote)
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@item.PaybackOrderID">Details</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+</div>
+
+

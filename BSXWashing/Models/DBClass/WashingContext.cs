@@ -16,5 +16,6 @@
         public virtual DbSet<PaybackModel> PaybackModels { get; set; }
         public virtual DbSet<ItemModel> ItemModels { get; set; }
         public virtual DbSet<WarehouseModel> WarehouseModels { get; set; }
+        public virtual DbSet<DiscountModel> DiscountModels { get; set; }
     }
 }

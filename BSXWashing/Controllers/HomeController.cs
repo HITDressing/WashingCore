@@ -17,10 +17,8 @@
     {
         protected readonly WashingContext _context;
 
-        public HomeController(WashingContext context)
-        {
-            _context = context;
-        }
+        public HomeController(WashingContext context) => _context = context;
+
         public IActionResult Index()
         {
             return View();

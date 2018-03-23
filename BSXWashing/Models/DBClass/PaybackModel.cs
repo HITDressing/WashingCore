@@ -3,7 +3,7 @@ namespace BSXWashing.Models.DBClass
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    public class PaybackModel : WashingFather
+    public class PaybackModel : WashingMother
     {
         [Key]
         [DisplayName("POID")]

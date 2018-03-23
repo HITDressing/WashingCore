@@ -71,5 +71,8 @@ namespace BSXWashing.Models.DBClass
 
         [DisplayName("还订单运送信息")]
         public virtual ICollection<PaybackModel> PaybackTransport { get; set; }
+
+        [DisplayName("折扣信息")]
+        public virtual ICollection<DiscountModel> Discounts { get; set; }
     }
 }
