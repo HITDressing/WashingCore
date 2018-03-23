@@ -1,0 +1,323 @@
+﻿@model IEnumerable<BSXWashing.Models.DBClass.PaybackModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.TranName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TranTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinishTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsCanceled)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsCompleted)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsTraned)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BorrowNote)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum2)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum3)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum4)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum5)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum6)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum7)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum8)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum9)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum10)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum11)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum12)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum13)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum14)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum15)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum16)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum17)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum18)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum19)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum20)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum21)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum22)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum23)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum24)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum25)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum26)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum27)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum28)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum29)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum30)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum31)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum32)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum33)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum34)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum35)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum36)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum37)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum38)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum39)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ItemNum40)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TranName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TranTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinishTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCanceled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsCompleted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsTraned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BorrowNote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum4)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum5)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum6)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum7)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum8)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum9)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum10)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum11)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum12)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum13)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum14)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum15)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum16)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum17)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum18)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum19)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum20)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum21)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum22)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum23)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum24)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum25)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum26)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum27)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum28)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum29)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum30)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum31)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum32)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum33)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum34)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum35)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum36)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum37)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum38)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum39)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNum40)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account.AccountName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PaybackOrderID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PaybackOrderID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PaybackOrderID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

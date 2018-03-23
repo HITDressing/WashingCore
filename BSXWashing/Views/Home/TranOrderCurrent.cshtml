@@ -1,0 +1,194 @@
+﻿@model BSXWashing.Models.DBClass.AccountModel
+
+@{
+    ViewData["Title"] = "个人中心";
+    ViewData["SubTitle"] = Model.Address + "-" + Model.StoreName + "-" + Model.MobileNumber;
+
+    var myWare = Model.Warehouses.FirstOrDefault();
+
+    var NotFinishBorrow = Model.BorrowTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
+    var NotFinishPayback = Model.PaybackTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
+
+    var FinishBorrow = Model.BorrowTransport.Where(x => x.IsCompleted || x.IsCanceled);
+    var FinishPayback = Model.PaybackTransport.Where(x => x.IsCompleted || x.IsCanceled);
+}
+
+<div class="jumbotron" style="background-color:mediumseagreen">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h5>
+        <span class="label label-default">@ViewData["SubTitle"]</span>
+    </h5>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("编辑个人信息", "Edit", "AccountModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-info" })
+        @Html.ActionLink("修改密码", "Password", "AccountModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-warning" })
+    </p>
+</div>
+<div>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送借</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">配送还</a></li>
+
+        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史借</a></li>
+        <li role="presentation"><a href="#hp" aria-controls="hp" role="tab" data-toggle="tab">历史还</a></li>
+    </ul>
+    <div class="tab-content">
+
+        <div role="tabpanel" class="tab-pane fade in active" id="home">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            订单ID
+                        </th>
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        <th>
+                            已经送达
+                        </th>
+                        <th>
+                            操作
+                        </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in NotFinishBorrow.Where(x => !String.IsNullOrEmpty(x.TranName)))
+                    {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsTraned)
+                        </td>
+                        <td>
+                            @Html.ActionLink("标记送达", "TranedOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="profile">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            订单ID
+                        </th>
+                        <th>
+                            用户名
+                        </th>
+                        <th>
+                            已经送达
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in NotFinishPayback.Where(x => !String.IsNullOrEmpty(x.TranName)))
+                    {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsTraned)
+                        </td>
+                        <td>
+                            @Html.ActionLink("标记送达", "TranedOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="hb">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            订单ID
+                        </th>
+                        <th>
+                            是否取消
+                        </th>
+                        <th>
+                            是否完成
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in FinishBorrow)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCanceled)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCompleted)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="hp">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            订单ID
+                        </th>
+                        <th>
+                            是否取消
+                        </th>
+                        <th>
+                            是否完成
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in FinishPayback)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCanceled)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCompleted)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

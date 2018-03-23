@@ -27,10 +27,10 @@
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.BorrowOrderID)
+                            借订单ID
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Account)
+                            @Html.DisplayNameFor(model => model.Account.AccountName)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.StartTime)
@@ -38,27 +38,33 @@
                         <th>
                             @Html.DisplayNameFor(model => model.BorrowNote)
                         </th>
-                        <th></th>
+                        <th>
+                            操作
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.BorrowOrderID">@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Account.AccountName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BorrowNote)
-                        </td>
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BorrowNote)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-controller="BorrowModels" class="btn btn-xs btn-warning" asp-route-id="@item.BorrowOrderID">分配</a>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -72,7 +78,7 @@
                             还订单ID
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Account)
+                            @Html.DisplayNameFor(model => model.Account.AccountName)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.TranName)
@@ -89,23 +95,24 @@
                 <tbody>
                     @foreach (var item in (List<PaybackModel>)ViewBag.Payback)
                     {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.PaybackOrderID">@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Account.AccountName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.StartTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.BorrowNote)
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.PaybackOrderID">Details</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartTime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BorrowNote)
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.PaybackOrderID">Details</a>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

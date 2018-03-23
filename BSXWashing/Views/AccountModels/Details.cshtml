@@ -1,72 +1,14 @@
 ﻿@model BSXWashing.Models.DBClass.AccountModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = Model.AccountName;
+    ViewData["SubTitle"] = Model.Address + "-" + Model.StoreName + "-" + Model.MobileNumber;
 }
 
-<h2>Details</h2>
-
-<div>
-    <h4>AccountModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.MobileNumber)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.MobileNumber)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Level)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Level)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Category)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Salt)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Salt)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.StoreName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.StoreName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Balance)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Balance)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.AccountName">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+<div class="jumbotron" style="background-color:sandybrown">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h5>
+        <span class="label label-default">@ViewData["SubTitle"]</span>
+        <span class="label label-danger">余额：@Model.Balance 元</span>
+    </h5>
 </div>

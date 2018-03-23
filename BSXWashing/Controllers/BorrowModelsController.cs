@@ -59,7 +59,7 @@ namespace BSXWashing.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", borrowModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
             return View(borrowModel);
         }
 
@@ -95,7 +95,7 @@ namespace BSXWashing.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", borrowModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
             return View(borrowModel);
         }
 
@@ -478,7 +478,7 @@ namespace BSXWashing.Controllers
                         _context.Update(account);
                         _context.Add(borrowModel);
                         await _context.SaveChangesAsync();
-                        return RedirectToAction("Details", "AccountModels", new { id = borrowModel.AccountName });
+                        return RedirectToAction("OrderCurrent", "Home", new { id = borrowModel.AccountName });
                     }
 
                     ModelState.AddModelError("BorrowNote", "您的余额不足 无法提交订单");
@@ -488,7 +488,6 @@ namespace BSXWashing.Controllers
             return View(borrowModel);
         }
 
-        [HttpPost]
         [Authorize(Roles = "超级管理员,客户,仓库保管员")]
         public async Task<IActionResult> CancelOrder(int id)
         {
@@ -498,6 +497,7 @@ namespace BSXWashing.Controllers
             if (String.IsNullOrEmpty(borrowOrder.TranName))
             {
                 borrowOrder.IsCanceled = true;
+                borrowOrder.FinishTime = DateTime.Now;
 
                 account.Balance += borrowOrder.OrderMoney;
 
@@ -518,7 +518,6 @@ namespace BSXWashing.Controllers
             return RedirectToAction("OrderCurrent", "Home");
         }
 
-        [HttpPost]
         [Authorize(Roles = "超级管理员,客户,仓库保管员")]
         public async Task<IActionResult> ConfirmOrder(int id)
         {    
@@ -533,6 +532,7 @@ namespace BSXWashing.Controllers
 
             var borrowOrder = _context.BorrowModels.Find(id);
 
+            borrowOrder.FinishTime = DateTime.Now;
             borrowOrder.IsCompleted = true;
 
             var ware = await _context.WarehouseModels.FirstOrDefaultAsync(x=>x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
@@ -552,24 +552,21 @@ namespace BSXWashing.Controllers
 
         }
 
-        [HttpPost]
         [Authorize(Roles = "超级管理员,配送专员,仓库保管员")]
         public async Task<IActionResult> TranedOrder(int id)
         {
             var borrowOrder = _context.BorrowModels.Find(id);
-            if (String.IsNullOrEmpty(borrowOrder.TranName))
-            {
-                borrowOrder.IsTraned = true;
+            borrowOrder.TranTime = DateTime.Now;
+            borrowOrder.IsTraned = true;
 
-                try
-                {
-                    _context.Update(borrowOrder);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException ex)
-                {
-                    throw ex;
-                }
+            try
+            {
+                _context.Update(borrowOrder);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                throw ex;
             }
 
             return RedirectToAction("TranOrderCurrent", "Home");

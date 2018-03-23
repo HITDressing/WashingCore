@@ -6,6 +6,9 @@
 
 <div class="jumbotron" style="background-color:lightseagreen">
     <h2 style="color:white">@ViewData["Title"]</h2>
+    <h4 style="color:white">
+        点击对应的折扣系数来进行编辑
+    </h4>
     <p style="color:white" class="lead">
         @Html.ActionLink("添加折扣信息", "Create", "DiscountModels", null, htmlAttributes: new { @class = "btn btn-info" })
     </p>
@@ -30,7 +33,7 @@
         {
             <tr>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.DiscountID">@Html.DisplayFor(modelItem => item.DiscountValue)</a>                    
+                    <a asp-action="Edit" asp-route-id="@item.DiscountID">系数：@Html.DisplayFor(modelItem => item.DiscountValue)</a>                    
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DiscountNote)

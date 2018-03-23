@@ -1,29 +1,218 @@
 ﻿@model BSXWashing.Models.DBClass.AccountModel
 
 @{
-    ViewData["Title"] = "进行中的订单";
-    ViewData["SubTitle"] = Model.AccountName;
+    ViewData["Title"] = "个人中心";
+    ViewData["SubTitle"] = Model.Address + "-" + Model.StoreName + "-" + Model.MobileNumber;
+
+    var myWare = Model.Warehouses.FirstOrDefault();
+
+    var NotFinishBorrow = Model.BorrowTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
+    var NotFinishPayback = Model.PaybackTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
+
+    var FinishBorrow = Model.BorrowTransport.Where(x => x.IsCompleted || x.IsCanceled);
+    var FinishPayback = Model.PaybackTransport.Where(x => x.IsCompleted || x.IsCanceled);
 }
 
-<div class="jumbotron" style="background-color:lightsalmon">
+<div class="jumbotron" style="background-color:mediumseagreen">
     <h2 style="color:white">@ViewData["Title"]</h2>
-    <h4>
-        <span class="label label-warning">@ViewData["SubTitle"]</span>
-    </h4>
+    <h5>
+        <span class="label label-default">@ViewData["SubTitle"]</span>
+        <span class="label label-danger">余额：@Model.Balance 元</span>
+    </h5>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("编辑个人信息", "Edit", "AccountModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-info" })
+        @Html.ActionLink("修改密码", "Password", "AccountModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-warning" })
+        @Html.ActionLink("充值记录", "Index", "TopupModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-default" })
+    </p>
 </div>
 
 <div>
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送借</a></li>
+        <li role="presentation" class="active"><a href="#inve" aria-controls="inve" role="tab" data-toggle="tab">库存</a></li>
+        <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送借</a></li>
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">配送还</a></li>
         <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">未送借</a></li>
         <li role="presentation"><a href="#target" aria-controls="target" role="tab" data-toggle="tab">未送还</a></li>
+
+        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史借</a></li>
+        <li role="presentation"><a href="#hp" aria-controls="hp" role="tab" data-toggle="tab">历史还</a></li>
     </ul>
     <div class="tab-content">
 
-        <div role="tabpanel" class="tab-pane fade in active" id="home">
+        <div role="tabpanel" class="tab-pane fade in active" id="inve">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum1</span>
+                    床单 1.2M
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum2</span>
+                    床单 1.5M
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum3</span>
+                    床单 1.8M
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum4</span>
+                    被套 1.2M
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum5</span>
+                    被套 1.5M
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum6</span>
+                    被套 1.8M
+                </li>
+
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum7</span>
+                    枕套
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum8</span>
+                    浴巾
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum9</span>
+                    地巾
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum10</span>
+                    毛巾
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum11</span>
+                    方巾
+                </li>
+
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum12</span>
+                    大台布
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum13</span>
+                    香巾
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum14</span>
+                    小台布
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum15</span>
+                    口布
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum16</span>
+                    毛毯
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum17</span>
+                    桌围裙
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum18</span>
+                    厨衣
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum19</span>
+                    窗帘
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum20</span>
+                    窗帘内胆
+                </li>
+
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum21</span>
+                    浴帘
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum22</span>
+                    浴服
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum23</span>
+                    椅套
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum24</span>
+                    帽子
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum25</span>
+                    床裙
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum26</span>
+                    缎料工服
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum27</span>
+                    唐装
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum28</span>
+                    免烫工服
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum29</span>
+                    旗袍
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum30</span>
+                    西服
+                </li>
+
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum31</span>
+                    领带
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum32</span>
+                    已烫工服
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum33</span>
+                    沙发套
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum34</span>
+                    床罩
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum35</span>
+                    抹布
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum36</span>
+                    保护垫
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum37</span>
+                    地毯清洗
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum38</span>
+                    美容足浴窄床单
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum39</span>
+                    预留
+                </li>
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum40</span>
+                    预留
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="home">
             <table class="table">
                 <thead>
                     <tr>
@@ -37,29 +226,35 @@
                             电话
                         </th>
                         <th>
+                            已经送达
+                        </th>
+                        <th>
                             操作
                         </th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.BorrowTransport.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TranName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-                            </td>
-                            <td>
-                                @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                            </td>
-                        </tr>
-                    }
+                    @foreach (var item in NotFinishBorrow.Where(x => !String.IsNullOrEmpty(x.TranName)))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TranName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsTraned)
+                        </td>
+                        <td>
+                            @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                        </td>
+                    </tr>
+            }
                 </tbody>
             </table>
         </div>
@@ -78,28 +273,34 @@
                             电话
                         </th>
                         <th>
+                            已经送达
+                        </th>
+                        <th>
                             操作
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.PaybackTransport.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.TranName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-                            </td>
-                            <td>
-                                @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                            </td>
-                        </tr>
-                    }
+                    @foreach (var item in NotFinishPayback.Where(x => !String.IsNullOrEmpty(x.TranName)))
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TranName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsTraned)
+                        </td>
+                        <td>
+                            @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                        </td>
+                    </tr>
+            }
                 </tbody>
             </table>
         </div>
@@ -109,6 +310,9 @@
                 <thead>
                     <tr>
                         <th>
+                            订单ID
+                        </th>
+                        <th>
                             地址
                         </th>
                         <th>
@@ -120,20 +324,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.BorrowTransport.Where(x => String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-                            </td>
-                            <td>
-                                @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                            </td>
-                        </tr>
-                    }
+                    @foreach (var item in NotFinishBorrow.Where(x => String.IsNullOrEmpty(x.TranName)))
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                        </td>
+                    </tr>
+            }
                 </tbody>
             </table>
         </div>
@@ -143,6 +350,9 @@
                 <thead>
                     <tr>
                         <th>
+                            订单ID
+                        </th>
+                        <th>
                             地址
                         </th>
                         <th>
@@ -154,20 +364,91 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.PaybackTransport.Where(x => String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-                            </td>
-                            <td>
-                                @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                            </td>
-                        </tr>
-                    }
+                    @foreach (var item in NotFinishPayback.Where(x => String.IsNullOrEmpty(x.TranName)))
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.Address)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                        </td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="hb">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            订单ID
+                        </th>
+                        <th>
+                            是否取消
+                        </th>
+                        <th>
+                            是否完成
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in FinishBorrow)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsCanceled)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsCompleted)
+                        </td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="hp">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            订单ID
+                        </th>
+                        <th>
+                            是否取消
+                        </th>
+                        <th>
+                            是否完成
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in FinishPayback)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsCanceled)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsCompleted)
+                        </td>
+                    </tr>
+            }
                 </tbody>
             </table>
         </div>

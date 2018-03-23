@@ -42,9 +42,10 @@ namespace BSXWashing.Controllers
         }
 
         // GET: WarehouseModels/Create
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
+            var list = _context.WarehouseModels.Select(x => x.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => (x.Type == Models.EnumClass.EnumAccountType.客户 || x.Type == Models.EnumClass.EnumAccountType.仓库保管员) && !list.Contains(x.AccountName)), "AccountName", "AccountName", id);
             return View();
         }
 
@@ -57,11 +58,18 @@ namespace BSXWashing.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(warehouseModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (await _context.DiscountModels.AnyAsync(x => x.AccountName == warehouseModel.AccountName))
+                {
+                    ModelState.AddModelError("AccountName", "该用户已经填写过库存");
+                }
+                else
+                {
+                    _context.Add(warehouseModel);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", warehouseModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => (x.Type == Models.EnumClass.EnumAccountType.客户 || x.Type == Models.EnumClass.EnumAccountType.仓库保管员)), "AccountName", "AccountName", warehouseModel.AccountName);
             return View(warehouseModel);
         }
 

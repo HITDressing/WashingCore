@@ -16,10 +16,20 @@ namespace BSXWashing.Controllers
         public TopupModelsController(WashingContext context) => _context = context;
 
         // GET: TopupModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string id)
         {
             var washingContext = _context.TopupModels.Include(t => t.Account);
-            return View(await washingContext.ToListAsync());
+
+            if (!String.IsNullOrEmpty(id))
+            {
+                ViewData["Flag"] = "OK";
+                return View(await washingContext.Where(x => x.AccountName == id).ToListAsync());
+            }
+            else
+            {
+                ViewData["Flag"] = "NOTOK";
+                return View(await washingContext.ToListAsync());
+            }
         }
 
         // GET: TopupModels/Details/5
@@ -44,7 +54,7 @@ namespace BSXWashing.Controllers
         // GET: TopupModels/Create
         public IActionResult Create(string id)
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.客户), "AccountName", "AccountName", id);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.客户), "AccountName", "AccountName", id);
             return View();
         }
 
@@ -64,9 +74,9 @@ namespace BSXWashing.Controllers
                 _context.Update(account);
                 _context.Add(topupModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Balance","AccountModels");
+                return RedirectToAction("Balance", "AccountModels");
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.客户), "AccountName", "AccountName", topupModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.客户), "AccountName", "AccountName", topupModel.AccountName);
             return View(topupModel);
         }
 

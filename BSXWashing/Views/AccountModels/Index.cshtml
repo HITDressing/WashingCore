@@ -1,83 +1,61 @@
 ﻿@model IEnumerable<BSXWashing.Models.DBClass.AccountModel>
 
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "用户管理";
+    ViewData["SubTitle"] = "对用户类别、级别、种类等信息进行管理";
 }
 
-<h2>Index</h2>
+<div class="jumbotron" style="background-color:lightsalmon">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h4>
+        <span class="label label-default">@ViewData["SubTitle"]</span>
+    </h4>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("添加用户", "Create", "AccountModels", null, htmlAttributes: new { @class = "btn btn-info" })
+    </p>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.MobileNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Type)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Level)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Password)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Salt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.StoreName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Balance)
-                </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Balance)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.MobileNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Level)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StoreName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Balance)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.AccountName">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.AccountName">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.AccountName">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Edit" class="btn btn-primary btn-xs" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.AccountName)</a>
+                </td>
+                <td>
+                    <a asp-action="Change" class="btn btn-info btn-xs" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Type)</a>
+                </td>
+                <td>
+                    <a asp-action="Change" class="btn btn-info btn-xs" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Level)</a>
+                </td>
+                <td>
+                    <a asp-action="Change" class="btn btn-info btn-xs" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Category)</a>
+                </td>
+                <td>
+                    <a asp-action="Create" asp-controller="TopupModels" asp-route-id="@item.AccountName" class="btn btn-warning btn-xs">@Html.DisplayFor(modelItem => item.Balance)</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

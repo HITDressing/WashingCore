@@ -2,13 +2,18 @@
 
 @{
     ViewData["Title"] = "充值记录";
+    bool flag = ViewData["Flag"].ToString() == "OK" ? false : true;
 }
 
 <div class="jumbotron" style="background-color:peru">
     <h2 style="color:white">@ViewData["Title"]</h2>
-    <p style="color:white" class="lead">
-        @Html.ActionLink("余额充值", "Create", "TopupModels", null, htmlAttributes: new { @class = "btn btn-success" })
-    </p>
+    @if (flag)
+    {
+        <p style="color:white" class="lead">
+            @Html.ActionLink("余额充值", "Create", "TopupModels", null, htmlAttributes: new { @class = "btn btn-success" })
+        </p>
+    }
+
 </div>
 
 <table class="table">

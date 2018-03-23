@@ -187,5 +187,57 @@ namespace BSXWashing.Controllers
             }
             return View(accountModel);
         }
+
+
+        // GET: AccountModels/Edit/5
+        public async Task<IActionResult> Change(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var accountModel = await _context.AccountModels.SingleOrDefaultAsync(m => m.AccountName == id);
+            if (accountModel == null)
+            {
+                return NotFound();
+            }
+            return View(accountModel);
+        }
+
+        // POST: AccountModels/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Change(string id, [Bind("AccountName,MobileNumber,Address,Type,Level,Category,Password,Salt,StoreName,Balance")] AccountModel accountModel)
+        {
+            if (id != accountModel.AccountName)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(accountModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AccountModelExists(accountModel.AccountName))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(accountModel);
+        }
     }
 }
