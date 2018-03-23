@@ -45,9 +45,10 @@ namespace BSXWashing.Controllers
         }
 
         // GET: DiscountModels/Create
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
+            var list = _context.DiscountModels.Select(x => x.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.客户 && !list.Contains(x.AccountName)), "AccountName", "AccountName", id);
             return View();
         }
 
@@ -60,11 +61,18 @@ namespace BSXWashing.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(discountModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(await _context.DiscountModels.AnyAsync(x=>x.AccountName == discountModel.AccountName))
+                {
+                    ModelState.AddModelError("AccountName", "该用户已经填写过折扣");
+                }
+                else
+                {
+                    _context.Add(discountModel);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", discountModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.客户), "AccountName", "AccountName", discountModel.AccountName);
             return View(discountModel);
         }
 

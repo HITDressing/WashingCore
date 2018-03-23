@@ -1,0 +1,62 @@
+﻿@model IEnumerable<BSXWashing.Models.DBClass.AccountModel>
+
+@{
+    ViewData["Title"] = "余额管理";
+}
+
+<div class="jumbotron" style="background-color:tomato">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("充值记录", "Index", "TopupModels", null, htmlAttributes: new { @class = "btn btn-info" })
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Level)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Balance)
+            </th>
+            <th>
+                操作
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.AccountName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Level)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Balance)
+                </td>
+                <td>
+                    <a asp-action="Create" asp-controller="TopupModels" asp-route-id="@item.AccountName" class="btn btn-warning btn-xs">充值</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

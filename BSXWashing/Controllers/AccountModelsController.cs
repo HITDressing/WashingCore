@@ -21,6 +21,13 @@ namespace BSXWashing.Controllers
             return View(await _context.AccountModels.ToListAsync());
         }
 
+        [Authorize(Roles = "超级管理员,财务负责人")]
+        // GET: AccountModels
+        public async Task<IActionResult> Balance()
+        {
+            return View(await _context.AccountModels.Where(x=>x.Type == EnumAccountType.客户).ToListAsync());
+        }
+
         // GET: AccountModels/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -168,7 +175,15 @@ namespace BSXWashing.Controllers
             {
                 _context.Add(accountModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                await new DiscountModelsController(_context).Create(new DiscountModel
+                {
+                    AccountName = accountModel.AccountName,
+                    DiscountValue = 1,
+                    DiscountNote = "初始化折扣为1"
+                });
+
+                return RedirectToAction("Login","Home");
             }
             return View(accountModel);
         }

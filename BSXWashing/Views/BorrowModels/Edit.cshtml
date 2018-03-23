@@ -60,6 +60,11 @@
                 </div>
             </div>
             <div class="form-group">
+                <label asp-for="OrderMoney" class="control-label"></label>
+                <input asp-for="OrderMoney" class="form-control" />
+                <span asp-validation-for="OrderMoney" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="BorrowNote" class="control-label"></label>
                 <input asp-for="BorrowNote" class="form-control" />
                 <span asp-validation-for="BorrowNote" class="text-danger"></span>

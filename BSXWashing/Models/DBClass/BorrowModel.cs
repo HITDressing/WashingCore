@@ -38,6 +38,9 @@ namespace BSXWashing.Models.DBClass
         [DisplayName("是否送达")]
         public bool IsTraned { get; set; }
 
+        [DisplayName("订单金额")]
+        public double OrderMoney { get; set; }
+
         [DisplayName("借订单备注")]
         [DataType(DataType.MultilineText)]
         public string BorrowNote { get; set; }

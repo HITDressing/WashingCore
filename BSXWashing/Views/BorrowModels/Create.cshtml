@@ -1,12 +1,14 @@
 ﻿@model BSXWashing.Models.DBClass.BorrowModel
-
+@using System.Security.Claims;
 @{
     ViewData["Title"] = "填写借订单";
     ViewData["SubTitle"] = "物品对应表如下";
 }
 
 <div class="jumbotron" style="background-color:deepskyblue">
-    <h2 style="color:white">@ViewBag.Title</h2>
+    <h2 style="color:white">
+        @ViewBag.Title
+    </h2>
     <p style="color:white" class="lead">
         @ViewBag.SubTitle
     </p>
@@ -16,6 +18,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StartTime" value="@DateTime.Now" />
+            <input type="hidden" asp-for="AccountName" value="@User.FindFirst(ClaimTypes.Sid).Value"/>
+            <input type="hidden" asp-for="IsCanceled" value="@false"/>
+            <input type="hidden" asp-for="IsCompleted" value="@false"/>
+            <input type="hidden" asp-for="IsTraned" value="@false"/>
+
+
             <div class="form-group">
                 <label asp-for="BorrowNote" class="control-label"></label>
                 <textarea asp-for="BorrowNote" class="form-control" rows="3"></textarea>
@@ -23,12 +32,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="ItemNum1" class="control-label"></label>
-                <input asp-for="ItemNum1" class="form-control" value="0" />
+                <input asp-for="ItemNum1" class="form-control" value="0"/>
                 <span asp-validation-for="ItemNum1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ItemNum2" class="control-label"></label>
-                <input asp-for="ItemNum2" class="form-control" value="0" />
+                <input asp-for="ItemNum2" class="form-control" value="0"/>
                 <span asp-validation-for="ItemNum2" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -218,11 +227,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="ItemNum40" class="control-label"></label>
-                <input asp-for="ItemNum40" class="form-control" value="0"/>
+                <input asp-for="ItemNum40" class="form-control" value="0" />
                 <span asp-validation-for="ItemNum40" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="提交借订单" class="btn btn-block btn-primary" />
+                <input type="submit" value="提交借订单" class="btn btn-primary btn-block" />
             </div>
         </form>
     </div>

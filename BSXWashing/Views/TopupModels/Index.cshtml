@@ -1,53 +1,50 @@
 ﻿@model IEnumerable<BSXWashing.Models.DBClass.TopupModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "充值记录";
 }
 
-<h2>Index</h2>
+<div class="jumbotron" style="background-color:peru">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <p style="color:white" class="lead">
+        @Html.ActionLink("余额充值", "Create", "TopupModels", null, htmlAttributes: new { @class = "btn btn-success" })
+    </p>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.TopupValue)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TopupTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TopupNote)
-                </th>
             <th>
-                @Html.DisplayNameFor(model => model.Account)
+                @Html.DisplayNameFor(model => model.TopupValue)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.TopupTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TopupNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account.AccountName)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopupValue)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopupTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopupNote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Account.AccountName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TopupID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TopupID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TopupID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.TopupID">@Html.DisplayFor(modelItem => item.TopupValue)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TopupTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TopupNote)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

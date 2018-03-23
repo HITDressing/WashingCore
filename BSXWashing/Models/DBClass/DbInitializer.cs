@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace BSXWashing.Models.DBClass
 {
@@ -114,13 +115,20 @@ namespace BSXWashing.Models.DBClass
                 new ItemModel{ ItemName = "保护垫",ItemValue = 3.0},
                 new ItemModel{ ItemName = "地毯清洗",ItemValue = 3.0},
                 new ItemModel{ ItemName = "足浴窄床单",ItemValue = 3.0},
-                new ItemModel{ ItemName = "预留",ItemValue = 3.0},
-                new ItemModel{ ItemName = "预留",ItemValue = 3.0}
+                new ItemModel{ ItemName = "预留1",ItemValue = 3.0},
+                new ItemModel{ ItemName = "预留2",ItemValue = 3.0}
             };
-
-            context.ItemModels.AddRange(items);
-            context.AccountModels.AddRange(accounts);
-            context.SaveChanges();
+            
+            try
+            {
+                context.ItemModels.AddRange(items);
+                context.AccountModels.AddRange(accounts);
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }            
         }
     }
 }

@@ -42,9 +42,9 @@ namespace BSXWashing.Controllers
         }
 
         // GET: TopupModels/Create
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.客户), "AccountName", "AccountName", id);
             return View();
         }
 
@@ -53,15 +53,20 @@ namespace BSXWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TopupID,TopupValue,TopupTime,TopupNote,AccountName")] TopupModel topupModel)
+        public async Task<IActionResult> Create([Bind("TopupID,TopupValue,TopupNote,AccountName")] TopupModel topupModel)
         {
+            topupModel.TopupTime = DateTime.Now;
             if (ModelState.IsValid)
             {
+                var account = await _context.AccountModels.FindAsync(topupModel.AccountName);
+                account.Balance += topupModel.TopupValue;
+
+                _context.Update(account);
                 _context.Add(topupModel);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Balance","AccountModels");
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName", topupModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.客户), "AccountName", "AccountName", topupModel.AccountName);
             return View(topupModel);
         }
 

@@ -1,0 +1,42 @@
+﻿@model IEnumerable<BSXWashing.Models.DBClass.ItemModel>
+
+@{
+    ViewData["Title"] = "物品信息管理";
+}
+
+<div class="jumbotron" style="background-color:orange">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+</div>
+
+<table class="table table-condensed table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemValue)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemNote)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ItemName">
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemNote)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

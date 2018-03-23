@@ -9,6 +9,7 @@
         public int DiscountID { get; set; }
 
         [Required]
+        [DisplayName("折扣系数")]
         [Range(0,1,ErrorMessage ="折扣为0~1之间的数")]
         public double DiscountValue { get; set; }
 
@@ -16,7 +17,7 @@
         public string AccountName { get; set; }
         public virtual AccountModel Account { get; set; }
 
-        [DisplayName("库存备注")]
+        [DisplayName("折扣备注")]
         [DataType(DataType.MultilineText)]
         public string DiscountNote { get; set; }
     }

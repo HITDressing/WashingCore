@@ -1,12 +1,8 @@
 ﻿@model BSXWashing.Models.DBClass.AccountModel
 
-@using System.Security.Claims;
-
 @{
     ViewData["Title"] = "进行中的订单";
     ViewData["SubTitle"] = Model.AccountName;
-
-    var isUser = User.FindFirst(ClaimTypes.Role).Value == "客户" ? true : false;
 }
 
 <div class="jumbotron" style="background-color:lightsalmon">
@@ -20,8 +16,10 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">借订单信息</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">还订单信息</a></li>
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送借</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">配送还</a></li>
+        <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">未送借</a></li>
+        <li role="presentation"><a href="#target" aria-controls="target" role="tab" data-toggle="tab">未送还</a></li>
     </ul>
     <div class="tab-content">
 
@@ -29,71 +27,37 @@
             <table class="table">
                 <thead>
                     <tr>
-                        @if (isUser)
-                        {
-                            <th>
-                                配送人员
-                            </th>
-
-                        }
-                        else
-                        {
-                            <th>
-                                订单用户
-                            </th>
-
-                        }
-
+                        <th>
+                            配送人员
+                        </th>
                         <th>
                             地址
                         </th>
                         <th>
                             电话
                         </th>
-                        @if (isUser)
-                        {
-                            <th>
-                                操作
-                            </th>
-
-                        }
+                        <th>
+                            操作
+                        </th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.BorrowTransport)
+                    @foreach (var item in Model.BorrowTransport.Where(x => !String.IsNullOrEmpty(x.TranName)))
                     {
                         <tr>
-                            @if (isUser)
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TranName)
-                                </td>
-
-                            }
-                            else
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AccountName)
-                                </td>
-
-                            }
-
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TranName)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Account.Address)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Account.MobileNumber)
                             </td>
-                            @if (isUser)
-                            {
-
-                                <td>
-                                    @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                                    @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                                </td>
-                            }
-
+                            <td>
+                                @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -104,74 +68,109 @@
             <table class="table">
                 <thead>
                     <tr>
-                        @if (isUser)
-                        {
-                            <th>
-                                配送人员
-                            </th>
-
-                        }
-                        else
-                        {
-                            <th>
-                                订单用户
-                            </th>
-
-                        }
+                        <th>
+                            配送人员
+                        </th>
                         <th>
                             地址
                         </th>
                         <th>
                             电话
                         </th>
-                        @if (isUser)
-                        {
-                            <th>
-                                操作
-                            </th>
-
-                        }
-
+                        <th>
+                            操作
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.PaybackTransport)
+                    @foreach (var item in Model.PaybackTransport.Where(x => !String.IsNullOrEmpty(x.TranName)))
                     {
                         <tr>
-                            @if (isUser)
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.TranName)
-                                </td>
-
-                            }
-                            else
-                            {
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AccountName)
-                                </td>
-
-                            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TranName)
+                            </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Account.Address)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Account.MobileNumber)
                             </td>
-                            @if (isUser)
-                            {
-                                <td>
-                                    @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                                    @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                                </td>
-                            }
-
+                            <td>
+                                @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                            </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
 
+        <div role="tabpanel" class="tab-pane fade" id="setting">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.BorrowTransport.Where(x => String.IsNullOrEmpty(x.TranName)))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div role="tabpanel" class="tab-pane fade" id="target">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            地址
+                        </th>
+                        <th>
+                            电话
+                        </th>
+                        <th>
+                            操作
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.PaybackTransport.Where(x => String.IsNullOrEmpty(x.TranName)))
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            </td>
+                            <td>
+                                @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </div>
