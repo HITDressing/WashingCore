@@ -31,13 +31,13 @@
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#inve" aria-controls="inve" role="tab" data-toggle="tab">库存</a></li>
-        <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送借</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">配送还</a></li>
-        <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">未送借</a></li>
-        <li role="presentation"><a href="#target" aria-controls="target" role="tab" data-toggle="tab">未送还</a></li>
+        <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送中的提货订单</a></li>
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">配送中的回收订单</a></li>
+        <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">未配送的提货订单</a></li>
+        <li role="presentation"><a href="#target" aria-controls="target" role="tab" data-toggle="tab">未配送的回收订单</a></li>
 
-        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史借</a></li>
-        <li role="presentation"><a href="#hp" aria-controls="hp" role="tab" data-toggle="tab">历史还</a></li>
+        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史用户订单</a></li>
+        <li role="presentation"><a href="#hp" aria-controls="hp" role="tab" data-toggle="tab">历史回收订单</a></li>
     </ul>
     <div class="tab-content">
 
@@ -217,13 +217,10 @@
                 <thead>
                     <tr>
                         <th>
+                            订单ID
+                        </th>
+                        <th>
                             配送人员
-                        </th>
-                        <th>
-                            地址
-                        </th>
-                        <th>
-                            电话
                         </th>
                         <th>
                             已经送达
@@ -239,14 +236,12 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TranName)
+                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Account.Address)
+                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
-                        </td>
+
                         <td>
                             @Html.DisplayFor(modelItem => item.IsTraned)
                         </td>
@@ -264,13 +259,10 @@
                 <thead>
                     <tr>
                         <th>
+                            订单ID
+                        </th>
+                        <th>
                             配送人员
-                        </th>
-                        <th>
-                            地址
-                        </th>
-                        <th>
-                            电话
                         </th>
                         <th>
                             已经送达
@@ -285,13 +277,10 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.TranName)
+                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Account.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.IsTraned)
@@ -313,10 +302,7 @@
                             订单ID
                         </th>
                         <th>
-                            地址
-                        </th>
-                        <th>
-                            电话
+                            配送人员
                         </th>
                         <th>
                             操作
@@ -331,10 +317,7 @@
                             <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Account.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
                         </td>
                         <td>
                             @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
@@ -353,10 +336,7 @@
                             订单ID
                         </th>
                         <th>
-                            地址
-                        </th>
-                        <th>
-                            电话
+                            配送人员
                         </th>
                         <th>
                             操作
@@ -371,10 +351,7 @@
                             <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Account.Address)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Account.MobileNumber)
+                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
                         </td>
                         <td>
                             @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })

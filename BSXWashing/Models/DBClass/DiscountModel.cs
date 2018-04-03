@@ -10,7 +10,7 @@
 
         [Required]
         [DisplayName("折扣系数")]
-        [Range(0,1,ErrorMessage ="折扣为0~1之间的数")]
+        [Range(0, 2147483647, ErrorMessage = "折扣不能为负")]
         public double DiscountValue { get; set; }
 
         [Required]

@@ -183,6 +183,15 @@ namespace BSXWashing.Controllers
                     DiscountNote = "初始化折扣为1"
                 });
 
+                if (!await _context.WarehouseModels.AnyAsync(x => x.AccountName == accountModel.AccountName))
+                {
+                    _context.Add(new WarehouseModel()
+                    {
+                        AccountName = accountModel.AccountName
+                    });
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction("Login","Home");
             }
             return View(accountModel);
