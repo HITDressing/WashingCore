@@ -25,7 +25,9 @@ namespace BSXWashing.Controllers
         // GET: AccountModels
         public async Task<IActionResult> Balance()
         {
-            return View(await _context.AccountModels.Where(x=>x.Type == EnumAccountType.客户).ToListAsync());
+            return View(await _context.AccountModels
+                .Where(x=>x.Type == EnumAccountType.客户)
+                .ToListAsync());
         }
 
         // GET: AccountModels/Details/5

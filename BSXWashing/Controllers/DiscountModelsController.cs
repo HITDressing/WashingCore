@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BSXWashing.Models.DBClass;
+using BSXWashing.Models.ViewModel;
 
 namespace BSXWashing.Controllers
 {
@@ -162,6 +163,34 @@ namespace BSXWashing.Controllers
         private bool DiscountModelExists(int id)
         {
             return _context.DiscountModels.Any(e => e.DiscountID == id);
+        }
+
+        //批量修改用户组折扣信息
+        public IActionResult Range()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Range([Bind("Level,DiscountValue")] RangeDiscount rangeDiscount)
+        {
+            if (ModelState.IsValid)
+            {
+                var rangeList = _context.DiscountModels.Where(x => x.Account.Level == rangeDiscount.Level);
+                try
+                {
+                    await rangeList.ForEachAsync(x => x.DiscountValue = rangeDiscount.DiscountValue);
+                    _context.UpdateRange(rangeList);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(rangeDiscount);
         }
     }
 }

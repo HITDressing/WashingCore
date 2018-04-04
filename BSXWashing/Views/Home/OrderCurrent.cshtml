@@ -370,6 +370,9 @@
                             订单ID
                         </th>
                         <th>
+                            配送人员
+                        </th>
+                        <th>
                             是否取消
                         </th>
                         <th>
@@ -383,6 +386,9 @@
                     <tr>
                         <td>
                             <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.IsCanceled)
@@ -404,6 +410,9 @@
                             订单ID
                         </th>
                         <th>
+                            配送人员
+                        </th>
+                        <th>
                             是否取消
                         </th>
                         <th>
@@ -417,6 +426,9 @@
                     <tr>
                         <td>
                             <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                        </td>
+                        <td>
+                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.IsCanceled)

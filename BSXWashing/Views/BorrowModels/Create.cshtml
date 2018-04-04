@@ -1,8 +1,11 @@
 ﻿@model BSXWashing.Models.DBClass.BorrowModel
 @using System.Security.Claims;
 @{
-    ViewData["Title"] = "填写借订单";
+    ViewData["Title"] = "填写提货订单";
     ViewData["SubTitle"] = "只有客户才能填写借订单";
+
+    var items = (List<BSXWashing.Models.DBClass.ItemModel>)(ViewBag.ItemModels);
+    var discount = (BSXWashing.Models.DBClass.DiscountModel)ViewBag.Discount;
 }
 
 <div class="jumbotron" style="background-color:deepskyblue">
@@ -10,7 +13,7 @@
         @ViewBag.Title
     </h2>
     <p style="color:white" class="lead">
-        @ViewBag.SubTitle
+        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">物品价格清单</button>
     </p>
 </div>
 
@@ -30,6 +33,8 @@
                 <span asp-validation-for="BorrowNote" class="text-danger"></span>
             </div>
 
+            <hr />
+
             <div class="form-group">
                 <label asp-for="ItemNum1" class="control-label"></label>
                 <input asp-for="ItemNum1" class="form-control" value="0" />
@@ -40,6 +45,8 @@
                 <input asp-for="ItemNum4" class="form-control" value="0" />
                 <span asp-validation-for="ItemNum4" class="text-danger"></span>
             </div>
+
+            <hr />
 
             <div class="form-group">
                 <label asp-for="ItemNum2" class="control-label"></label>
@@ -52,6 +59,8 @@
                 <span asp-validation-for="ItemNum5" class="text-danger"></span>
             </div>
 
+            <hr />
+
             <div class="form-group">
                 <label asp-for="ItemNum3" class="control-label"></label>
                 <input asp-for="ItemNum3" class="form-control" value="0" />
@@ -62,6 +71,8 @@
                 <input asp-for="ItemNum6" class="form-control" value="0" />
                 <span asp-validation-for="ItemNum6" class="text-danger"></span>
             </div>
+
+            <hr />
 
             <div class="form-group">
                 <label asp-for="ItemNum7" class="control-label"></label>
@@ -80,7 +91,7 @@
             </div>
 
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -251,9 +262,33 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="提交借订单" class="btn btn-primary btn-block" />
+                <input type="submit" value="提交提货订单" class="btn btn-primary btn-block" />
             </div>
         </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">物品列表</h4>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group">
+                    @foreach (var item in items)
+                    {
+                        var temp = item.ItemValue * discount.DiscountValue;
+                    <li class="list-group-item">
+                        <span class="badge">@temp.ToString("0.00")</span>
+                        @item.ItemName
+                    </li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -21,9 +21,27 @@ namespace BSXWashing.Controllers
         }
 
         // GET: BorrowModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string start, string end, string name)
         {
-            var washingContext = _context.BorrowModels.Include(b => b.Account);
+
+            var washingContext = _context.BorrowModels.Include(b => b.Account).AsQueryable();
+                //.Include(b => b.Account).ToListAsync();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                washingContext = washingContext.Where(x => x.AccountName.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(start))
+            {
+                washingContext = washingContext.Where(x => x.StartTime >= DateTime.Parse(start));
+            }
+
+            if (!string.IsNullOrEmpty(end))
+            {
+                washingContext = washingContext.Where(x => x.StartTime <= DateTime.Parse(end));
+            }
+
             return View(await washingContext.ToListAsync());
         }
 
@@ -263,8 +281,10 @@ namespace BSXWashing.Controllers
 
         [Authorize(Roles = "客户")]
         // GET: BorrowModels/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewData["ItemModels"] = await _context.ItemModels.ToListAsync();
+            ViewData["Discount"] = await _context.DiscountModels.FirstOrDefaultAsync(x=>x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
             //ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
             return View();
         }
@@ -485,6 +505,9 @@ namespace BSXWashing.Controllers
                 }
             }
 
+            ViewData["Discount"] = await _context.DiscountModels.FirstOrDefaultAsync(x => x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
+
+            ViewData["ItemModels"] = await _context.ItemModels.ToListAsync();
             return View(borrowModel);
         }
 

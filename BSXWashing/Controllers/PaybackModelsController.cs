@@ -20,10 +20,26 @@ namespace BSXWashing.Controllers
             _context = context;
         }
 
-        // GET: PaybackModels
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string start, string end, string name)
         {
-            var washingContext = _context.PaybackModels.Include(p => p.Account);
+
+            var washingContext = _context.PaybackModels.Include(b => b.Account).AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                washingContext = washingContext.Where(x => x.AccountName.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(start))
+            {
+                washingContext = washingContext.Where(x => x.StartTime >= DateTime.Parse(start));
+            }
+
+            if (!string.IsNullOrEmpty(end))
+            {
+                washingContext = washingContext.Where(x => x.StartTime <= DateTime.Parse(end));
+            }
+
             return View(await washingContext.ToListAsync());
         }
 
@@ -497,7 +513,7 @@ namespace BSXWashing.Controllers
             {
                 throw ex;
             }
-            return RedirectToAction("Order", "Home");
+            return RedirectToAction("OrderCurrent", "Home");
 
         }
 
