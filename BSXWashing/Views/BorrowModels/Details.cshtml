@@ -7,7 +7,7 @@
 
 <div class="jumbotron" style="background-color:olivedrab">
     <h2 style="color:white">
-        <span class="label label-info">@Model.Account.StoreName</span>
+        <span id="s_name" class="label label-info">@Model.Account.StoreName</span>
     </h2>
     <p style="color:white" class="lead">
         <span class="label label-warning">@Model.AccountName</span>
@@ -18,6 +18,18 @@
         <span class="label label-default">@ViewBag.SubTitle</span>
     </p>
 </div>
+
+@using System.Security.Claims;
+@{
+    var t = User.FindFirst(ClaimTypes.Role);
+    var userType = t == null ? "" : t.Value;
+
+    if (userType == "配送专员" && Model.IsTraned)
+    {
+        <button class="btn btn-warning btn-block" onclick="printBill()">打印提货订单</button>
+        <hr />
+    }
+}
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -208,16 +220,16 @@
             <ul class="list-group">
 
                 <li class="list-group-item list-group-item-info">
-                    <span class="badge">@Html.DisplayFor(model => model.TranName)</span>
-                    @Html.DisplayNameFor(model => model.TranName)
+                    <span id="t_name" class="badge">@Html.DisplayFor(model => model.TranName)</span>
+                    <span>@Html.DisplayNameFor(model => model.TranName)</span>
                 </li>
                 <li class="list-group-item list-group-item-success">
                     <span class="badge">@Html.DisplayFor(model => model.StartTime)</span>
                     @Html.DisplayNameFor(model => model.StartTime)
                 </li>
                 <li class="list-group-item list-group-item-success">
-                    <span class="badge">@Html.DisplayFor(model => model.TranTime)</span>
-                    @Html.DisplayNameFor(model => model.TranTime)
+                    <span id="t_time" class="badge">@Html.DisplayFor(model => model.TranTime)</span>
+                    <span>@Html.DisplayNameFor(model => model.TranTime)</span>
                 </li>
                 <li class="list-group-item list-group-item-success">
                     <span class="badge">@Html.DisplayFor(model => model.FinishTime)</span>
@@ -244,3 +256,13 @@
     </div>
 
 </div>
+
+<script>
+    function printBill() {
+        var name = "商户名：" + document.getElementById("s_name").innerText
+            + "\n配送人：" + document.getElementById("t_name").innerText
+            + "\n时  间：" + document.getElementById("t_time").innerText;
+        alert(name);
+        window.AndroidWebView.showInfoFromJs(name);
+    }
+</script>
