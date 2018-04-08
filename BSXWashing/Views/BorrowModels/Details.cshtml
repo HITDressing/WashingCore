@@ -29,11 +29,19 @@
 
         var realname = "&";
 
-        document.getElementsByName("dark").forEach(x => realname = realname + "&" + x.innerText);
+        var darkArray = document.getElementsByName("dark");
 
-        var describe = "&"
+        for (var i = 0; i < darkArray.length; i++) {
+            realname = realname + "&" + darkArray[i].innerText;
+        }
 
-        document.getElementsByName("deep").forEach(x => describe = describe + "&" + x.innerText);
+        var describe = "&";
+
+        var describeArray = document.getElementsByName("deep");
+
+        for (var i = 0; i < describeArray.length; i++) {
+            describe = describe + "&" + describeArray[i].innerText;
+        }
 
         var total = document.getElementById("order_money").innerText;
 
@@ -75,7 +83,7 @@
                 @foreach (var item in items)
                 {
                     <li class="list-group-item">
-                        <span name="deep" class="badge">@item.ItemQuantity 个 * @item.ItemTrueUnitValue = @item.ItemTrueTotalValue 元</span>
+                        <span name="deep" class="badge">@item.ItemQuantity<span>个*</span>@item.ItemTrueUnitValue<span>=</span>@item.ItemTrueTotalValue<span>元</span></span>
                         <span name="dark">@item.ItemName</span>
                     </li>
                 }
