@@ -71,7 +71,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Where(x => string.IsNullOrEmpty(x.TranName)))
+                    @foreach (var item in Model.Where(x => !string.IsNullOrEmpty(x.TranName)))
                     {
                         <tr>
                             <td>

@@ -3,6 +3,8 @@
 @{
     //ViewData["Title"] = Model.Account.AccountName + "-" + Model.Account.Address + "-" + Model.Account.StoreName + "-" + Model.Account.MobileNumber;
     ViewData["SubTitle"] = "用户提货订单详情";
+
+    var items = (List<BSXWashing.Models.ViewModel.ItemViewModel>)(ViewBag.ItemModels);
 }
 
 <div class="jumbotron" style="background-color:olivedrab">
@@ -18,6 +20,26 @@
         <span class="label label-default">@ViewBag.SubTitle</span>
     </p>
 </div>
+
+<script>
+    function printBill() {
+        var title = "类  型：用户提货订单\n商户名：" + document.getElementById("s_name").innerText
+            + "\n配送人：" + document.getElementById("t_name").innerText
+            + "\n时  间：" + document.getElementById("t_time").innerText;
+
+        var realname = "&";
+
+        document.getElementsByName("dark").forEach(x => realname = realname + "&" + x.innerText);
+
+        var describe = "&"
+
+        document.getElementsByName("deep").forEach(x => describe = describe + "&" + x.innerText);
+
+        var total = document.getElementById("order_money").innerText;
+
+        Android.showToast(title + realname + describe + "&&" + total);
+    }
+</script>
 
 @using System.Security.Claims;
 @{
@@ -50,168 +72,13 @@
         <div role="tabpanel" class="tab-pane fade in active" id="inve">
             <ul class="list-group">
 
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum1)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum1)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum2)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum2)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum3)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum3)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum4)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum4)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum5)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum5)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum6)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum6)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum7)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum7)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum8)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum8)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum9)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum9)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum10)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum10)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum11)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum11)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum12)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum12)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum13)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum13)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum14)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum14)
-                </li>
-
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum15)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum15)
-                </li>
-
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum16)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum16)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum17)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum17)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum18)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum18)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum19)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum19)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum20)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum20)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum21)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum21)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum22)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum22)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum23)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum23)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum24)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum24)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum25)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum25)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum26)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum26)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum27)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum27)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum28)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum28)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum29)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum29)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum30)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum30)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum31)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum31)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum32)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum32)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum33)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum33)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum34)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum34)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum35)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum35)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum36)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum36)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum37)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum37)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum38)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum38)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum39)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum39)
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@Html.DisplayFor(model => model.ItemNum40)</span>
-                    @Html.DisplayNameFor(model => model.ItemNum40)
-                </li>
+                @foreach (var item in items)
+                {
+                    <li class="list-group-item">
+                        <span name="deep" class="badge">@item.ItemQuantity 个 * @item.ItemTrueUnitValue = @item.ItemTrueTotalValue 元</span>
+                        <span name="dark">@item.ItemName</span>
+                    </li>
+                }
             </ul>
         </div>
 
@@ -236,7 +103,7 @@
                     @Html.DisplayNameFor(model => model.FinishTime)
                 </li>
                 <li class="list-group-item list-group-item-warning">
-                    <span class="badge">@Html.DisplayFor(model => model.OrderMoney)</span>
+                    <span id="order_money" class="badge">@Html.DisplayFor(model => model.OrderMoney)</span>
                     @Html.DisplayNameFor(model => model.OrderMoney)
                 </li>
                 <li class="list-group-item list-group-item-danger">
@@ -256,13 +123,3 @@
     </div>
 
 </div>
-
-<script>
-    function printBill() {
-        var name = "商户名：" + document.getElementById("s_name").innerText
-            + "\n配送人：" + document.getElementById("t_name").innerText
-            + "\n时  间：" + document.getElementById("t_time").innerText;
-        alert(name);
-        window.AndroidWebView.showInfoFromJs(name);
-    }
-</script>

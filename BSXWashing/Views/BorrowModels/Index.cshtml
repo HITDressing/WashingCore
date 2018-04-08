@@ -92,10 +92,13 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Account.AccountName)
                         </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TranName)
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Where(x => string.IsNullOrEmpty(x.TranName)))
+                    @foreach (var item in Model.Where(x => !string.IsNullOrEmpty(x.TranName)))
                     {
                         <tr>
                             <td>
@@ -108,6 +111,9 @@
                             </td>
                             <td>
                                 <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+                            </td>                            
+                            <td>
+                                <a class="label label-success" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
                             </td>
                         </tr>
                     }

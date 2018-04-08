@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BSXWashing.Models.DBClass;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using BSXWashing.Models.ViewModel;
 
 namespace BSXWashing.Controllers
 {
@@ -25,7 +26,7 @@ namespace BSXWashing.Controllers
         {
 
             var washingContext = _context.BorrowModels.Include(b => b.Account).AsQueryable();
-                //.Include(b => b.Account).ToListAsync();
+            //.Include(b => b.Account).ToListAsync();
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -55,12 +56,17 @@ namespace BSXWashing.Controllers
 
             var borrowModel = await _context.BorrowModels
                 .Include(b => b.Account)
+                .Include(b => b.Account.Discounts)
                 .SingleOrDefaultAsync(m => m.BorrowOrderID == id);
             if (borrowModel == null)
             {
                 return NotFound();
             }
 
+            var discount = borrowModel.Account.Discounts.FirstOrDefault() == null
+                ? 1.0 : borrowModel.Account.Discounts.FirstOrDefault().DiscountValue;
+
+            ViewData["ItemModels"] = await MyGetRealItemsAsync(discount, borrowModel);
             return View(borrowModel);
         }
 
@@ -77,7 +83,7 @@ namespace BSXWashing.Controllers
             {
                 return NotFound();
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
             return View(borrowModel);
         }
 
@@ -111,9 +117,9 @@ namespace BSXWashing.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction("OrderPool","Home");
+                return RedirectToAction("OrderPool", "Home");
             }
-            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x=>x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
+            ViewData["AccountName"] = new SelectList(_context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.配送专员), "AccountName", "AccountName", borrowModel.AccountName);
             return View(borrowModel);
         }
 
@@ -166,19 +172,54 @@ namespace BSXWashing.Controllers
                 borrowModel.ItemNum37 == 0 && borrowModel.ItemNum38 == 0 && borrowModel.ItemNum39 == 0 && borrowModel.ItemNum40 == 0;
         }
 
+        //按照物品名字计算
         private async Task<double> ComputeTempBalance(BorrowModel borrowModel)
         {
-            var item = await _context.ItemModels.ToListAsync();
-            return borrowModel.ItemNum1 * item[0].ItemValue + borrowModel.ItemNum2 * item[1].ItemValue + borrowModel.ItemNum3 * item[2].ItemValue + borrowModel.ItemNum4 * item[3].ItemValue +
-                       borrowModel.ItemNum5 * item[4].ItemValue + borrowModel.ItemNum6 * item[5].ItemValue + borrowModel.ItemNum7 * item[6].ItemValue + borrowModel.ItemNum8 * item[7].ItemValue +
-                       borrowModel.ItemNum9 * item[8].ItemValue + borrowModel.ItemNum10 * item[9].ItemValue + borrowModel.ItemNum11 * item[10].ItemValue + borrowModel.ItemNum12 * item[11].ItemValue +
-                       borrowModel.ItemNum13 * item[12].ItemValue + borrowModel.ItemNum14 * item[13].ItemValue + borrowModel.ItemNum15 * item[14].ItemValue + borrowModel.ItemNum16 * item[15].ItemValue +
-                       borrowModel.ItemNum17 * item[16].ItemValue + borrowModel.ItemNum18 * item[17].ItemValue + borrowModel.ItemNum19 * item[18].ItemValue + borrowModel.ItemNum20 * item[19].ItemValue +
-                       borrowModel.ItemNum21 * item[20].ItemValue + borrowModel.ItemNum22 * item[21].ItemValue + borrowModel.ItemNum23 * item[22].ItemValue + borrowModel.ItemNum24 * item[23].ItemValue +
-                       borrowModel.ItemNum25 * item[24].ItemValue + borrowModel.ItemNum26 * item[25].ItemValue + borrowModel.ItemNum27 * item[26].ItemValue + borrowModel.ItemNum28 * item[27].ItemValue +
-                       borrowModel.ItemNum29 * item[28].ItemValue + borrowModel.ItemNum30 * item[29].ItemValue + borrowModel.ItemNum31 * item[30].ItemValue + borrowModel.ItemNum32 * item[31].ItemValue +
-                       borrowModel.ItemNum33 * item[32].ItemValue + borrowModel.ItemNum34 * item[33].ItemValue + borrowModel.ItemNum35 * item[34].ItemValue + borrowModel.ItemNum36 * item[35].ItemValue +
-                       borrowModel.ItemNum37 * item[36].ItemValue + borrowModel.ItemNum38 * item[37].ItemValue + borrowModel.ItemNum39 * item[38].ItemValue + borrowModel.ItemNum40 * item[39].ItemValue;
+            var item = _context.ItemModels;
+
+            return borrowModel.ItemNum1 * (await item.FindAsync("床单 1.2M")).ItemValue 
+                + borrowModel.ItemNum2 * (await item.FindAsync("床单 1.5M")).ItemValue
+                + borrowModel.ItemNum3 * (await item.FindAsync("床单 1.8M")).ItemValue
+                + borrowModel.ItemNum4 * (await item.FindAsync("被套 1.2M")).ItemValue
+                + borrowModel.ItemNum5 * (await item.FindAsync("被套 1.5M")).ItemValue
+                + borrowModel.ItemNum6 * (await item.FindAsync("被套 1.8M")).ItemValue
+                + borrowModel.ItemNum7 * (await item.FindAsync("枕套")).ItemValue
+                + borrowModel.ItemNum8 * (await item.FindAsync("浴巾")).ItemValue
+                + borrowModel.ItemNum9 * (await item.FindAsync("地巾")).ItemValue
+                + borrowModel.ItemNum10 * (await item.FindAsync("毛巾")).ItemValue
+
+                + borrowModel.ItemNum11 * (await item.FindAsync("方巾")).ItemValue
+                + borrowModel.ItemNum12 * (await item.FindAsync("大台布")).ItemValue
+                + borrowModel.ItemNum13 *  (await item.FindAsync("香巾")).ItemValue
+                + borrowModel.ItemNum14 *  (await item.FindAsync("小台布")).ItemValue
+                + borrowModel.ItemNum15 *  (await item.FindAsync("口布")).ItemValue
+                + borrowModel.ItemNum16 *  (await item.FindAsync("毛毯")).ItemValue
+                + borrowModel.ItemNum17 *  (await item.FindAsync("桌围裙")).ItemValue
+                + borrowModel.ItemNum18 *  (await item.FindAsync("厨衣")).ItemValue
+                + borrowModel.ItemNum19 *  (await item.FindAsync("窗帘")).ItemValue
+                + borrowModel.ItemNum20 *  (await item.FindAsync("窗帘内胆")).ItemValue
+
+                + borrowModel.ItemNum21 *  (await item.FindAsync("浴帘")).ItemValue
+                + borrowModel.ItemNum22 *  (await item.FindAsync("浴服")).ItemValue
+                + borrowModel.ItemNum23 *  (await item.FindAsync("椅套")).ItemValue
+                + borrowModel.ItemNum24 *  (await item.FindAsync("帽子")).ItemValue
+                + borrowModel.ItemNum25 *  (await item.FindAsync("床裙")).ItemValue
+                + borrowModel.ItemNum26 *  (await item.FindAsync("缎料工服")).ItemValue
+                + borrowModel.ItemNum27 *  (await item.FindAsync("唐装")).ItemValue
+                + borrowModel.ItemNum28 *  (await item.FindAsync("免烫工服")).ItemValue
+                + borrowModel.ItemNum29 *  (await item.FindAsync("旗袍")).ItemValue
+                + borrowModel.ItemNum30 *  (await item.FindAsync("西服")).ItemValue
+
+                + borrowModel.ItemNum31 *  (await item.FindAsync("领带")).ItemValue
+                + borrowModel.ItemNum32 *  (await item.FindAsync("已烫工服")).ItemValue
+                + borrowModel.ItemNum33 *  (await item.FindAsync("沙发套")).ItemValue
+                + borrowModel.ItemNum34 *  (await item.FindAsync("床罩")).ItemValue
+                + borrowModel.ItemNum35 *  (await item.FindAsync("抹布")).ItemValue
+                + borrowModel.ItemNum36 *  (await item.FindAsync("保护垫")).ItemValue
+                + borrowModel.ItemNum37 *  (await item.FindAsync("地毯清洗")).ItemValue
+                + borrowModel.ItemNum38 *  (await item.FindAsync("足浴窄床单")).ItemValue
+                + borrowModel.ItemNum39 *  (await item.FindAsync("预留1")).ItemValue
+                + borrowModel.ItemNum40 *  (await item.FindAsync("预留2")).ItemValue;
         }
 
         private void WareReduce(WarehouseModel ware, BorrowModel borrowModel)
@@ -284,7 +325,7 @@ namespace BSXWashing.Controllers
         public async Task<IActionResult> Create()
         {
             ViewData["ItemModels"] = await _context.ItemModels.ToListAsync();
-            ViewData["Discount"] = await _context.DiscountModels.FirstOrDefaultAsync(x=>x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
+            ViewData["Discount"] = await _context.DiscountModels.FirstOrDefaultAsync(x => x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
             //ViewData["AccountName"] = new SelectList(_context.AccountModels, "AccountName", "AccountName");
             return View();
         }
@@ -543,8 +584,8 @@ namespace BSXWashing.Controllers
 
         [Authorize(Roles = "超级管理员,客户,仓库保管员")]
         public async Task<IActionResult> ConfirmOrder(int id)
-        {    
-            if(!await _context.WarehouseModels.AnyAsync(x => x.AccountName == User.FindFirst(ClaimTypes.Sid).Value))
+        {
+            if (!await _context.WarehouseModels.AnyAsync(x => x.AccountName == User.FindFirst(ClaimTypes.Sid).Value))
             {
                 _context.Add(new WarehouseModel()
                 {
@@ -558,7 +599,7 @@ namespace BSXWashing.Controllers
             borrowOrder.FinishTime = DateTime.Now;
             borrowOrder.IsCompleted = true;
 
-            var ware = await _context.WarehouseModels.FirstOrDefaultAsync(x=>x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
+            var ware = await _context.WarehouseModels.FirstOrDefaultAsync(x => x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
 
             WareTopup(ware, borrowOrder);
 
@@ -593,6 +634,414 @@ namespace BSXWashing.Controllers
             }
 
             return RedirectToAction("TranOrderCurrent", "Home");
+        }
+
+        private async Task<List<ItemViewModel>> MyGetRealItemsAsync(double discount, BorrowModel borrowModel)
+        {
+            var realItems = new List<ItemViewModel>();
+            var item = _context.ItemModels;
+
+            if (borrowModel.ItemNum1 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "床单 1.2M",
+                    ItemQuantity = borrowModel.ItemNum1,
+                    ItemTrueUnitValue = (await item.FindAsync("床单 1.2M")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum2 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "床单 1.5M",
+                    ItemQuantity = borrowModel.ItemNum2,
+                    ItemTrueUnitValue = (await item.FindAsync("床单 1.5M")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum3 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "床单 1.8M",
+                    ItemQuantity = borrowModel.ItemNum3,
+                    ItemTrueUnitValue = (await item.FindAsync("床单 1.8M")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum4 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "被套 1.2M",
+                    ItemQuantity = borrowModel.ItemNum4,
+                    ItemTrueUnitValue = (await item.FindAsync("被套 1.2M")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum5 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "被套 1.5M",
+                    ItemQuantity = borrowModel.ItemNum5,
+                    ItemTrueUnitValue = (await item.FindAsync("被套 1.5M")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum6 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "被套 1.8M",
+                    ItemQuantity = borrowModel.ItemNum6,
+                    ItemTrueUnitValue = (await item.FindAsync("被套 1.8M")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum7 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "枕套",
+                    ItemQuantity = borrowModel.ItemNum7,
+                    ItemTrueUnitValue = (await item.FindAsync("枕套")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum8 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "浴巾",
+                    ItemQuantity = borrowModel.ItemNum8,
+                    ItemTrueUnitValue = (await item.FindAsync("浴巾")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum9 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "地巾",
+                    ItemQuantity = borrowModel.ItemNum9,
+                    ItemTrueUnitValue = (await item.FindAsync("地巾")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum10 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "毛巾",
+                    ItemQuantity = borrowModel.ItemNum10,
+                    ItemTrueUnitValue = (await item.FindAsync("毛巾")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum11 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "方巾",
+                    ItemQuantity = borrowModel.ItemNum11,
+                    ItemTrueUnitValue = (await item.FindAsync("方巾")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum12 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "大台布",
+                    ItemQuantity = borrowModel.ItemNum12,
+                    ItemTrueUnitValue = (await item.FindAsync("大台布")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum13 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "香巾",
+                    ItemQuantity = borrowModel.ItemNum13,
+                    ItemTrueUnitValue = (await item.FindAsync("香巾")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum14 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "小台布",
+                    ItemQuantity = borrowModel.ItemNum14,
+                    ItemTrueUnitValue = (await item.FindAsync("小台布")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum15 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "口布",
+                    ItemQuantity = borrowModel.ItemNum15,
+                    ItemTrueUnitValue = (await item.FindAsync("口布")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum16 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "毛毯",
+                    ItemQuantity = borrowModel.ItemNum16,
+                    ItemTrueUnitValue = (await item.FindAsync("毛毯")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum17 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "桌围裙",
+                    ItemQuantity = borrowModel.ItemNum17,
+                    ItemTrueUnitValue = (await item.FindAsync("桌围裙")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum18 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "厨衣",
+                    ItemQuantity = borrowModel.ItemNum18,
+                    ItemTrueUnitValue = (await item.FindAsync("厨衣")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum19 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "窗帘",
+                    ItemQuantity = borrowModel.ItemNum19,
+                    ItemTrueUnitValue = (await item.FindAsync("窗帘")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum20 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "窗帘内胆",
+                    ItemQuantity = borrowModel.ItemNum20,
+                    ItemTrueUnitValue = (await item.FindAsync("窗帘内胆")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum21 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "浴帘",
+                    ItemQuantity = borrowModel.ItemNum21,
+                    ItemTrueUnitValue = (await item.FindAsync("浴帘")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum22 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "浴服",
+                    ItemQuantity = borrowModel.ItemNum22,
+                    ItemTrueUnitValue = (await item.FindAsync("浴服")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum23 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "椅套",
+                    ItemQuantity = borrowModel.ItemNum23,
+                    ItemTrueUnitValue = (await item.FindAsync("椅套")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum24 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "帽子",
+                    ItemQuantity = borrowModel.ItemNum24,
+                    ItemTrueUnitValue = (await item.FindAsync("帽子")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum25 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "床裙",
+                    ItemQuantity = borrowModel.ItemNum25,
+                    ItemTrueUnitValue = (await item.FindAsync("床裙")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum26 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "缎料工服",
+                    ItemQuantity = borrowModel.ItemNum26,
+                    ItemTrueUnitValue = (await item.FindAsync("缎料工服")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum27 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "唐装",
+                    ItemQuantity = borrowModel.ItemNum27,
+                    ItemTrueUnitValue = (await item.FindAsync("唐装")).ItemValue * discount
+                });
+            }
+            
+            if (borrowModel.ItemNum28 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "免烫工服",
+                    ItemQuantity = borrowModel.ItemNum28,
+                    ItemTrueUnitValue = (await item.FindAsync("免烫工服")).ItemValue * discount
+                });
+            }   
+            
+            if (borrowModel.ItemNum29 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "旗袍",
+                    ItemQuantity = borrowModel.ItemNum29,
+                    ItemTrueUnitValue = (await item.FindAsync("旗袍")).ItemValue * discount
+                });
+            }     
+            
+            if (borrowModel.ItemNum30 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "西服",
+                    ItemQuantity = borrowModel.ItemNum30,
+                    ItemTrueUnitValue = (await item.FindAsync("西服")).ItemValue * discount
+                });
+            }   
+            
+            if (borrowModel.ItemNum31 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "领带",
+                    ItemQuantity = borrowModel.ItemNum31,
+                    ItemTrueUnitValue = (await item.FindAsync("领带")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum32 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "已烫工服",
+                    ItemQuantity = borrowModel.ItemNum32,
+                    ItemTrueUnitValue = (await item.FindAsync("已烫工服")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum33 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "沙发套",
+                    ItemQuantity = borrowModel.ItemNum33,
+                    ItemTrueUnitValue = (await item.FindAsync("沙发套")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum34 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "床罩",
+                    ItemQuantity = borrowModel.ItemNum34,
+                    ItemTrueUnitValue = (await item.FindAsync("床罩")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum35 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "抹布",
+                    ItemQuantity = borrowModel.ItemNum35,
+                    ItemTrueUnitValue = (await item.FindAsync("抹布")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum36 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "保护垫",
+                    ItemQuantity = borrowModel.ItemNum36,
+                    ItemTrueUnitValue = (await item.FindAsync("保护垫")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum37 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "地毯清洗",
+                    ItemQuantity = borrowModel.ItemNum37,
+                    ItemTrueUnitValue = (await item.FindAsync("地毯清洗")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum38 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "足浴窄床单",
+                    ItemQuantity = borrowModel.ItemNum38,
+                    ItemTrueUnitValue = (await item.FindAsync("足浴窄床单")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum39 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "预留1",
+                    ItemQuantity = borrowModel.ItemNum39,
+                    ItemTrueUnitValue = (await item.FindAsync("预留1")).ItemValue * discount
+                });
+            }
+
+            if (borrowModel.ItemNum40 != 0)
+            {
+                realItems.Add(new ItemViewModel
+                {
+                    ItemName = "预留2",
+                    ItemQuantity = borrowModel.ItemNum40,
+                    ItemTrueUnitValue = (await item.FindAsync("预留2")).ItemValue * discount
+                });
+            }
+
+            return realItems;
         }
     }
 }
