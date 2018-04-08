@@ -54,6 +54,7 @@ namespace BSXWashing.Controllers
 
             var paybackModel = await _context.PaybackModels
                 .Include(p => p.Account)
+                .Include(p=>p.Account.Discounts)
                 .SingleOrDefaultAsync(m => m.PaybackOrderID == id);
             if (paybackModel == null)
             {
