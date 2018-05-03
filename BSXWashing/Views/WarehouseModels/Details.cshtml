@@ -1,270 +1,289 @@
 ﻿@model BSXWashing.Models.DBClass.WarehouseModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "库存详情";
 }
 
-<h2>Details</h2>
+<div class="jumbotron" style="background-color:tomato">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+</div>
+
 
 <div>
-    <h4>WarehouseModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.WareNote)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.WareNote)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum1)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum1)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum2)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum2)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum3)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum3)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum4)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum4)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum5)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum5)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum6)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum6)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum7)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum7)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum8)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum8)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum9)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum9)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum10)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum10)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum11)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum11)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum12)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum12)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum13)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum13)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum14)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum14)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum15)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum15)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum16)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum16)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum17)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum17)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum18)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum18)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum19)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum19)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum20)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum20)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum21)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum21)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum22)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum22)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum23)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum23)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum24)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum24)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum25)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum25)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum26)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum26)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum27)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum27)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum28)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum28)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum29)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum29)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum30)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum30)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum31)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum31)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum32)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum32)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum33)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum33)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum34)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum34)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum35)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum35)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum36)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum36)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum37)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum37)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum38)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum38)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum39)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum39)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.ItemNum40)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.ItemNum40)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Account)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Account.AccountName)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.WarehouseID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <ul class="list-group">
+        @if (Model.ItemNum1 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum1</span>
+                @Html.DisplayNameFor(m => m.ItemNum1)
+            </li>
+        }
+        @if (Model.ItemNum2 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum2</span>
+                @Html.DisplayNameFor(m => m.ItemNum2)
+            </li>
+        }
+        @if (Model.ItemNum3 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum3</span>
+                @Html.DisplayNameFor(m => m.ItemNum3)
+            </li>
+        }
+        @if (Model.ItemNum4 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum4</span>
+                @Html.DisplayNameFor(m => m.ItemNum4)
+            </li>
+        }
+        @if (Model.ItemNum5 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum5</span>
+                @Html.DisplayNameFor(m => m.ItemNum5)
+            </li>
+        }
+
+        @if (Model.ItemNum6 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum6</span>
+                @Html.DisplayNameFor(m => m.ItemNum6)
+            </li>
+        }
+        @if (Model.ItemNum7 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum7</span>
+                @Html.DisplayNameFor(m => m.ItemNum7)
+            </li>
+        }
+        @if (Model.ItemNum8 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum8</span>
+                @Html.DisplayNameFor(m => m.ItemNum8)
+            </li>
+        }
+        @if (Model.ItemNum9 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum9</span>
+                @Html.DisplayNameFor(m => m.ItemNum9)
+            </li>
+        }
+        @if (Model.ItemNum10 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum10</span>
+                @Html.DisplayNameFor(m => m.ItemNum10)
+            </li>
+        }
+
+        @if (Model.ItemNum11 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum11</span>
+                @Html.DisplayNameFor(m => m.ItemNum11)
+            </li>
+        }
+        @if (Model.ItemNum12 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum12</span>
+                @Html.DisplayNameFor(m => m.ItemNum12)
+            </li>
+        }
+        @if (Model.ItemNum13 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum13</span>
+                @Html.DisplayNameFor(m => m.ItemNum13)
+            </li>
+        }
+        @if (Model.ItemNum14 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum14</span>
+                @Html.DisplayNameFor(m => m.ItemNum14)
+            </li>
+        }
+        @if (Model.ItemNum15 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum15</span>
+                @Html.DisplayNameFor(m => m.ItemNum15)
+            </li>
+        }
+
+
+        @if (Model.ItemNum16 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum16</span>
+                @Html.DisplayNameFor(m => m.ItemNum16)
+            </li>
+        }
+        @if (Model.ItemNum17 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum17</span>
+                @Html.DisplayNameFor(m => m.ItemNum17)
+            </li>
+        }
+        @if (Model.ItemNum18 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum18</span>
+                @Html.DisplayNameFor(m => m.ItemNum18)
+            </li>
+        }
+        @if (Model.ItemNum19 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum19</span>
+                @Html.DisplayNameFor(m => m.ItemNum19)
+            </li>
+        }
+        @if (Model.ItemNum20 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum20</span>
+                @Html.DisplayNameFor(m => m.ItemNum20)
+            </li>
+        }
+
+        @if (Model.ItemNum21 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum21</span>
+                @Html.DisplayNameFor(m => m.ItemNum21)
+            </li>
+        }        @if (Model.ItemNum22 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum22</span>
+                @Html.DisplayNameFor(m => m.ItemNum22)
+            </li>
+        }        @if (Model.ItemNum23 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum23</span>
+                @Html.DisplayNameFor(m => m.ItemNum23)
+            </li>
+        }        @if (Model.ItemNum24 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum24</span>
+                @Html.DisplayNameFor(m => m.ItemNum24)
+            </li>
+        }        @if (Model.ItemNum25 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum25</span>
+                @Html.DisplayNameFor(m => m.ItemNum25)
+            </li>
+        }
+        @if (Model.ItemNum26 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum26</span>
+                @Html.DisplayNameFor(m => m.ItemNum26)
+            </li>
+        }
+        @if (Model.ItemNum27 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum27</span>
+                @Html.DisplayNameFor(m => m.ItemNum27)
+            </li>
+        }
+        @if (Model.ItemNum28 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum28</span>
+                @Html.DisplayNameFor(m => m.ItemNum28)
+            </li>
+        }
+        @if (Model.ItemNum29 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum29</span>
+                @Html.DisplayNameFor(m => m.ItemNum29)
+            </li>
+        }
+        @if (Model.ItemNum30 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum30</span>
+                @Html.DisplayNameFor(m => m.ItemNum30)
+            </li>
+        }
+
+        @if (Model.ItemNum31 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum31</span>
+                @Html.DisplayNameFor(m => m.ItemNum31)
+            </li>
+        }        @if (Model.ItemNum32 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum32</span>
+                @Html.DisplayNameFor(m => m.ItemNum32)
+            </li>
+        }        @if (Model.ItemNum33 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum33</span>
+                @Html.DisplayNameFor(m => m.ItemNum33)
+            </li>
+        }        @if (Model.ItemNum34 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum34</span>
+                @Html.DisplayNameFor(m => m.ItemNum34)
+            </li>
+        }        @if (Model.ItemNum35 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum35</span>
+                @Html.DisplayNameFor(m => m.ItemNum35)
+            </li>
+        }
+        @if (Model.ItemNum36 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum36</span>
+                @Html.DisplayNameFor(m => m.ItemNum36)
+            </li>
+        }        @if (Model.ItemNum37 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum37</span>
+                @Html.DisplayNameFor(m => m.ItemNum37)
+            </li>
+        }        @if (Model.ItemNum38 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum38</span>
+                @Html.DisplayNameFor(m => m.ItemNum38)
+            </li>
+        }        @if (Model.ItemNum39 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum39</span>
+                @Html.DisplayNameFor(m => m.ItemNum39)
+            </li>
+        }        @if (Model.ItemNum40 != 0)
+        {
+            <li class="list-group-item">
+                <span class="badge">@Model.ItemNum40</span>
+                @Html.DisplayNameFor(m => m.ItemNum40)
+            </li>
+        }
+    </ul>
 </div>

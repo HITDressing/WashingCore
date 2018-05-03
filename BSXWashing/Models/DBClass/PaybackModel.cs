@@ -12,6 +12,7 @@ namespace BSXWashing.Models.DBClass
         [DisplayName("配送人员")]
         public string TranName { get; set; }
 
+        [DisplayName("回收用户名")]
         public string AccountName { get; set; }
         public virtual AccountModel Account { get; set; }
 

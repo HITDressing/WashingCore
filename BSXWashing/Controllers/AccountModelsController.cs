@@ -59,13 +59,12 @@ namespace BSXWashing.Controllers
             return View();
         }
 
-        // POST: AccountModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "超级管理员")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("AccountName,MobileNumber,Address,Type,Level,Category,Password,Salt,StoreName,Balance")] AccountModel accountModel)
+        public async Task<IActionResult> Create([Bind("AccountName,Password,MobileNumber,Address,Type,Level,Category,StoreName")] AccountModel accountModel)
         {
+            accountModel.Balance = 0;
             if (ModelState.IsValid)
             {
                 _context.Add(accountModel);

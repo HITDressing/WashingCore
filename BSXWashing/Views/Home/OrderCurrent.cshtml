@@ -36,178 +36,287 @@
         <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">未配送的提货订单</a></li>
         <li role="presentation"><a href="#target" aria-controls="target" role="tab" data-toggle="tab">未配送的回收订单</a></li>
 
-        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史用户订单</a></li>
+        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史提货订单</a></li>
         <li role="presentation"><a href="#hp" aria-controls="hp" role="tab" data-toggle="tab">历史回收订单</a></li>
     </ul>
     <div class="tab-content">
 
         <div role="tabpanel" class="tab-pane fade in active" id="inve">
             <ul class="list-group">
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum1</span>
-                    床单 1.2M
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum2</span>
-                    床单 1.5M
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum3</span>
-                    床单 1.8M
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum4</span>
-                    被套 1.2M
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum5</span>
-                    被套 1.5M
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum6</span>
-                    被套 1.8M
-                </li>
+                @if (myWare.ItemNum1 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum1</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum1)
+                    </li>
+                }
+                @if (myWare.ItemNum2 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum2</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum2)
+                    </li>
+                }
+                @if (myWare.ItemNum3 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum3</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum3)
+                    </li>
+                }
+                @if (myWare.ItemNum4 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum4</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum4)
+                    </li>
+                }
+                @if (myWare.ItemNum5 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum5</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum5)
+                    </li>
+                }
 
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum7</span>
-                    枕套
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum8</span>
-                    浴巾
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum9</span>
-                    地巾
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum10</span>
-                    毛巾
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum11</span>
-                    方巾
-                </li>
+                @if (myWare.ItemNum6 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum6</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum6)
+                    </li>
+                }
+                @if (myWare.ItemNum7 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum7</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum7)
+                    </li>
+                }
+                @if (myWare.ItemNum8 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum8</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum8)
+                    </li>
+                }
+                @if (myWare.ItemNum9 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum9</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum9)
+                    </li>
+                }
+                @if (myWare.ItemNum10 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum10</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum10)
+                    </li>
+                }
 
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum12</span>
-                    大台布
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum13</span>
-                    香巾
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum14</span>
-                    小台布
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum15</span>
-                    口布
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum16</span>
-                    毛毯
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum17</span>
-                    桌围裙
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum18</span>
-                    厨衣
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum19</span>
-                    窗帘
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum20</span>
-                    窗帘内胆
-                </li>
+                @if (myWare.ItemNum11 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum11</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum11)
+                    </li>
+                }
+                @if (myWare.ItemNum12 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum12</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum12)
+                    </li>
+                }
+                @if (myWare.ItemNum13 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum13</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum13)
+                    </li>
+                }
+                @if (myWare.ItemNum14 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum14</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum14)
+                    </li>
+                }
+                @if (myWare.ItemNum15 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum15</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum15)
+                    </li>
+                }
 
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum21</span>
-                    浴帘
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum22</span>
-                    浴服
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum23</span>
-                    椅套
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum24</span>
-                    帽子
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum25</span>
-                    床裙
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum26</span>
-                    缎料工服
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum27</span>
-                    唐装
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum28</span>
-                    免烫工服
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum29</span>
-                    旗袍
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum30</span>
-                    西服
-                </li>
 
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum31</span>
-                    领带
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum32</span>
-                    已烫工服
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum33</span>
-                    沙发套
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum34</span>
-                    床罩
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum35</span>
-                    抹布
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum36</span>
-                    保护垫
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum37</span>
-                    地毯清洗
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum38</span>
-                    美容足浴窄床单
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum39</span>
-                    预留
-                </li>
-                <li class="list-group-item">
-                    <span class="badge">@myWare.ItemNum40</span>
-                    预留
-                </li>
+                @if (myWare.ItemNum16 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum16</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum16)
+                    </li>
+                }
+                @if (myWare.ItemNum17 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum17</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum17)
+                    </li>
+                }
+                @if (myWare.ItemNum18 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum18</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum18)
+                    </li>
+                }
+                @if (myWare.ItemNum19 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum19</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum19)
+                    </li>
+                }
+                @if (myWare.ItemNum20 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum20</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum20)
+                    </li>
+                }
 
+                @if (myWare.ItemNum21 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum21</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum21)
+                    </li>
+                }        @if (myWare.ItemNum22 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum22</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum22)
+                    </li>
+                }        @if (myWare.ItemNum23 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum23</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum23)
+                    </li>
+                }        @if (myWare.ItemNum24 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum24</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum24)
+                    </li>
+                }        @if (myWare.ItemNum25 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum25</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum25)
+                    </li>
+                }
+                @if (myWare.ItemNum26 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum26</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum26)
+                    </li>
+                }
+                @if (myWare.ItemNum27 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum27</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum27)
+                    </li>
+                }
+                @if (myWare.ItemNum28 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum28</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum28)
+                    </li>
+                }
+                @if (myWare.ItemNum29 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum29</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum29)
+                    </li>
+                }
+                @if (myWare.ItemNum30 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum30</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum30)
+                    </li>
+                }
+
+                @if (myWare.ItemNum31 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum31</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum31)
+                    </li>
+                }        @if (myWare.ItemNum32 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum32</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum32)
+                    </li>
+                }        @if (myWare.ItemNum33 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum33</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum33)
+                    </li>
+                }        @if (myWare.ItemNum34 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum34</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum34)
+                    </li>
+                }        @if (myWare.ItemNum35 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum35</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum35)
+                    </li>
+                }
+                @if (myWare.ItemNum36 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum36</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum36)
+                    </li>
+                }        @if (myWare.ItemNum37 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum37</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum37)
+                    </li>
+                }        @if (myWare.ItemNum38 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum38</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum38)
+                    </li>
+                }        @if (myWare.ItemNum39 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum39</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum39)
+                    </li>
+                }        @if (myWare.ItemNum40 != 0)
+                {
+                    <li class="list-group-item">
+                        <span class="badge">@myWare.ItemNum40</span>
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum40)
+                    </li>
+                }
             </ul>
 
         </div>
@@ -233,23 +342,23 @@
                 </thead>
                 <tbody>
                     @foreach (var item in NotFinishBorrow.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                        </td>
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsTraned)
-                        </td>
-                        <td>
-                            @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                        </td>
-                    </tr>
-            }
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsTraned)
+                            </td>
+                            <td>
+                                @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -274,22 +383,22 @@
                 </thead>
                 <tbody>
                     @foreach (var item in NotFinishPayback.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsTraned)
-                        </td>
-                        <td>
-                            @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                        </td>
-                    </tr>
-            }
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsTraned)
+                            </td>
+                            <td>
+                                @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -311,19 +420,19 @@
                 </thead>
                 <tbody>
                     @foreach (var item in NotFinishBorrow.Where(x => String.IsNullOrEmpty(x.TranName)))
-                {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                        </td>
-                        <td>
-                            @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                        </td>
-                    </tr>
-            }
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                            </td>
+                            <td>
+                                @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -345,19 +454,19 @@
                 </thead>
                 <tbody>
                     @foreach (var item in NotFinishPayback.Where(x => String.IsNullOrEmpty(x.TranName)))
-                {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                        </td>
-                        <td>
-                            @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                        </td>
-                    </tr>
-            }
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                            </td>
+                            <td>
+                                @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -382,22 +491,22 @@
                 </thead>
                 <tbody>
                     @foreach (var item in FinishBorrow)
-                {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsCanceled)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsCompleted)
-                        </td>
-                    </tr>
-            }
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCanceled)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCompleted)
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>
@@ -422,22 +531,22 @@
                 </thead>
                 <tbody>
                     @foreach (var item in FinishPayback)
-                {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsCanceled)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsCompleted)
-                        </td>
-                    </tr>
-            }
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCanceled)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsCompleted)
+                            </td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         </div>

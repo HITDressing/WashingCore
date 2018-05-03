@@ -1,21 +1,39 @@
 ﻿@model BSXWashing.Models.DBClass.AccountModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "添加用户";
+    ViewData["SubTitle"] = "默认密码为12345678";
 }
 
-<h2>Create</h2>
-
-<h4>AccountModel</h4>
-<hr />
+<div class="jumbotron" style="background-color:lightsalmon">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h4>
+        <span class="label label-default">@ViewData["SubTitle"]</span>
+    </h4>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="AccountName" class="control-label"></label>
+                <input asp-for="AccountName" class="form-control" />
+                <span asp-validation-for="AccountName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="MobileNumber" class="control-label"></label>
                 <input asp-for="MobileNumber" class="form-control" />
                 <span asp-validation-for="MobileNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
@@ -24,28 +42,36 @@
             </div>
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control"></select>
+                <select asp-for="Type" class="form-control">
+                    <option value="0">超级管理员</option>
+                    <option value="1">仓库保管员</option>
+                    <option value="2">财务负责人</option>
+                    <option value="3">配送专员</option>
+                    <option value="4">客户</option>
+                </select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Level" class="control-label"></label>
-                <select asp-for="Level" class="form-control"></select>
+                <select asp-for="Level" class="form-control">
+                    <option value="0">A类</option>
+                    <option value="1">B类</option>
+                    <option value="2">C类</option>
+                    <option value="3">D类</option>
+                    <option value="4">E类</option>
+                </select>
                 <span asp-validation-for="Level" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <select asp-for="Category" class="form-control"></select>
+                <select asp-for="Category" class="form-control">
+                    <option value="0">洗浴</option>
+                    <option value="1">宾馆</option>
+                    <option value="2">美发</option>
+                    <option value="3">预留</option>
+                    <option value="4">其他</option>
+                </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Salt" class="control-label"></label>
-                <input asp-for="Salt" class="form-control" />
-                <span asp-validation-for="Salt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StoreName" class="control-label"></label>
@@ -53,19 +79,10 @@
                 <span asp-validation-for="StoreName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Balance" class="control-label"></label>
-                <input asp-for="Balance" class="form-control" />
-                <span asp-validation-for="Balance" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="添加" class="btn btn-block btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
