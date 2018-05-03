@@ -98,12 +98,14 @@
         [Authorize(Roles = "配送专员")]
         public async Task<ActionResult> TranOrderCurrent()
         {
-            var account = await _context.AccountModels.Include(x => x.PaybackTransport).Include(x => x.BorrowTransport).Include(x => x.Warehouses).FirstOrDefaultAsync(x=>x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
+            var account = await _context.AccountModels.Include(x => x.PaybackTransport).Include(x => x.BorrowTransport).Include(x => x.Warehouses).FirstOrDefaultAsync(x => x.AccountName == User.FindFirst(ClaimTypes.Sid).Value);
 
             account.BorrowTransport = await _context.BorrowModels.Include(x => x.Account).Where(x => x.TranName == User.FindFirst(ClaimTypes.Sid).Value).ToListAsync();
             account.PaybackTransport = await _context.PaybackModels.Include(x => x.Account).Where(x => x.TranName == User.FindFirst(ClaimTypes.Sid).Value).ToListAsync();
 
             return View(account);
         }
+
+        public async Task<ActionResult> Mapping() => View(await _context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.客户).ToListAsync());
     }
 }
