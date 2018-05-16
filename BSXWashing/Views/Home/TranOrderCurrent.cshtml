@@ -20,7 +20,7 @@
     </h5>
     <p style="color:white" class="lead">
         @Html.ActionLink("编辑个人信息", "Edit", "AccountModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-info" })
-        @Html.ActionLink("修改密码", "Password", "AccountModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-warning" })
+        @Html.ActionLink("修改密码", "PasswordChange", "AccountModels", routeValues: new { id = Model.AccountName }, htmlAttributes: new { @class = "btn btn-warning" })
     </p>
 </div>
 <div>

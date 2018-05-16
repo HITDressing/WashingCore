@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using BSXWashing.Models.DBClass;
 using BSXWashing.Models.EnumClass;
 using Microsoft.AspNetCore.Authorization;
+using BSXWashing.Models.ViewModel;
 
 namespace BSXWashing.Controllers
 {
@@ -26,7 +27,7 @@ namespace BSXWashing.Controllers
         public async Task<IActionResult> Balance()
         {
             return View(await _context.AccountModels
-                .Where(x=>x.Type == EnumAccountType.客户)
+                .Where(x => x.Type == EnumAccountType.客户)
                 .ToListAsync());
         }
 
@@ -64,11 +65,32 @@ namespace BSXWashing.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AccountName,Password,MobileNumber,Address,Type,Level,Category,StoreName")] AccountModel accountModel)
         {
+            accountModel.Type = EnumAccountType.客户;
+            accountModel.Category = EnumAccountCategory.其他;
+            accountModel.Level = EnumAccountLevel.E类;
             accountModel.Balance = 0;
+
             if (ModelState.IsValid)
             {
                 _context.Add(accountModel);
                 await _context.SaveChangesAsync();
+
+                await new DiscountModelsController(_context).Create(new DiscountModel
+                {
+                    AccountName = accountModel.AccountName,
+                    DiscountValue = 1,
+                    DiscountNote = "初始化折扣为1"
+                });
+
+                if (!await _context.WarehouseModels.AnyAsync(x => x.AccountName == accountModel.AccountName))
+                {
+                    _context.Add(new WarehouseModel()
+                    {
+                        AccountName = accountModel.AccountName
+                    });
+                    await _context.SaveChangesAsync();
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(accountModel);
@@ -193,7 +215,7 @@ namespace BSXWashing.Controllers
                     await _context.SaveChangesAsync();
                 }
 
-                return RedirectToAction("Login","Home");
+                return RedirectToAction("Login", "Home");
             }
             return View(accountModel);
         }
@@ -248,6 +270,64 @@ namespace BSXWashing.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(accountModel);
+        }
+
+        // GET: AccountModels/Edit/5
+        public async Task<IActionResult> PasswordChange(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (await _context.AccountModels.SingleOrDefaultAsync(m => m.AccountName == id) == null)
+            {
+                return NotFound();
+            }
+            return View();
+        }
+
+        // POST: AccountModels/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> PasswordChange(string id, [Bind("OldPassword,NewPassword,ConfirmNewPassword")] PasswordChangeViewModel passwordChangeViewModel)
+        {
+            var accountModel = await _context.AccountModels.SingleOrDefaultAsync(m => m.AccountName == id);
+            if (accountModel == null)
+            {
+                return NotFound();
+            }
+
+            if (accountModel.Password != passwordChangeViewModel.OldPassword)
+            {
+                ModelState.AddModelError("OldPassword", "旧密码错误");
+            }
+
+
+            if (ModelState.IsValid)
+            {
+                accountModel.Password = passwordChangeViewModel.NewPassword;
+                try
+                {
+                    _context.Update(accountModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!AccountModelExists(accountModel.AccountName))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("Details", new { id });
+            }
+            return View(passwordChangeViewModel);
         }
     }
 }

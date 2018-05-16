@@ -1,14 +1,18 @@
 ﻿@model BSXWashing.Models.DBClass.TopupModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "充值记录";
+    ViewData["SubTitle"] = "充值记录";
 }
 
-<h2>Details</h2>
+<div class="jumbotron" style="background-color:lightseagreen">
+    <h2 style="color:white">@ViewData["Title"]</h2>
+    <h4>
+        <span class="label label-warning">@ViewData["SubTitle"]</span>
+    </h4>
+</div>
 
 <div>
-    <h4>TopupModel</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.TopupValue)

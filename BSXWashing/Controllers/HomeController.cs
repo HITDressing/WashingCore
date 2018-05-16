@@ -106,6 +106,6 @@
             return View(account);
         }
 
-        public async Task<ActionResult> Mapping() => View(await _context.AccountModels.Where(x => x.Type == Models.EnumClass.EnumAccountType.客户).ToListAsync());
+        public async Task<ActionResult> Mapping() => View(await _context.AccountModels.Include(x=>x.Warehouses).Where(x => x.Type == Models.EnumClass.EnumAccountType.客户).ToListAsync());
     }
 }

@@ -19,7 +19,7 @@
         }
 
         #l-map {
-            height: 300px;
+            height: 100%;
             width: 100%;
         }
 
@@ -33,29 +33,360 @@
 </head>
 <body>
     <div id="l-map"></div>
-    <div id="r-result">
-        <input type="button" value="批量地址解析" onclick="bdGEO()" />
-        <div id="result"></div>
+
+    <div hidden="hidden">
+        @foreach (var item in Model)
+        {
+            <hit name="address">
+                @item.Address
+            </hit>
+
+            <hit name="store">
+                @item.StoreName
+            </hit>
+
+            var myWare = item.Warehouses.First();
+
+            <hit name="ware">
+                @if (myWare.ItemNum1 != 0)
+                {
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum1)
+                    <span>-</span>
+                    @myWare.ItemNum1
+                    <br />}
+                @if (myWare.ItemNum2 != 0)
+                {
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum2)
+                    <span>-</span>
+                    @myWare.ItemNum2
+                    <br />}
+                @if (myWare.ItemNum3 != 0)
+                {
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum3)
+                    <span>-</span>
+                    @myWare.ItemNum3
+
+                    <br />}
+                @if (myWare.ItemNum4 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum4)
+                    <span>-</span>
+                    @myWare.ItemNum4
+
+                    <br />}
+                @if (myWare.ItemNum5 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum5)
+                    <span>-</span>
+                    @myWare.ItemNum5
+
+                    <br />}
+
+                @if (myWare.ItemNum6 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum6)
+                    <span>-</span>
+
+                    @myWare.ItemNum6
+
+                    <br />}
+                @if (myWare.ItemNum7 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum7)
+                    <span>-</span>
+                    @myWare.ItemNum7
+
+
+                    <br />}
+                @if (myWare.ItemNum8 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum8)
+                    <span>-</span>
+                    @myWare.ItemNum8
+
+                    <br />}
+                @if (myWare.ItemNum9 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum9)
+                    <span>-</span>
+                    @myWare.ItemNum9
+
+                    <br />}
+                @if (myWare.ItemNum10 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum10)
+                    <span>-</span>
+                    @myWare.ItemNum10
+
+                    <br />}
+
+                @if (myWare.ItemNum11 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum11)
+                    <span>-</span>
+
+                    @myWare.ItemNum11
+
+                    <br />}
+                @if (myWare.ItemNum12 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum12)
+                    <span>-</span>
+
+                    @myWare.ItemNum12
+
+
+                    <br />}
+                @if (myWare.ItemNum13 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum13)
+                    <span>-</span>
+                    @myWare.ItemNum13
+
+                    <br />}
+                @if (myWare.ItemNum14 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum14)
+                    <span>-</span>
+                    @myWare.ItemNum14
+
+                    <br />}
+                @if (myWare.ItemNum15 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum15)
+                    <span>-</span>
+                    @myWare.ItemNum15
+
+                    <br />}
+
+
+                @if (myWare.ItemNum16 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum16)
+                    <span>-</span>
+                    @myWare.ItemNum16
+
+                    <br />}
+                @if (myWare.ItemNum17 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum17)
+                    <span>-</span>
+                    @myWare.ItemNum17
+
+                    <br />}
+                @if (myWare.ItemNum18 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum18)
+                    <span>-</span>
+                    @myWare.ItemNum18
+
+                    <br />}
+                @if (myWare.ItemNum19 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum19)
+                    <span>-</span>
+                    @myWare.ItemNum19
+
+                    <br />}
+                @if (myWare.ItemNum20 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum20)
+                    <span>-</span>
+                    @myWare.ItemNum20
+
+                    <br />}
+
+                @if (myWare.ItemNum21 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum21)
+                    <span>-</span>
+                    @myWare.ItemNum21
+
+                    <br />}        @if (myWare.ItemNum22 != 0)
+                {
+
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum22)
+                    <span>-</span>
+                    @myWare.ItemNum22
+
+                    <br />}        @if (myWare.ItemNum23 != 0)
+                    {
+
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum23)
+                        <span>-</span>
+                        @myWare.ItemNum23
+
+                        <br />}        @if (myWare.ItemNum24 != 0)
+                    {
+
+                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum24)
+                        <span>-</span>
+                        @myWare.ItemNum24
+
+                        <br />}        @if (myWare.ItemNum25 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum25)
+                            <span>-</span>
+                            @myWare.ItemNum25
+
+                            <br />}
+                        @if (myWare.ItemNum26 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum26)
+                            <span>-</span>
+                            @myWare.ItemNum26
+
+                            <br />}
+                        @if (myWare.ItemNum27 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum27)
+                            <span>-</span>
+                            @myWare.ItemNum27
+
+                            <br />}
+                        @if (myWare.ItemNum28 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum28)
+                            <span>-</span>
+                            @myWare.ItemNum28
+
+                            <br />}
+                        @if (myWare.ItemNum29 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum29)
+                            <span>-</span>
+                            @myWare.ItemNum29
+
+                            <br />}
+                        @if (myWare.ItemNum30 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum30)
+                            <span>-</span>
+                            @myWare.ItemNum30
+
+                            <br />}
+
+                        @if (myWare.ItemNum31 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum31)
+                            <span>-</span>
+                            @myWare.ItemNum31
+
+                            <br />}        @if (myWare.ItemNum32 != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum32)
+                            <span>-</span>
+                            @myWare.ItemNum32
+
+                            <br />}        @if (myWare.ItemNum33 != 0)
+                            {
+
+                                @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum33)
+                                <span>-</span>
+                                @myWare.ItemNum33
+
+                                <br />}        @if (myWare.ItemNum34 != 0)
+                            {
+
+                                @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum34)
+                                <span>-</span>
+                                @myWare.ItemNum34
+
+                                <br />}        @if (myWare.ItemNum35 != 0)
+                                {
+
+                                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum35)
+                                    <span>-</span>
+                                    @myWare.ItemNum35
+
+                                    <br />}
+                                @if (myWare.ItemNum36 != 0)
+                                {
+
+                                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum36)
+                                    <span>-</span>
+                                    @myWare.ItemNum36
+
+                                    <br />}        @if (myWare.ItemNum37 != 0)
+                                {
+
+                                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum37)
+                                    <span>-</span>
+                                    @myWare.ItemNum37
+
+                                    <br />}        @if (myWare.ItemNum38 != 0)
+                                    {
+
+                                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum38)
+                                        <span>-</span>
+                                        @myWare.ItemNum38
+
+                                        <br />}        @if (myWare.ItemNum39 != 0)
+                                    {
+
+                                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum39)
+                                        <span>-</span>
+                                        @myWare.ItemNum39
+
+                                        <br />}        @if (myWare.ItemNum40 != 0)
+                                        {
+
+                                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum40)
+                                            <span>-</span>
+                                            @myWare.ItemNum40
+
+                                            <br />}
+                                    </hit>}
     </div>
+
 </body>
 </html>
 <script type="text/javascript">
     // 百度地图API功能
     var map = new BMap.Map("l-map");
-    map.centerAndZoom(new BMap.Point(117.269945, 31.86713), 13);
+    map.centerAndZoom(new BMap.Point(126.6389558404, 45.7537137743), 13);
     map.enableScrollWheelZoom(true);
     var index = 0;
     var myGeo = new BMap.Geocoder();
-    var adds = [
-        "包河区金寨路1号（金寨路与望江西路交叉口）",
-        "庐阳区凤台路209号（凤台路与蒙城北路交叉口）",
-        "蜀山区金寨路217号(近安医附院公交车站)",
-        "蜀山区梅山路10号(近安徽饭店) ",
-        "蜀山区 长丰南路159号铜锣湾广场312室",
-        "合肥市寿春路93号钱柜星乐町KTV（逍遥津公园对面）",
-        "庐阳区长江中路177号",
-        "新站区胜利路89"
-    ];
+    var adds = [];
+    var hitAddress = document.getElementsByName("address");
+    for (i = 0; i < hitAddress.length; i++) {
+        adds.push(hitAddress[i].innerText);
+    }
+
+    var stores = [];
+    var hitStore = document.getElementsByName("store");
+    var hitWare = document.getElementsByName("ware");
+    for (i = 0; i < hitStore.length; i++) {
+        stores.push(hitStore[i].innerText + "<br/>" + hitWare[i].outerHTML);
+    }
+
     function bdGEO() {
         var add = adds[index];
         geocodeSearch(add);
@@ -67,9 +398,9 @@
         }
         myGeo.getPoint(add, function (point) {
             if (point) {
-                document.getElementById("result").innerHTML += index + "、" + add + ":" + point.lng + "," + point.lat + "</br>";
+                //document.getElementById("result").innerHTML += index + "、" + add + ":" + point.lng + "," + point.lat + "</br>";
                 var address = new BMap.Point(point.lng, point.lat);
-                addMarker(address, new BMap.Label(index + ":" + add, { offset: new BMap.Size(20, -10) }));
+                addMarker(address, new BMap.Label(stores[index - 1], { offset: new BMap.Size(20, -10) }));
             }
         }, "哈尔滨市");
     }
@@ -79,4 +410,6 @@
         map.addOverlay(marker);
         marker.setLabel(label);
     }
+
+    bdGEO()
 </script>
