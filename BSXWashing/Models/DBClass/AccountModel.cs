@@ -58,7 +58,7 @@ namespace BSXWashing.Models.DBClass
         [DisplayName("余额")]
         public double Balance { get; set; }
 
-        //----------------------------------------------------------
+        //-----------外键替换更改----------------------------------
 
         [DisplayName("房间数")]
         [Range(0, 2147483647, ErrorMessage = "非法数字")]
