@@ -9,6 +9,14 @@
     <h2 style="color:white">@ViewData["Title"]</h2>
     <h5>
         <span class="label label-default">@ViewData["SubTitle"]</span>
+        <span class="label label-success">区域：@Model.Area</span>
         <span class="label label-danger">余额：@Model.Balance 元</span>
     </h5>
+    <h5>
+        <span class="label label-primary">房间数：@Model.RoomNumber 间</span>
+        <span class="label label-info">1.2M床数：@Model.TwoBedNumber 个</span>
+        <span class="label label-info">1.5M床数：@Model.FiveBedNumber 个</span>
+        <span class="label label-info">1.8M床数：@Model.EightBedNumber 个</span>
+    </h5>
+
 </div>

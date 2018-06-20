@@ -2,7 +2,7 @@
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    public class WarehouseModel : WashingFather
+    public class WarehouseModel : WashingMother
     {
         [Key]
         [DisplayName("WID")]

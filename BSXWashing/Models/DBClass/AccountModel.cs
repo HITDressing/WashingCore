@@ -60,6 +60,30 @@ namespace BSXWashing.Models.DBClass
 
         //----------------------------------------------------------
 
+        [DisplayName("房间数")]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+        public int RoomNumber { get; set; }
+
+        [DisplayName("备注")]
+        public string Note { get; set; }
+
+        [DisplayName("1.2米 床数")]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+        public int TwoBedNumber { get; set; }
+
+        [DisplayName("1.5米 床数")]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+        public int FiveBedNumber { get; set; }
+
+        [DisplayName("1.8米 床数")]
+        [Range(0, 2147483647, ErrorMessage = "非法数字")]
+        public int EightBedNumber { get; set; }
+
+        [DisplayName("用户区域")]
+        public EnumAreaCategory Area { get; set; }
+
+        //----------------------------------------------------------
+
         [DisplayName("库存信息")]
         public virtual ICollection<WarehouseModel> Warehouses { get; set; }
 

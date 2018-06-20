@@ -10,6 +10,7 @@
     <p style="color:white" class="lead">
         @ViewData["SubTitle"]
         <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal">订单筛选</button>
+        <a id="OJBK" class="btn btn-danger">导出表格</a>
     </p>
 </div>
 
@@ -197,3 +198,48 @@
         }
     </div>
 </div>
+
+<table hidden="hidden" class="table" id="downloadTable">
+    <thead>
+        <tr>
+            <th>
+                回收订单编号
+                @*@Html.DisplayNameFor(model => model.PaybackOrderID)*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TranName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Account.AccountName)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a class="label label-warning" asp-action="Details" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                </td>
+                <td>
+                    <a class="label label-success" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                </td>
+                <td>
+                    <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    // 使用outerHTML属性获取整个table元素的HTML代码（包括<table>标签），然后包装成一个完整的HTML文档，设置charset为urf-8以防止中文乱码
+    var html = "<html><head><meta charset='utf-8' /></head><body>" + document.getElementById("downloadTable").outerHTML + "</body></html>";
+    // 实例化一个Blob对象，其构造函数的第一个参数是包含文件内容的数组，第二个参数是包含文件类型属性的对象
+    var blob = new Blob([html], { type: "application/vnd.ms-excel" });
+    var a = document.getElementById("OJBK");
+    // 利用URL.createObjectURL()方法为a元素生成blob URL
+    a.href = URL.createObjectURL(blob);
+    // 设置文件名，目前只有Chrome和FireFox支持此属性
+    a.download = "回收订单记录.xls";
+</script>

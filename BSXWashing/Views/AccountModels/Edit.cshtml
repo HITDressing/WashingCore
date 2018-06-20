@@ -39,7 +39,50 @@
                 <span asp-validation-for="StoreName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-block btn-primary" />
+                <label asp-for="Area" class="control-label"></label>
+                <select asp-for="Area" class="form-control">
+                    <option value="0">区域零</option>
+                    <option value="1">区域一</option>
+                    <option value="2">区域二</option>
+                    <option value="3">区域三</option>
+                    <option value="4">区域四</option>
+                    <option value="5">区域五</option>
+                    <option value="6">区域六</option>
+                    <option value="7">区域七</option>
+                    <option value="8">区域八</option>
+                    <option value="9">区域九</option>
+                    <option value="10">区域十</option>
+                    <option value="10">其他</option>
+                </select>
+                <span asp-validation-for="Level" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RoomNumber" class="control-label"></label>
+                <input asp-for="RoomNumber" class="form-control" />
+                <span asp-validation-for="RoomNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TwoBedNumber" class="control-label"></label>
+                <input asp-for="TwoBedNumber" class="form-control" />
+                <span asp-validation-for="TwoBedNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FiveBedNumber" class="control-label"></label>
+                <input asp-for="FiveBedNumber" class="form-control" />
+                <span asp-validation-for="FiveBedNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EightBedNumber" class="control-label"></label>
+                <input asp-for="EightBedNumber" class="form-control" />
+                <span asp-validation-for="EightBedNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Note" class="control-label"></label>
+                <textarea asp-for="Note" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Note" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="保存" class="btn btn-block btn-primary" />
             </div>
         </form>
     </div>

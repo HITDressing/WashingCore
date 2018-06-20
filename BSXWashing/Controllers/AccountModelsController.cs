@@ -117,7 +117,7 @@ namespace BSXWashing.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("AccountName,MobileNumber,Address,Type,Level,Category,Password,Salt,StoreName,Balance")] AccountModel accountModel)
+        public async Task<IActionResult> Edit(string id, [Bind("AccountName,MobileNumber,Address,Type,Level,Category,Password,Salt,StoreName,Balance,RoomNumber,Note,TwoBedNumber,FiveBedNumber,EightBedNumber,Area")] AccountModel accountModel)
         {
             if (id != accountModel.AccountName)
             {

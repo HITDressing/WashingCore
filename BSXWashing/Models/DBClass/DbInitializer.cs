@@ -142,7 +142,7 @@ namespace BSXWashing.Models.DBClass
             {
                 new AccountModel
                 {
-                    AccountName = "admin",
+                    AccountName = "总管",
                     Balance =0,Address="管理员的地址",
                     Level = EnumClass.EnumAccountLevel.E类,
                     Category = EnumClass.EnumAccountCategory.预留,
@@ -153,7 +153,7 @@ namespace BSXWashing.Models.DBClass
                 },
                 new AccountModel
                 {
-                    AccountName = "ware",
+                    AccountName = "仓库管理员",
                     Balance =0,Address="仓库保管员的地址",
                     Level = EnumClass.EnumAccountLevel.E类,
                     Category = EnumClass.EnumAccountCategory.预留,
@@ -164,7 +164,7 @@ namespace BSXWashing.Models.DBClass
                 },
                 new AccountModel
                 {
-                    AccountName = "finance",
+                    AccountName = "财务管理员",
                     Balance =0,Address="财务负责人的地址",
                     Level = EnumClass.EnumAccountLevel.E类,
                     Category = EnumClass.EnumAccountCategory.预留,
@@ -175,24 +175,46 @@ namespace BSXWashing.Models.DBClass
                 },
                 new AccountModel
                 {
-                    AccountName = "tran1",
-                    Balance =0,Address="配送专员的地址",
+                    AccountName = "测试司机",
+                    Balance =0,Address="配送专员的地址A",
                     Level = EnumClass.EnumAccountLevel.E类,
                     Category = EnumClass.EnumAccountCategory.预留,
                     Type = EnumClass.EnumAccountType.配送专员,
-                    StoreName = "配送专员的商店",
+                    StoreName = "配送专员的商店A",
                     MobileNumber="15655898758",
                     Password="12345678"
                 },
                 new AccountModel
                 {
-                    AccountName = "user1",
-                    Balance =0,Address="客户的地址",
+                    AccountName = "老司机",
+                    Balance =0,Address="配送专员的地址B",
+                    Level = EnumClass.EnumAccountLevel.E类,
+                    Category = EnumClass.EnumAccountCategory.预留,
+                    Type = EnumClass.EnumAccountType.配送专员,
+                    StoreName = "配送专员的商店B",
+                    MobileNumber="18865869558",
+                    Password="12345678"
+                },
+                new AccountModel
+                {
+                    AccountName = "测试用户",
+                    Balance =0,Address="客户的地址A",
                     Level = EnumClass.EnumAccountLevel.E类,
                     Category = EnumClass.EnumAccountCategory.预留,
                     Type = EnumClass.EnumAccountType.客户,
-                    StoreName = "客户的商店",
+                    StoreName = "南岗区黄河路4号",
                     MobileNumber="18925467852",
+                    Password="12345678"
+                },
+                new AccountModel
+                {
+                    AccountName = "老用户",
+                    Balance =0,Address="客户的地址B",
+                    Level = EnumClass.EnumAccountLevel.E类,
+                    Category = EnumClass.EnumAccountCategory.预留,
+                    Type = EnumClass.EnumAccountType.客户,
+                    StoreName = "南岗区西大直街94号",
+                    MobileNumber="17456467621",
                     Password="12345678"
                 }
             };
