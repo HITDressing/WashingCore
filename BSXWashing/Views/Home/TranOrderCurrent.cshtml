@@ -7,10 +7,10 @@
     var myWare = Model.Warehouses.FirstOrDefault();
 
     var NotFinishBorrow = Model.BorrowTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
-    var NotFinishPayback = Model.PaybackTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
+    var NotFinishPayback = Model.PaybackTransport.Where(x => !x.IsTraned && !x.IsCanceled);
 
     var FinishBorrow = Model.BorrowTransport.Where(x => x.IsCompleted || x.IsCanceled);
-    var FinishPayback = Model.PaybackTransport.Where(x => x.IsCompleted || x.IsCanceled);
+    var FinishPayback = Model.PaybackTransport.Where(x => x.IsTraned || x.IsCanceled);
 }
 
 <div class="jumbotron" style="background-color:mediumseagreen">
@@ -27,15 +27,15 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送中的用户订单</a></li>
+        <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送中的提货订单</a></li>
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">配送中的回收订单</a></li>
 
-        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史用户订单</a></li>
+        <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史提货订单</a></li>
         <li role="presentation"><a href="#hp" aria-controls="hp" role="tab" data-toggle="tab">历史回收订单</a></li>
     </ul>
     <div class="tab-content">
-
         <div role="tabpanel" class="tab-pane fade in active" id="home">
+            <!--配送中的提货订单-->
             <table class="table">
                 <thead>
                     <tr>
@@ -56,27 +56,28 @@
                 </thead>
                 <tbody>
                     @foreach (var item in NotFinishBorrow.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                    {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.StoreName)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsTraned)
-                        </td>
-                        <td>
-                            @Html.ActionLink("标记送达", "TranedOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                        </td>
-                    </tr>
-                    }
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.StoreName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsTraned)
+                    </td>
+                    <td>
+                        @Html.ActionLink("标记送达", "TranedOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                    </td>
+                </tr>
+    }
                 </tbody>
             </table>
         </div>
 
         <div role="tabpanel" class="tab-pane fade" id="profile">
+            <!--配送中的回收订单-->
             <table class="table">
                 <thead>
                     <tr>
@@ -95,28 +96,29 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in NotFinishPayback.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                    {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.StoreName)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsTraned)
-                        </td>
-                        <td>
-                            @Html.ActionLink("标记送达", "TranedOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                        </td>
-                    </tr>
-                    }
+                    @foreach (var item in NotFinishPayback.Where(x => x.IsCompleted))
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.StoreName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsTraned)
+                    </td>
+                    <td>
+                        @Html.ActionLink("标记送达", "TranedOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                    </td>
+                </tr>
+    }
                 </tbody>
             </table>
         </div>
 
         <div role="tabpanel" class="tab-pane fade" id="hb">
+            <!--历史提货订单-->
             <table class="table">
                 <thead>
                     <tr>
@@ -136,27 +138,28 @@
                 </thead>
                 <tbody>
                     @foreach (var item in FinishBorrow)
-                    {
-                    <tr>
-                        <td>
-                            <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                        </td>
-                        <td>
-                            <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.StoreName)</a>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsCanceled)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IsCompleted)
-                        </td>
-                    </tr>
-                    }
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.StoreName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsCanceled)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsCompleted)
+                    </td>
+                </tr>
+    }
                 </tbody>
             </table>
         </div>
 
         <div role="tabpanel" class="tab-pane fade" id="hp">
+            <!--历史回收订单-->
             <table class="table">
                 <thead>
                     <tr>
@@ -170,13 +173,13 @@
                             是否取消
                         </th>
                         <th>
-                            是否完成
+                            是否送达
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in FinishPayback)
-                    {
+            {
                     <tr>
                         <td>
                             <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
@@ -188,10 +191,10 @@
                             @Html.DisplayFor(modelItem => item.IsCanceled)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.IsCompleted)
+                            @Html.DisplayFor(modelItem => item.IsTraned)
                         </td>
                     </tr>
-                    }
+    }
                 </tbody>
             </table>
         </div>

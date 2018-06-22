@@ -18,10 +18,12 @@
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active"><a href="#inve" aria-controls="inve" role="tab" data-toggle="tab">已完成订单</a></li>
-        <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送中订单</a></li>
-        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">已送达订单</a></li>
-        <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">已取消订单</a></li>
+        <li role="presentation" class="active"><a href="#inve" aria-controls="inve" role="tab" data-toggle="tab">历史回收订单</a></li>
+        <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送中的回收订单</a></li>
+        <!--
+        <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">已送达的回收订单（用户未确认）</a></li>
+        <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">已取消的回收订单</a></li>
+        -->
     </ul>
     <div class="tab-content">
 
@@ -42,24 +44,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Where(x => x.IsCompleted))
-                    {
-                        <tr>
-                            <td>
-                                <a class="label label-warning" asp-action="Details" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                            </td>
-                            <td>
-                                <a class="label label-success" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                            </td>
-                            <td>
-                                <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
-                            </td>
-                        </tr>
-                    }
+                    @foreach (var item in Model.Where(x => x.IsTraned||x.IsCanceled))
+                {
+                    <tr>
+                        <td>
+                            <a class="label label-warning" asp-action="Details" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                        </td>
+                        <td>
+                            <a class="label label-success" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                        </td>
+                        <td>
+                            <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+                        </td>
+                    </tr>
+            }
                 </tbody>
             </table>
         </div>
-
         <div role="tabpanel" class="tab-pane fade" id="home">
             <table class="table table-condensed table-striped">
                 <thead>
@@ -74,39 +75,39 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model.Where(x => !string.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                <a class="label label-warning" asp-action="Details" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                            </td>
-                            <td>
-                                <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
-                            </td>
-                        </tr>
-                    }
+                    @foreach (var item in Model.Where(x =>x.IsCompleted && !x.IsTraned))
+                {
+                    <tr>
+                        <td>
+                            <a class="label label-warning" asp-action="Details" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                        </td>
+                        <td>
+                            <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
+                        </td>
+                    </tr>
+            }
                 </tbody>
             </table>
         </div>
-
-        <div role="tabpanel" class="tab-pane fade" id="profile">
-            <table class="table table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <th>
-                            回收订单编号
-                            @*@Html.DisplayNameFor(model => model.PaybackOrderID)*@
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.TranName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Account.AccountName)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Where(x => x.IsTraned))
+        <!--
+            <div role="tabpanel" class="tab-pane fade" id="profile">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                回收订单编号
+                                @*@Html.DisplayNameFor(model => model.PaybackOrderID)*@
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TranName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Account.AccountName)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Where(x => x.IsTraned && !x.IsCompleted))
                     {
                         <tr>
                             <td>
@@ -119,29 +120,29 @@
                                 <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
                             </td>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+                    </tbody>
+                </table>
+            </div>
 
-        <div role="tabpanel" class="tab-pane fade" id="setting">
-            <table class="table table-condensed table-striped">
-                <thead>
-                    <tr>
-                        <th>
-                            回收订单编号
-                            @*@Html.DisplayNameFor(model => model.PaybackOrderID)*@
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.TranName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Account.AccountName)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Where(x => x.IsCanceled))
+            <div role="tabpanel" class="tab-pane fade" id="setting">
+                <table class="table table-condensed table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                回收订单编号
+                                @*@Html.DisplayNameFor(model => model.PaybackOrderID)*@
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TranName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Account.AccountName)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Where(x => x.IsCanceled))
                     {
                         <tr>
                             <td>
@@ -154,10 +155,11 @@
                                 <a class="label label-info" asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.AccountName">@Html.DisplayFor(modelItem => item.Account.AccountName)</a>
                             </td>
                         </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+                    </tbody>
+                </table>
+            </div>
+            -->
     </div>
 
 </div>

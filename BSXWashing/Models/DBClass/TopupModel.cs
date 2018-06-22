@@ -23,6 +23,7 @@
         public string TopupNote { get; set; }
 
         [Required]
+        [DisplayName("用户名")]
         public string AccountName { get; set; }
         public virtual AccountModel Account { get; set; }
     }

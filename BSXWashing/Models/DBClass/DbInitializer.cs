@@ -100,7 +100,7 @@ namespace BSXWashing.Models.DBClass
 
                 context.ItemModels.Add(new ItemModel { ItemName = "西服", ItemValue = 3.0 });
                 context.SaveChanges();
-                
+
                 context.ItemModels.Add(new ItemModel { ItemName = "领带", ItemValue = 1.0 });
                 context.SaveChanges();
 

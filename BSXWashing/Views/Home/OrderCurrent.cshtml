@@ -7,10 +7,10 @@
     var myWare = Model.Warehouses.FirstOrDefault();
 
     var NotFinishBorrow = Model.BorrowTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
-    var NotFinishPayback = Model.PaybackTransport.Where(x => !x.IsCompleted && !x.IsCanceled);
+    var NotFinishPayback = Model.PaybackTransport.Where(x => !x.IsTraned && !x.IsCanceled);
 
     var FinishBorrow = Model.BorrowTransport.Where(x => x.IsCompleted || x.IsCanceled);
-    var FinishPayback = Model.PaybackTransport.Where(x => x.IsCompleted || x.IsCanceled);
+    var FinishPayback = Model.PaybackTransport.Where(x => x.IsTraned || x.IsCanceled);
 }
 
 <div class="jumbotron" style="background-color:mediumseagreen">
@@ -28,529 +28,537 @@
 </div>
 
 <div>
-
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#inve" aria-controls="inve" role="tab" data-toggle="tab">库存</a></li>
         <li role="presentation"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">配送中的提货订单</a></li>
         <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">配送中的回收订单</a></li>
         <li role="presentation"><a href="#setting" aria-controls="setting" role="tab" data-toggle="tab">未配送的提货订单</a></li>
-        <li role="presentation"><a href="#target" aria-controls="target" role="tab" data-toggle="tab">未配送的回收订单</a></li>
-
+        <li role="presentation"><a href="#target" aria-controls="target" role="tab" data-toggle="tab">未确认的回收订单</a></li>
         <li role="presentation"><a href="#hb" aria-controls="hb" role="tab" data-toggle="tab">历史提货订单</a></li>
         <li role="presentation"><a href="#hp" aria-controls="hp" role="tab" data-toggle="tab">历史回收订单</a></li>
     </ul>
     <div class="tab-content">
 
-        <div role="tabpanel" class="tab-pane fade in active" id="inve">
+     <div role="tabpanel" class="tab-pane fade in active" id="inve">
+         <!--库存-->
             <ul class="list-group">
                 @if (myWare.ItemNum1 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum1</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum1)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum1</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum1)
+                </li>
+        }
                 @if (myWare.ItemNum2 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum2</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum2)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum2</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum2)
+                </li>
+        }
                 @if (myWare.ItemNum3 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum3</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum3)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum3</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum3)
+                </li>
+        }
                 @if (myWare.ItemNum4 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum4</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum4)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum4</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum4)
+                </li>
+        }
                 @if (myWare.ItemNum5 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum5</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum5)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum5</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum5)
+                </li>
+        }
 
                 @if (myWare.ItemNum6 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum6</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum6)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum6</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum6)
+                </li>
+        }
                 @if (myWare.ItemNum7 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum7</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum7)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum7</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum7)
+                </li>
+        }
                 @if (myWare.ItemNum8 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum8</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum8)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum8</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum8)
+                </li>
+        }
                 @if (myWare.ItemNum9 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum9</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum9)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum9</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum9)
+                </li>
+        }
                 @if (myWare.ItemNum10 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum10</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum10)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum10</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum10)
+                </li>
+        }
 
                 @if (myWare.ItemNum11 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum11</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum11)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum11</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum11)
+                </li>
+        }
                 @if (myWare.ItemNum12 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum12</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum12)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum12</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum12)
+                </li>
+        }
                 @if (myWare.ItemNum13 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum13</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum13)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum13</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum13)
+                </li>
+        }
                 @if (myWare.ItemNum14 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum14</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum14)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum14</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum14)
+                </li>
+        }
                 @if (myWare.ItemNum15 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum15</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum15)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum15</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum15)
+                </li>
+        }
 
 
                 @if (myWare.ItemNum16 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum16</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum16)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum16</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum16)
+                </li>
+        }
                 @if (myWare.ItemNum17 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum17</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum17)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum17</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum17)
+                </li>
+        }
                 @if (myWare.ItemNum18 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum18</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum18)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum18</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum18)
+                </li>
+        }
                 @if (myWare.ItemNum19 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum19</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum19)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum19</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum19)
+                </li>
+        }
                 @if (myWare.ItemNum20 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum20</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum20)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum20</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum20)
+                </li>
+        }
 
                 @if (myWare.ItemNum21 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum21</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum21)
-                    </li>
-                }        @if (myWare.ItemNum22 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum22</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum22)
-                    </li>
-                }        @if (myWare.ItemNum23 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum23</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum23)
-                    </li>
-                }        @if (myWare.ItemNum24 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum24</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum24)
-                    </li>
-                }        @if (myWare.ItemNum25 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum25</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum25)
-                    </li>
-                }
-                @if (myWare.ItemNum26 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum26</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum26)
-                    </li>
-                }
-                @if (myWare.ItemNum27 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum27</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum27)
-                    </li>
-                }
-                @if (myWare.ItemNum28 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum28</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum28)
-                    </li>
-                }
-                @if (myWare.ItemNum29 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum29</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum29)
-                    </li>
-                }
-                @if (myWare.ItemNum30 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum30</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum30)
-                    </li>
-                }
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum21</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum21)
+                </li>
+        }        @if (myWare.ItemNum22 != 0)
+            {
+                <li class="list-group-item">
+                    <span class="badge">@myWare.ItemNum22</span>
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum22)
+                </li>
+        }        @if (myWare.ItemNum23 != 0)
+    {
+        <li class="list-group-item">
+            <span class="badge">@myWare.ItemNum23</span>
+            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum23)
+        </li>
+}        @if (myWare.ItemNum24 != 0)
+    {
+        <li class="list-group-item">
+            <span class="badge">@myWare.ItemNum24</span>
+            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum24)
+        </li>
+}        @if (myWare.ItemNum25 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum25</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum25)
+    </li>
+}
+    @if (myWare.ItemNum26 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum26</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum26)
+    </li>
+}
+    @if (myWare.ItemNum27 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum27</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum27)
+    </li>
+}
+    @if (myWare.ItemNum28 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum28</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum28)
+    </li>
+}
+    @if (myWare.ItemNum29 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum29</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum29)
+    </li>
+}
+    @if (myWare.ItemNum30 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum30</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum30)
+    </li>
+}
 
-                @if (myWare.ItemNum31 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum31</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum31)
-                    </li>
-                }        @if (myWare.ItemNum32 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum32</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum32)
-                    </li>
-                }        @if (myWare.ItemNum33 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum33</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum33)
-                    </li>
-                }        @if (myWare.ItemNum34 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum34</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum34)
-                    </li>
-                }        @if (myWare.ItemNum35 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum35</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum35)
-                    </li>
-                }
-                @if (myWare.ItemNum36 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum36</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum36)
-                    </li>
-                }        @if (myWare.ItemNum37 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum37</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum37)
-                    </li>
-                }        @if (myWare.ItemNum38 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum38</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum38)
-                    </li>
-                }        @if (myWare.ItemNum39 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum39</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum39)
-                    </li>
-                }        @if (myWare.ItemNum40 != 0)
-                {
-                    <li class="list-group-item">
-                        <span class="badge">@myWare.ItemNum40</span>
-                        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum40)
-                    </li>
-                }
-            </ul>
+    @if (myWare.ItemNum31 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum31</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum31)
+    </li>
+}        @if (myWare.ItemNum32 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum32</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum32)
+    </li>
+}        @if (myWare.ItemNum33 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum33</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum33)
+    </li>
+}        @if (myWare.ItemNum34 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum34</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum34)
+    </li>
+}        @if (myWare.ItemNum35 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum35</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum35)
+    </li>
+}
+    @if (myWare.ItemNum36 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum36</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum36)
+    </li>
+}        @if (myWare.ItemNum37 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum37</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum37)
+    </li>
+}        @if (myWare.ItemNum38 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum38</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum38)
+    </li>
+}        @if (myWare.ItemNum39 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum39</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum39)
+    </li>
+}        @if (myWare.ItemNum40 != 0)
+{
+    <li class="list-group-item">
+        <span class="badge">@myWare.ItemNum40</span>
+        @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum40)
+    </li>
+}
+    </ul>
+    </div>
 
-        </div>
+    <div role="tabpanel" class="tab-pane fade" id="home">
+        <!--配送中的提货订单-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        订单ID
+                    </th>
+                    <th>
+                        配送人员
+                    </th>
+                    <th>
+                        已经送达
+                    </th>
+                    <th>
+                        操作
+                    </th>
 
-        <div role="tabpanel" class="tab-pane fade" id="home">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            订单ID
-                        </th>
-                        <th>
-                            配送人员
-                        </th>
-                        <th>
-                            已经送达
-                        </th>
-                        <th>
-                            操作
-                        </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in NotFinishBorrow.Where(x => !String.IsNullOrEmpty(x.TranName)))
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                    </td>
 
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in NotFinishBorrow.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                            </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsTraned)
+                    </td>
+                    <td>
+                        @Html.ActionLink("完成提货订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsTraned)
-                            </td>
-                            <td>
-                                @Html.ActionLink("完成订单", "ConfirmOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    <div role="tabpanel" class="tab-pane fade" id="profile">
+        <!--配送中的回收订单-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        订单ID
+                    </th>
+                    <th>
+                        配送人员
+                    </th>
+                    <th>
+                        已经送达
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in NotFinishPayback.Where(x => x.IsCompleted))
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                    </td>
+                    <td><!--我觉得这里可以删-->
+                        @Html.DisplayFor(modelItem => item.IsTraned)
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
 
-        <div role="tabpanel" class="tab-pane fade" id="profile">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            订单ID
-                        </th>
-                        <th>
-                            配送人员
-                        </th>
-                        <th>
-                            已经送达
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in NotFinishPayback.Where(x => !String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsTraned)
-                            </td>
-                            <td>
-                                @Html.ActionLink("完成订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    <div role="tabpanel" class="tab-pane fade" id="setting">
+        <!--未配送的提货订单-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        订单ID
+                    </th>
+                    <th>
+                        配送人员
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in NotFinishBorrow.Where(x => String.IsNullOrEmpty(x.TranName)))
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                    </td>
+                    <td>
+                        @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
 
-        <div role="tabpanel" class="tab-pane fade" id="setting">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            订单ID
-                        </th>
-                        <th>
-                            配送人员
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in NotFinishBorrow.Where(x => String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                            </td>
-                            <td>
-                                @Html.ActionLink("取消订单", "CancelOrder", "BorrowModels", routeValues: new { id = item.BorrowOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    <div role="tabpanel" class="tab-pane fade" id="target">
+        <!--“此为未确认的回收订单”栏目
+        现在共isCompleted(用户掌握),isTraned(司机掌握),isCanceled(用户掌握)这三个标记，如何利用呢？
+        首先弄清楚在回收订单程序中无论是用户、司机还是仓库管理员都能看到回收订单的三种状态“未确认”、“运送中”、“历史”
+        现在司机下单了，用户进入“未确认回收订单”页面应对着两种情况：
+            1.正常下回收单，用户应该点“确认回收订单”，激活isCompleted，进入下一环节“运输中的回收订单”
+            2.司机发生失误输入不正确，用户应该点“取消回收订单”，激活isCanceled，直接进入历史订单
+        司机将回收物资送达仓库，点击“送达”按钮，激活isTraned，进入历史订单
+        -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        订单ID
+                    </th>
+                    <th>
+                        配送人员
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in NotFinishPayback.Where(x => !x.IsCompleted && !x.IsCanceled))
+            {
+            <!--没被送达，没被确认，没被取消的订单出现在“未确认订单”栏目-->
+            <tr>
+                <td>
+                    <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                </td>
+                <td>@Html.ActionLink("取消回收订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })</td>
+                <td>@Html.ActionLink("确认回收订单", "ConfirmOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-success" })</td>
+            </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 
-        <div role="tabpanel" class="tab-pane fade" id="target">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            订单ID
-                        </th>
-                        <th>
-                            配送人员
-                        </th>
-                        <th>
-                            操作
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in NotFinishPayback.Where(x => String.IsNullOrEmpty(x.TranName)))
-                    {
-                        <tr>
-                            <td>
-                                <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                            </td>
-                            <td>
-                                @Html.ActionLink("取消订单", "CancelOrder", "PaybackModels", routeValues: new { id = item.PaybackOrderID }, htmlAttributes: new { @class = "btn btn-xs btn-danger" })
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    <div role="tabpanel" class="tab-pane fade" id="hb">
+        <!--历史提货订单-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        订单ID
+                    </th>
+                    <th>
+                        配送人员
+                    </th>
+                    <th>
+                        是否取消
+                    </th>
+                    <th>
+                        是否完成
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in FinishBorrow)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsCanceled)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsCompleted)
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
 
-        <div role="tabpanel" class="tab-pane fade" id="hb">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            订单ID
-                        </th>
-                        <th>
-                            配送人员
-                        </th>
-                        <th>
-                            是否取消
-                        </th>
-                        <th>
-                            是否完成
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in FinishBorrow)
-                    {
-                        <tr>
-                            <td>
-                                <a asp-action="Details" asp-controller="BorrowModels" asp-route-id="@item.BorrowOrderID">ID:@Html.DisplayFor(modelItem => item.BorrowOrderID)</a>
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsCanceled)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsCompleted)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <div role="tabpanel" class="tab-pane fade" id="hp">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            订单ID
-                        </th>
-                        <th>
-                            配送人员
-                        </th>
-                        <th>
-                            是否取消
-                        </th>
-                        <th>
-                            是否完成
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in FinishPayback)
-                    {
-                        <tr>
-                            <td>
-                                <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
-                            </td>
-                            <td>
-                                <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsCanceled)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.IsCompleted)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+    <div role="tabpanel" class="tab-pane fade" id="hp">
+        <!--历史回收订单-->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        订单ID
+                    </th>
+                    <th>
+                        配送人员
+                    </th>
+                    <th>
+                        是否取消
+                    </th>
+                    <th>
+                        是否送达
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in FinishPayback)
+            {
+                <tr>
+                    <td>
+                        <a asp-action="Details" asp-controller="PaybackModels" asp-route-id="@item.PaybackOrderID">ID:@Html.DisplayFor(modelItem => item.PaybackOrderID)</a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-controller="AccountModels" asp-route-id="@item.TranName">@Html.DisplayFor(modelItem => item.TranName)</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsCanceled)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsTraned)
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
     </div>
 
 </div>

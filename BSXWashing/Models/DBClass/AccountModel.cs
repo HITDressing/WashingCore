@@ -9,8 +9,8 @@ namespace BSXWashing.Models.DBClass
     public class AccountModel
     {
         [Key]
-        [StringLength(32, ErrorMessage = "帐户名必须为2~32", MinimumLength = 2)]
-        [DisplayName("帐户名")]
+        [StringLength(32, ErrorMessage = "用户名必须为2~32", MinimumLength = 2)]
+        [DisplayName("用户名")]
         public string AccountName { get; set; }
 
         [DisplayName("手机号")]

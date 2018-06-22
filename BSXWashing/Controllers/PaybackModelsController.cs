@@ -475,10 +475,11 @@ namespace BSXWashing.Controllers
             return View(paybackModel);
         }
 
-        [Authorize(Roles = "超级管理员,仓库保管员")]
+        [Authorize(Roles = "超级管理员,客户,仓库保管员")]
         public async Task<IActionResult> CancelOrder(int id)
         {
             var paybackOrder = await _context.PaybackModels.FindAsync(id);
+            var account = await _context.AccountModels.FindAsync(paybackOrder.AccountName);
             var ware = await _context.WarehouseModels.FirstOrDefaultAsync(x => x.AccountName == paybackOrder.AccountName);
 
             paybackOrder.IsCanceled = true;
@@ -489,6 +490,7 @@ namespace BSXWashing.Controllers
             try
             {
                 _context.Update(paybackOrder);
+                _context.Update(account);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
@@ -496,7 +498,7 @@ namespace BSXWashing.Controllers
                 throw ex;
             }
 
-            return RedirectToAction("Order", "Home");
+            return RedirectToAction("OrderCurrent", "Home");
         }
 
         [Authorize(Roles = "超级管理员,客户,仓库保管员")]
