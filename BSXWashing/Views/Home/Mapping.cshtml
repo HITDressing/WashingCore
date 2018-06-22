@@ -3,7 +3,7 @@
 @{
     Layout = null;
 
-    var group = Model.GroupBy(x => x.Area);
+    var group = Model.OrderBy(x => x.Area).GroupBy(x => x.Area);
 }
 
 <!DOCTYPE html>
@@ -45,7 +45,7 @@
                     商家数量
                 </th>
                 <th>
-                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum1)
+                    物品统计
                 </th>
             </tr>
         </thead>
@@ -60,7 +60,21 @@
                         @item.Count()
                     </td>
                     <td>
-                        @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum1)
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum1) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum1)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum1)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum2) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum2)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum2)
+                        }
                     </td>
                 </tr>
             }
