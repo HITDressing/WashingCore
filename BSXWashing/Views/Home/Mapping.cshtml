@@ -2,6 +2,8 @@
 
 @{
     Layout = null;
+
+    var group = Model.GroupBy(x => x.Area);
 }
 
 <!DOCTYPE html>
@@ -32,6 +34,44 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Hfbv9K6fga0fOoKHg1zA2f0NqzrWFn31"></script>
 </head>
 <body>
+
+    <table class="table" id="downloadTable">
+        <thead>
+            <tr>
+                <th>
+                    区域
+                </th>
+                <th>
+                    商家数量
+                </th>
+                <th>
+                    物品明细
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in group)
+            {
+                <tr>
+                    <td>
+                        @item.Key
+                    </td>
+                    <td>
+                        @item.Count()
+                    </td>
+                    <td>
+                        @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum1)
+                        @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum2)
+                        @*@foreach(var store in item)
+                        {
+
+                        }*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
     <div id="l-map"></div>
 
     <div hidden="hidden">
