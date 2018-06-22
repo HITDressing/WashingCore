@@ -75,6 +75,150 @@
                             <span>-</span>
                             @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum2)
                         }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum3) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum3)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum3)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum4) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum4)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum4)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum5) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum5)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum5)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum6) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum6)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum6)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum7) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum7)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum7)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum8) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum8)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum8)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum9) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum9)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum9)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum10) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum10)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum10)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum11) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum11)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum11)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum12) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum12)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum12)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum13) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum13)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum13)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum14) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum14)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum14)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum15) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum15)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum15)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum16) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum16)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum16)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum17) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum17)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum17)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum18) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum18)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum18)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum19) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum19)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum19)
+                        }
+
+                        @if (item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum20) != 0)
+                        {
+
+                            @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum20)
+                            <span>-</span>
+                            @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum20)
+                        }
                     </td>
                 </tr>
             }
@@ -92,6 +236,10 @@
 
             <hit name="store">
                 @item.StoreName
+            </hit>
+
+            <hit name="area">
+                @item.Area
             </hit>
 
             var myWare = item.Warehouses.First();
@@ -417,6 +565,23 @@
 </body>
 </html>
 <script type="text/javascript">
+
+    var mapColors = {
+
+        区域零:'black',
+        区域一:'red',
+        区域二:'blue',
+        区域三:'green',
+        区域四:'pink',
+        区域五:'gray',
+        区域六:'aqua',
+        区域七:'lime',
+        区域八:'maroon',
+        区域九:'peru',
+        区域十:'yellow'
+    };
+
+    //var myColors = ["red","blue","black","green","pink"]
     // 百度地图API功能
     var map = new BMap.Map("l-map");
     map.centerAndZoom(new BMap.Point(126.6389558404, 45.7537137743), 13);
@@ -432,8 +597,9 @@
     var stores = [];
     var hitStore = document.getElementsByName("store");
     var hitWare = document.getElementsByName("ware");
+    var hitArea = document.getElementsByName("area");
     for (i = 0; i < hitStore.length; i++) {
-        stores.push(hitStore[i].innerText + "<br/>" + hitWare[i].outerHTML);
+        stores.push(hitStore[i].innerText + "-" + hitArea[i].innerText + "<br/>" + hitWare[i].outerHTML);
     }
 
     function bdGEO() {
@@ -447,9 +613,11 @@
         }
         myGeo.getPoint(add, function (point) {
             if (point) {
+                var stm = hitArea[index - 1].innerText.trim();
                 //document.getElementById("result").innerHTML += index + "、" + add + ":" + point.lng + "," + point.lat + "</br>";
                 var address = new BMap.Point(point.lng, point.lat);
-                addMarker(address, new BMap.Label(stores[index - 1], { offset: new BMap.Size(20, -10) }));
+                addMarker(address, new BMap.Label("<span style='background:" + mapColors[stm] + ";color:white'>" + stores[index - 1] + "</span>", { offset: new BMap.Size(20, -10) }));
+                console.log(hitArea[index - 1].innerText.trim());
             }
         }, "哈尔滨市");
     }
