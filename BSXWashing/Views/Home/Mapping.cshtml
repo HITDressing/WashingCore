@@ -45,7 +45,7 @@
                     商家数量
                 </th>
                 <th>
-                    物品明细
+                    @Html.DisplayNameFor(m => m.Warehouses.First().ItemNum1)
                 </th>
             </tr>
         </thead>
@@ -61,11 +61,6 @@
                     </td>
                     <td>
                         @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum1)
-                        @item.Sum(x => x.Warehouses.FirstOrDefault().ItemNum2)
-                        @*@foreach(var store in item)
-                        {
-
-                        }*@
                     </td>
                 </tr>
             }
